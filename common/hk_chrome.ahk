@@ -1,6 +1,10 @@
-﻿#include %A_ScriptDir%\lib_misc.ahk
+﻿/*
+  This module enables some combos to manage Chrome application.
 
-; Keycombos for chrome.
+  @jfsicilia 2022.
+*/
+#include %A_ScriptDir%\lib_misc.ahk
+
 ChromeAutoExec:
   ; Move tab to new window. Registered in "Tab to Window/Popup" chrome extension.
   global CHROME_COMBO_TAB_TO_NEW_WINDOW := LShiftLAltCombo(".")
