@@ -1,8 +1,14 @@
+/*
+  This module enables some combos to manage apps' windows.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_window.ahk
 #include %A_ScriptDir%\lib_highlight_active_window.ahk
 
 WindowAutoExec:
-  global snapped := false
+  ; Global variable to control if a window has been snapped.
+  global __snapped := false
 return
 
 ;----------------------------------------------------------------------------
@@ -20,14 +26,13 @@ return
 #if
 
 ; Restore or Maximize window
->#space:: snapped := false
->#space up:: (!snapped) ? ToggleMaximizeRestoreActiveWindow()
+>#space:: __snapped := false
+>#space up:: (!__snapped) ? ToggleMaximizeRestoreActiveWindow()
 
 ; Toggle windows always on top.
->#t::
->#+space:: ToggleActiveWindowAlwaysOnTop()
+>#t:: ToggleActiveWindowAlwaysOnTop()
 
-; Toggle window highlighting.
+; Toggle window highlighting (it shows a red rectangle around the app).
 >#r:: ManageToggleHighlightWindow()
 
 ; Go to recent active window.
@@ -107,6 +112,8 @@ SC055 & Ralt:: RecentActiveWindow()
 ;----------------------------------------------------------------------------
 
 /*
+  Enable/disable window highlighting. It shows a tray tip with a message 
+  showing if highlighting is on or off.
 */
 ManageToggleHighlightWindow() {
   highlight := ToggleHighlightWindow()
@@ -117,66 +124,66 @@ ManageToggleHighlightWindow() {
 }
 
 /*
-
+  Snap window to the half-top of the screen.
 */
 SnapUp() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(1, 0.5, 0, 0)
 }
 
 /*
-
+  Snap window to the half-bottom of the screen.
 */
 SnapDown() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(1, 0.5, 0, 1)
 }
 
 /*
-
+  Snap window to the half-left of the screen.
 */
 SnapLeft() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(0.5, 1, 0, 0)
 }
 
 /*
-
+  Snap window to the half-right of the screen.
 */
 SnapRight() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(0.5, 1, 1, 0)
 }
 
 /*
-
+  Snap window to the up-left corner of the screen.
 */
 SnapUpLeft() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(0.5, 0.5, 0, 0)
 }
 
 /*
-
+  Snap window to the down-left corner of the screen.
 */
 SnapDownLeft() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(0.5, 0.5, 0, 1)
 }
 
 /*
-
+  Snap window to the up-right corner of the screen.
 */
 SnapUpRight() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(0.5, 0.5, 1, 0)
 }
 
 /*
-
+  Snap window to the down-right corner of the screen.
 */
 SnapDownRight() {
-  snapped := true
+  __snapped := true
   ResizeAndMoveActiveWindow(0.5, 0.5, 1, 1)
 }
 
