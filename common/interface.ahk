@@ -79,6 +79,7 @@ ImplementInterface(interface, appsId, appImplementation) {
   "WinGet, ..., ProcessName, A" and "WinGetClass, ..., A" will be used
   to get the id of the running app, and then it will check if the indicated 
   interface has been implemented by the app.
+  interface -- Name of the interface.
   return -- True if implements it, false otherwise.
 */
 IsInterfaceImplemented(interface) {
@@ -177,6 +178,10 @@ __RunInterfaceAction__(freeModifiers, setModifiers, interface, combo, params*) {
 /*
   See __RunInterfaceAction__
   freeModifiers and setModifiers are false.
+  interface -- Name of the interface to look for the combo.
+  combo -- Combo that was triggered.
+  params -- (Optional) If present, they will be passed to the action (if
+            the action is a function).
 */
 RunInterfaceAction(interface, combo, params*) {
   __RunInterfaceAction__(false, false, interface, combo, params*)
@@ -185,6 +190,10 @@ RunInterfaceAction(interface, combo, params*) {
 /*
   See __RunInterfaceAction__
   freeModifiers is true and setModifiers is false.
+  interface -- Name of the interface to look for the combo.
+  combo -- Combo that was triggered.
+  params -- (Optional) If present, they will be passed to the action (if
+            the action is a function).
 */
 RunInterfaceActionFree(interface, combo, params*) {
   __RunInterfaceAction__(true, false, interface, combo, params*)
@@ -193,6 +202,10 @@ RunInterfaceActionFree(interface, combo, params*) {
 /*
   See __RunInterfaceAction__
   freeModifiers and setModifiers are true.
+  interface -- Name of the interface to look for the combo.
+  combo -- Combo that was triggered.
+  params -- (Optional) If present, they will be passed to the action (if
+            the action is a function).
 */
 RunInterfaceActionIsolated(interface, combo, params*) {
   __RunInterfaceAction__(true, true, interface, combo, params*)
