@@ -18,7 +18,8 @@ ChromeAutoExec:
   ; Go to bookmark by fuzzy search. Registered in "Holmes" chrome extension.
   global CHROME_COMBO_GO_TO_BOOKMARK := LAltCombo("b")
   ; Focus bookmark bar.
-  global CHROME_COMBO_FOCUS_BOOKMARK := LCtrlCombo("l") . "{F6 2}{right 2}"
+  global CHROME_COMBO_ADDRESS_BAR := AltCombo("d")
+  global CHROME_COMBO_FOCUS_BOOKMARK := AltCombo("d") . "{F6 2}{right 2}"
   ; Go to prev/next tab in chrome  
   global CHROME_COMBO_GO_PREV_TAB := RShiftRCtrlCombo("{tab}")
   global CHROME_COMBO_GO_NEXT_TAB := RCtrlCombo("{tab}")
@@ -35,6 +36,9 @@ ChromeAutoExec:
   global CHROME_COMBO_CLOSE_PANE := LCtrlCombo("w")
   ; Show settings.
   global CHROME_COMBO_SETTINGS := LCtrlCombo("t") . "chrome://settings{enter}"
+
+  ImplementAddressInterface("chrome.exe"
+    , CHROME_COMBO_ADDRESS_BAR)                ; Focus address bar. 
 
   ImplementTabsInterface("chrome.exe"
     , CHROME_COMBO_GO_NEXT_TAB           ; Next tab
