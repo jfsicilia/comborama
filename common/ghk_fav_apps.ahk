@@ -48,6 +48,8 @@ RAlt & LCtrl:: ToggleEverythingApp()
 >!j:: FocusOrLaunchJoplin()
 ; ------ 'k'eePass -------
 >!k:: FocusOrLaunchKeePassXC()
+; ------ 'k'eypirinha -----
+; >!space:: ; This combo is defined in the keypirinha settings.
 ; ------ Chro'm'e ------
 >!m:: FocusOrLaunchChrome()
 ; ------ O'n'e Commander -------
