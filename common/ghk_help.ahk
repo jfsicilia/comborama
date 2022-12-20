@@ -5,6 +5,9 @@
 */
 #include %A_ScriptDir%\lib_window.ahk
 
+; TODO Maybe in the future this file can be converted into an interface. If
+; there are different help systems for different apps.
+
 ;-----------------------------------------------------------------------------
 ;                                 Hotkeys
 ;                         Open/Close help windows
@@ -27,18 +30,22 @@
 /*
   Toggles help keyboard shortcuts help dialog. The dialog window is an
   internet explorer frame where a html file is loaded. If the dialog is
-  active it closes it, if not loads the file into the internet explorer
+  active it closes it, if not, loads the file into the internet explorer
   frame an shows it.
 */
 ToggleKeyboardShortcutsHelpDialog() {
   if not WinActive("ahk_class Internet Explorer_TridentDlgFrame") {
+    ; Finds an html file with the same name as the current app. If not found,
+    ; it will load the default _global_.exe.html file.
     WinGet, exeFile, ProcessName, A
-    hwnd := WinExist("A")
     filepath := A_ScriptDir . "\html\" . exeFile . ".html"
     if not FileExist(filepath)
       filepath := A_ScriptDir . "\html\_global_.exe.html"
-    ;ShowHTMLDialog("file:///" . filepath, inArgs, "dialogWidth:1800px;dialogHeight:800px;unadorned:yes;", hwnd, 0x0040)
-    ShowHTMLDialog("file:///" . filepath, "", "dialogWidth:1800px;dialogHeight:800px;unadorned:yes;", hwnd, 0x0040)
+
+    ; Shows the html file in a internet explorer frame.
+    hwnd := WinExist("A")
+    ShowHTMLDialog("file:///" . filepath, ""
+      , "dialogWidth:1800px;dialogHeight:800px;unadorned:yes;", hwnd, 0x0040)
   }
   else  ; Close dialog if active.
     CloseWindow()
@@ -57,6 +64,10 @@ JoplinSearchHelpDialog() {
 /*
   Makes a search in joplin and the first note found will be open in Chrome
   (in Chrome there is a plugin to show markdown files as html).
+  search -- Text to search. If a # is present alone, the search statement
+            will include tag:main. If a #<id> is present, the search
+            statement will include tag:<id>. If a <text> is present, the
+            search statement will include title:<text>.
 */
 OpenJoplinNoteInChrome(search) {
   if (FocusOrLaunchJoplin() > 0) {
