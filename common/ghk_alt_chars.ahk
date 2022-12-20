@@ -196,8 +196,11 @@ return
 ;                             Helper functions.
 ;-----------------------------------------------------------------------------
 
+/* 
+  Returns if Alt Chars are enabled.
+  return -- True if enabled. False, otherwise.
+*/
 IsAltCharsEnabled() {
-  global _toggleAltChars 
   return _toggleAltChars
 }
 
@@ -240,7 +243,7 @@ __DoNTimesKey(key, minKeyDelay=100, maxKeyDelay=300){ ;
     altChar := c%charNum%%altCharIndex%
     ; If the key is the same as the last key, there is an alternative
     ; char for the key, and the key has been pressed in the right time, then
-    ; remove the last to chars and replace them with the alternative char.
+    ; remove the last two chars and replace them with the alternative char.
     if (key = lastKey AND altChar != "" AND elapseKeyTime < maxKeyDelay AND elapseKeyTime > minKeyDelay)
       sendInput %  "{bs 2}" altChar
     else ; No alternative char was issued, therefore reset index.
