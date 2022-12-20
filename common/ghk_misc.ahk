@@ -1,12 +1,21 @@
+/*
+  This module enables some misc key combos.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\mod_tab.ahk
 
 MiscAutoExec:
+  ; If the user is in the middle of an alt+tab combo, this var is true. False,
+  ; otherwise.
   global altTabLaunched := false
 return
 
 ;----------------------------------------------------------------------------
 ;                            Apps switching
 ;----------------------------------------------------------------------------
+; I have reassigned modifiers keys with keysharp. Alt+Tab windows functinality
+; is now done with LCtrl + Tab.
 LCtrl & Tab:: AltTabLaunch() 
 
 #If (altTabLaunched)
@@ -30,15 +39,12 @@ LCtrl & Tab:: AltTabLaunch()
 ;                             Print Screen
 ;----------------------------------------------------------------------------
 
-; Deprecated: Capture entire screen with CMD/WIN + SHIFT + 3 (keybind already in use).
 ; Capture entire screen with PrintScreen
 PrintScreen::send #{PrintScreen}
 
-; Deprecated: Capture portion of the screen with CMD/WIN + SHIFT + 4 (keybind already in use).
 ; Capture portion of the screen with Shitf + PrintScreen
 <!PrintScreen::
 +PrintScreen::send #+s
-
 
 ;----------------------------------------------------------------------------
 ;                          Task View / Mission Control
@@ -64,8 +70,9 @@ PrintScreen::send #{PrintScreen}
 ;                                Window Session
 ;----------------------------------------------------------------------------
 
-; Win+L is disabled to allow LWin & RWin shortcut combinations. In order not
-; to loose the functionality to lock the session, this is provided here.
+; Win+L is disabled to allow LWin & RWin shortcut combinations (see 
+; ghk_disable_windows_combos.ahk). In order not to loose the functionality 
+; to lock the session, this is provided here.
 <#l:: LockWorkstation() 
 
 ;----------------------------------------------------------------------------
@@ -114,6 +121,8 @@ PrintScreen::send #{PrintScreen}
 ;----------------------------------------------------------------------------
 
 /*
+  Launch windows alt+tab functionality.
+  It sets internally global variable altTabLaunched to true.
 */
 AltTabLaunch() {
   altTabLaunched := true
@@ -126,6 +135,8 @@ AltTabLaunch() {
 }
 
 /*
+  Shuts windows alt+tab functionality.
+  It sets internally global variable altTabLaunched to false.
 */
 AltTabRelease() {
     Send {Shift Up}{Alt Up}
@@ -150,14 +161,14 @@ SyncWSL() {
 }
 
 /*
-
+  Opens task manager.
 */
 RunTaskManager() {
   run taskmgr.exe
 }
 
 /*
-  down, hibernate or sleep computer. If alt key is pressed then shutdown 
+  Shutdown, hibernate or sleep computer. If alt key is pressed then shutdown 
   is issued, if shift is pressed then hibernate is issued. If none of those
   two are pressed, then sleep is issued.
 */
