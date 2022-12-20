@@ -1,5 +1,6 @@
 ;------------------------------------------------------------------------------
 ; COM.ahk Standard Library
+; Access to Windows Component Object Model.
 ; by Sean
 ; http://www.autohotkey.com/forum/topic22923.html
 ;------------------------------------------------------------------------------
