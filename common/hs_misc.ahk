@@ -1,4 +1,8 @@
-; Hotstrings keys sequences.
+/*
+  This script enables a set of hot strings.
+
+  @jfsicilia 2022.
+*/
 :*?:~@::jfsicilia@gmail.com
 :*?:~n::Juan Francisco Sicilia Santos
 :*?:~g::
