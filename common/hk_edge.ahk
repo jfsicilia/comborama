@@ -1,6 +1,10 @@
-﻿#include %A_ScriptDir%\lib_misc.ahk
+﻿/*
+  This module enables some combos to manage Microsoft Edge application.
 
-; Add some new shortcuts to Microsoft Edge.
+  @jfsicilia 2022.
+*/
+#include %A_ScriptDir%\lib_misc.ahk
+
 EdgeAutoExec:
   ; Go next/prev tab.
   global EDGE_COMBO_GO_PREV_TAB := LShiftLCtrlCombo("{Tab}")
@@ -61,6 +65,6 @@ edgeForwardHistory() {
   SendInput, !{right}
 }
 
-#IfWinActive ahk_exe msedge.exe
+#ifWinActive ahk_exe msedge.exe
 #if
 
