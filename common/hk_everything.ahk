@@ -1,8 +1,20 @@
+/*
+  This module enables some combos to manage Everything application.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_apps.ahk
 #include %A_ScriptDir%\lib_misc.ahk
 #include %A_ScriptDir%\lib_searches.ahk
 
 EverythingAutoExec:
+  global EVERYTHING_COMBO_OPEN_FILE_FOLDER = "{enter}"
+  global EVERYTHING_COMBO_RENAME_FILE = "{F2}"
+  global EVERYTHING_COMBO_REFRESH = "{F5}"
+  global EVERYTHING_COMBO_SHOW_INFO = "!{enter}"
+  global EVERYTHING_COMBO_FIND = "{F3}"
+  global EVERYTHING_COMBO_SELECT_ALL = "^a"
+  global EVERYTHING_COMBO_CONTEXT_MENU = "+{F10}"
   global EVERYTHING_COMBO_SHOW_EVERYTHING := LShiftLWinLAltCombo("{F10}")
   global EVERYTHING_COMBO_TOGGLE_EVERYTHING := LShiftLWinLAltCombo("{F11}")
   global EVERYTHING_COMBO_RECENT_FILES_SEARCH := LShiftLAltCombo("r")
@@ -10,7 +22,7 @@ EverythingAutoExec:
   global EVERYTHING_COMBO_FOCUS_PREVIEW := "{F9}"
   global EVERYTHING_COMBO_TOGGLE_PREVIEW := "{Alt Down}V{Alt Up}P"
   global EVERYTHING_COMBO_SHOW_HISTORY := LShiftLCtrlCombo("h")
-  ; NOTE: Search txtbox and find txtbox is the same, but two combos are useb
+  ; NOTE: Search txtbox and find txtbox is the same, but two combos are used
   ; due to special behaviour in some situations.
   global EVERYTHING_COMBO_FOCUS_SEARCH_TXTBOX := LCtrlCombo("l")
   global EVERYTHING_COMBO_FOCUS_FIND_TXTBOX := EVERYTHING_COMBO_SHOW_EVERYTHING
@@ -23,18 +35,18 @@ EverythingAutoExec:
     , EVERYTHING_COMBO_FOCUS_FIND_TXTBOX)         ; Focus address bar. 
 
   ImplementFileManagerInterface("Everything.exe"
-    , ""                      ; Prefiew file/folder
-    , "{enter}"               ; Open file/folder
-    , NOT_IMPLEMENTED         ; Go parent folder
-    , "{F2}"                  ; Rename file/folder
-    , "{F5}"                  ; Refresh file manager
-    , "!{enter}"              ; Show info of file/folder
-    , "{F3}"                  ; Find
-    , NOT_IMPLEMENTED         ; Duplicate file/folder
-    , "^a"                    ; Select all files/folders
-    , NOT_IMPLEMENTED         ; New file
-    , NOT_IMPLEMENTED         ; New folder
-    , "+{F10}"                ; Context menu
+    , ""                                    ; Prefiew file/folder
+    , EVERYTHING_COMBO_OPEN_FILE_FOLDER     ; Open file/folder
+    , NOT_IMPLEMENTED                       ; Go parent folder
+    , EVERYTHING_COMBO_RENAME_FILE          ; Rename file/folder
+    , EVERYTHING_COMBO_REFRESH              ; Refresh file manager
+    , EVERYTHING_COMBO_SHOW_INFO            ; Show info of file/folder
+    , EVERYTHING_COMBO_FIND                 ; Find
+    , NOT_IMPLEMENTED                       ; Duplicate file/folder
+    , EVERYTHING_COMBO_SELECT_ALL           ; Select all files/folders
+    , NOT_IMPLEMENTED                       ; New file
+    , NOT_IMPLEMENTED                       ; New folder
+    , EVERYTHING_COMBO_CONTEXT_MENU         ; Context menu
     ; View file/folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__Chrome__"))) 
     ; Edit file/folder.
@@ -74,7 +86,7 @@ return
   F8:: EverythingFocusFiles()
   ; Focus preview
   ;NOTE F9 focus preview
-  ;F9::  
+  ;F9::  ; Already built in everything.
 
   <!p:: SendInputIsolated(EVERYTHING_COMBO_TOGGLE_PREVIEW)
 #if
