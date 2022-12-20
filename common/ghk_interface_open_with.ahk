@@ -15,12 +15,12 @@ OpenWithInterfaceAutoExec:
 
   ; Dictionary with bound keys to functions to open items with apps.
   global __OPEN_WITH_FUNCS__ :=  {"v":Func("__Vim__")
-                              , "m":Func("__Chrome__")
-                              , "y":Func("__Typora__")
-                              , "e":Func("__FileExplorer__")
-                              , "n":Func("__OneCommander__")
-                              , "c":Func("__VSCode__")
-                              , "t":Func("__WindowsTerminal__")}
+                                , "m":Func("__Chrome__")
+                                , "y":Func("__Typora__")
+                                , "e":Func("__FileExplorer__")
+                                , "n":Func("__OneCommander__")
+                                , "c":Func("__VSCode__")
+                                , "t":Func("__WindowsTerminal__")}
 return
 
 ;----------------------------------------------------------------------  
@@ -65,9 +65,8 @@ return
   Help function to get selected items in file explorer or similar (must be able
   to copy paths of files to clipboard) and call a handler funtion to process 
   each one.
-  Params:
-    handlerFunc -- Handler to a function that receives two params, an index 
-                   and a string with a path.
+  handlerFunc -- Handler to a function that receives two params, an index 
+                 and a string with a path.
 */
 __OpenSelectedItemsWith__(handlerFunc) {
   ; Save clipboard and copy paths (for example in file explorer or everything)
@@ -91,9 +90,19 @@ __OpenSelectedItemsWith__(handlerFunc) {
 }
 
 /*
+  Opens selected items with bound app to specified key.
+*/
+__OpenWithDefaultAction__(key) {
+  if (__OPEN_WITH_FUNCS__[key] == "")
+    msgbox("No app bound to key '" . key . "'.")
+  else
+    __OpenSelectedItemsWith__(__OPEN_WITH_FUNCS__[key])
+}
+
+/*
   Help function that currently handles opening a path in windows terminal.
-  params:
-    path - Path to open.
+  index -- Index of the file. It allows special treatment for 1st item.
+  path -- Path to open.
 
   NOTE: Now FocusOrLaunch function is used to launch/focus Windows Terminal,
   this allows also to open a new tab with the selected path. Before that,
@@ -119,12 +128,18 @@ __WindowsTerminal__(index, path) {
   }
 }
 
+/*
+  Help function that currently handles opening a path in file explorer. 
+  If many paths are selected, they will be opened in tabs.
+  index -- Index of the file. It allows special treatment for 1st item.
+  path -- Path to open.
+*/
 __FileExplorer__(index, path) {
   path := GetDirFromPath(path) ; Make sure we are dealing with a dir not a file.
   ; Before the first path is processed, focus or launch File Explorer.
   if (index = 1) {
     ; Focus or launchs File Explorer.
-    result := FocusOrLaunchFileExplorer(path)
+    result := FocusOrLaunchFileExplorer()
     ; If File Explorer has been launched, wait until is ready.
     if (result = 2) {
       ; Define the group: Windows Explorer windows
@@ -135,8 +150,22 @@ __FileExplorer__(index, path) {
       WinActivate, % "ahk_group Explorer"
     }
   }
+  ; Open path in new tab.
+  Sleep, 800
+  SendInputIsolated("^t")
+  Sleep, 800
+  SendInputIsolated("!d")
+  Sleep, 800
+  SendInputIsolated(path . "{Enter}")
+  Sleep, 400
 }
 
+/*
+  Help function that currently handles opening a path in OneCommander. 
+  If many paths are selected, they will be opened in tabs.
+  index -- Index of the file. It allows special treatment for 1st item.
+  path -- Path to open.
+*/
 __OneCommander__(index, path) {
   path := GetDirFromPath(path) ; Make sure we are dealing with a dir not a file.
   ; Before the first path is processed, focus or launch OneCommander.
@@ -161,12 +190,11 @@ __OneCommander__(index, path) {
 
 /*
   Help function that currently handles opening a path in VSCode.
-  params:
-    index - Index of the path to process. If 1 launch or focus VSCode 
-            before trying to open path.
-    path - Path can be a file path or a folder path. A file path it's opened
-           in a new editor tab. A folder path is set in VSCode as a root
-           project path.
+  index -- Index of the path to process. If 1 launch or focus VSCode 
+           before trying to open path.
+  path -- Path can be a file path or a folder path. A file path it's opened
+          in a new editor tab. A folder path is set in VSCode as a root
+          project path.
 */
 __VSCode__(index, path) {
   ; Before the first path is processed, focus or launch VSCode.
@@ -196,10 +224,9 @@ __VSCode__(index, path) {
 
 /*
   Help function that currently handles opening a file path in vim.
-  params:
-    index - Index of the file to process. If 1 launch or focus vim
-            before trying to open file.
-    file - File path.
+  index -- Index of the file to process. If 1 launch or focus vim
+           before trying to open file.
+  file -- File path.
 */
 __Vim__(index, file) {
   ; Before the first path is processed, focus or launch vim.
@@ -219,10 +246,9 @@ __Vim__(index, file) {
 
 /*
   Help function that currently handles opening a file path in chrome.
-  params:
-    index - Index of the file to process. If 1 launch or focus chrome
-            before trying to open file.
-    file - File path.
+  index - Index of the file to process. If 1 launch or focus chrome
+          before trying to open file.
+  file - File path.
 */
 __Chrome__(index, file) {
   ; Before the first path is processed, focus or launch app.
@@ -240,24 +266,12 @@ __Chrome__(index, file) {
 
 /*
   Help function that currently handles opening a file path in typora.
-  params:
-    index - Index of the file to process. It's ignored because each file
-            launches an instance of typora.
-    file - File path.
+  index - Index of the file to process. It's ignored because each file
+          launches an instance of typora.
+  file - File path.
 */
 __Typora__(index, file) {
-    FocusOrLaunchTypora(true, file, true)
-}
-
-/*
-  Opens selected items with bound app to specified key.
-*/
-__OpenWithDefaultAction__(key) {
-  f := __OPEN_WITH_FUNCS__[key] 
-  if (f == "")
-    msgbox("No app bound to key '" . key . "'.")
-  else
-    __OpenSelectedItemsWith__(__OPEN_WITH_FUNCS__[key])
+  FocusOrLaunchTypora(true, file, true)
 }
 
 ;----------------------------------------------------------------------  
