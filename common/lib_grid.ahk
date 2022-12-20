@@ -86,6 +86,13 @@ LibGridAutoExec:
     }   
   }
 
+  ; A grid is defined by number of rows and columns. Internally
+  ; each row and column is subdivided by the gridFactor, allowing
+  ; the resize of the grid by smaller steps (gridFactor steps per
+  ; row and column). This is a constant that defines 8 as a good 
+  ; gridFactor.
+  global GRID_FACTOR := 8
+
   ; Register function to be called when active window changes.
   RegisterActiveWindowChangedCallback(Func("__UpdateActiveWindowLocationCallback"))
   RegisterActiveWindowChangedCallback(Func("__ShowNumberWindowsInZoneCallback"))

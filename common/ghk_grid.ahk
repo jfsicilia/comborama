@@ -3,7 +3,6 @@
 
   @jfsicilia 2022.
 */
-
 #include %A_ScriptDir%\lib_grid.ahk
 
 ;-----------------------------------------------------------------------------
@@ -11,16 +10,13 @@
 ;-----------------------------------------------------------------------------
 
 ; Enable grid.
->#g::
->#F10:: ShowEnableGridDialog()
+>#g:: ShowEnableGridDialog()
 
 ; Disable grid.
->#+g::
->#+F10:: ShowDisableGridDialog()
+>#+g:: ShowDisableGridDialog()
 
 ; Toggle fit to grid.
->#f::
->#F11:: ManageToggleFitToGrid()
+>#f:: ManageToggleFitToGrid()
 
 #if ((IsGridEnabled()) AND (IsFitToGridOn()))
   ; Activate grid zone.
@@ -107,15 +103,15 @@
 >#+9:: MoveActiveWindowToZone(,,9)
 
 ; Enable predefined grid N.
->#F1:: EnablePredefinedGrid(1, 8)
->#F2:: EnablePredefinedGrid(2, 8)
->#F3:: EnablePredefinedGrid(3, 8)
->#F4:: EnablePredefinedGrid(4, 8)
->#F5:: EnablePredefinedGrid(5, 8)
->#F6:: EnablePredefinedGrid(6, 8)
->#F7:: EnablePredefinedGrid(7, 8)
->#F8:: EnablePredefinedGrid(8, 8)
->#F9:: EnablePredefinedGrid(9, 8)
+>#F1:: EnablePredefinedGrid(1, GRID_FACTOR)
+>#F2:: EnablePredefinedGrid(2, GRID_FACTOR)
+>#F3:: EnablePredefinedGrid(3, GRID_FACTOR)
+>#F4:: EnablePredefinedGrid(4, GRID_FACTOR)
+>#F5:: EnablePredefinedGrid(5, GRID_FACTOR)
+>#F6:: EnablePredefinedGrid(6, GRID_FACTOR)
+>#F7:: EnablePredefinedGrid(7, GRID_FACTOR)
+>#F8:: EnablePredefinedGrid(8, GRID_FACTOR)
+>#F9:: EnablePredefinedGrid(9, GRID_FACTOR)
 
 ;----------------------------------------------------------------------------
 ;                           Helper functions.
@@ -175,8 +171,7 @@ ShowEnableGridDialog() {
   if (InStr(gridDefinition, "#") = 1)
     gridDefinition := _gridDefinitions[SubStr(gridDefinition, 2, 1)]
 
-  ; TODO Set 8 to a global constant.
-  EnableGrid(, , gridDefinition, , GetWindowList(), 8)
+  EnableGrid(, , gridDefinition, , GetWindowList(), GRID_FACTOR)
   __ShowGridEnabledToolTip(GetDesktop(), GetMonitor(), Round(GetGridRows()/GetGridFactor()), Round(GetGridCols()/GetGridFactor()))
 }
 
