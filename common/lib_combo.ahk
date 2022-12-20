@@ -1,39 +1,104 @@
+/*
+  This module provides a set of function to create autohotkey combos 
+  combining different modifiers.
+
+  @jfsicilia 2022.
+*/
+
+/*
+  Shift combo.
+  key -- Key used in the combo.
+  pos -- Could be "" (default), "L" for a left modifier, or "R" for a right
+         modifier.
+  return -- "{<pos>Shift down}<key>{<pos>Shift up}"
+*/
 ShiftCombo(key, pos:="") {
   return "{" . pos . "Shift down}" . key . "{" . pos . "Shift up}"
 }
 
+/*
+  Win combo.
+  key -- Key used in the combo.
+  pos -- Could be "" (default), "L" for a left modifier, or "R" for a right
+         modifier.
+  return -- "{<pos>Win down}<key>{<pos>Win up}"
+*/
 WinCombo(key, pos:="") {
   return "{" . pos . "Win down}" . key . "{" . pos . "Win up}"
 }
 
+/*
+  Alt combo.
+  key -- Key used in the combo.
+  pos -- Could be "" (default), "L" for a left modifier, or "R" for a right
+         modifier.
+  return -- "{<pos>Alt down}<key>{<pos>Alt up}"
+*/
 AltCombo(key, pos:="") {
   return "{" . pos . "Alt down}" . key . "{" . pos . "Alt up}"
 }
 
+/*
+  Ctrl combo.
+  key -- Key used in the combo.
+  pos -- Could be "" (default), "L" for a left modifier, or "R" for a right
+         modifier.
+  return -- "{<pos>Ctrl down}<key>{<pos>Ctrl up}"
+*/
 CtrlCombo(key, pos:="") {
   return "{" . pos . "Ctrl down}" . key . "{" . pos . "Ctrl up}"
 }
 
+/*
+  LWin combo.
+  key -- Key used in the combo.
+  return -- "{LWin down}<key>{LWin up}"
+*/
 LWinCombo(key) {
   return WinCombo(key, "L")
 }
 
+/*
+  LAlt combo.
+  key -- Key used in the combo.
+  return -- "{LAlt down}<key>{LAlt up}"
+*/
 LAltCombo(key) {
   return AltCombo(key, "L")
 }
 
+/*
+  LCtrl combo.
+  key -- Key used in the combo.
+  return -- "{LCtrl down}<key>{LCtrl up}"
+*/
 LCtrlCombo(key) {
   return CtrlCombo(key, "L")
 }
 
+/*
+  RWin combo.
+  key -- Key used in the combo.
+  return -- "{RWin down}<key>{RWin up}"
+*/
 RWinCombo(key) {
   return WinCombo(key, "R")
 }
 
+/*
+  LAlt combo.
+  key -- Key used in the combo.
+  return -- "{RAlt down}<key>{RAlt up}"
+*/
 RAltCombo(key) {
   return AltCombo(key, "R")
 }
 
+/*
+  RCtrl combo.
+  key -- Key used in the combo.
+  return -- "{RCtrl down}<key>{RCtrl up}"
+*/
 RCtrlCombo(key) {
   return CtrlCombo(key, "R")
 }
