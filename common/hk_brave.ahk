@@ -1,7 +1,12 @@
-﻿#include %A_ScriptDir%\lib_misc.ahk
+﻿/*
+  This module enables some combos to manage Brave application.
 
-; Add some new shortcuts to Microsoft Edge.
+  @jfsicilia 2022.
+*/
+#include %A_ScriptDir%\lib_misc.ahk
+
 BraveAutoExec:
+  ; Go to prev/next tab.
   global BRAVE_COMBO_GO_PREV_TAB := RShiftRCtrlCombo("{Tab}")
   global BRAVE_COMBO_GO_NEXT_TAB := RCtrlCombo("{Tab}")
   ; Go back/forward in history
