@@ -28,6 +28,10 @@ WindowsTerminalAutoExec:
   global WT_COMBO_COPY := CtrlCombo("{numpad7}")
   global WT_COMBO_PASTE := CtrlCombo("{numpad1}")
 
+  global WT_COMBO_SETTINGS := "^,"
+  global WT_COMBO_SETTINGS_JSON := "^+,"
+  global WT_COMBO_DEFAULTS_JSON := "^!,"
+
   ImplementTabsInterface("WindowsTerminal.exe"
     , WT_COMBO_NEXT_TAB                  ; Next tab
     , WT_COMBO_PREV_TAB                  ; Prev tab
@@ -74,7 +78,10 @@ WindowsTerminalAutoExec:
     , WT_COMBO_PASTE)                      ; Terminal paste
 
   ImplementSettingsInterface("WindowsTerminal.exe"
-    , bind("ShiftSwitch", "^,", "^+,", "^!,"))       ; Open settings.
+    , bind("ShiftSwitch"                   ; Open settings.
+         , WT_COMBO_SETTINGS
+         , WT_COMBO_SETTINGS_JSON
+         , WT_COMBO_DEFAULTS_JSON))       
 return
 
 /*
