@@ -1,3 +1,8 @@
+/*
+  This module enables some combos to manage Joplin application.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_apps.ahk
 #include %A_ScriptDir%\lib_misc.ahk
 
@@ -30,33 +35,47 @@ JoplinAutoExec:
   global JOPLIN_COMBO_SEARCH_IN_NOTE := "/"
   global VIM_COMBO_EXT_OPEN_FILE := "gX"
 
+  global JOPLIN_COMBO_SETTINGS := LCtrlCombo(",")                    
+
+  global JOPLIN_CMD_SWITCH_RIGHT := "SwitchRight"
+  global JOPLIN_CMD_SWITCH_LEFT := "SwitchLeft"
+  global JOPLIN_CMD_MOVE_TAB_RIGHT := "TabsMoveRight"
+  global JOPLIN_CMD_MOVE_TAB_LEFT := "TabsMoveLeft"
+  global JOPLIN_CMD_TOGGLE_FAVS_VISIBILITY := "FavsToggleVisibility"
+  global JOPLIN_CMD_PIN_TAB := "TabsPinNote"
+  global JOPLIN_CMD_UNPIN_TAB := "TabsUnPinNote"
+
+  global JOPLIN_NOTEBOOK_PREFIX := "@"
+  global JOPLIN_CMD_PREFIX := ":"
+  global JOPLIN_TAG_PREFIX := "{raw}#"
+
   ImplementTabsInterface("Joplin.exe"
-    , bind("JoplinRunPaletteCmd", "SwitchRight")      ; Next tab
-    , bind("JoplinRunPaletteCmd", "SwitchLeft")       ; Prev tab
-    , Func("JoplinToggleRecent")                      ; Recently used tab
-    , NOT_IMPLEMENTED                                 ; Go to tab by number.
-    , bind("JoplinRunPaletteCmd", "TabsMoveRight")    ; Move tab right.
-    , bind("JoplinRunPaletteCmd", "TabsMoveLeft")     ; Move tab left.
-    , NO_BOUND_ACTION_MSGBOX                          ; Move tab first.
-    , NO_BOUND_ACTION_MSGBOX                          ; Move tab last.
-    , NOT_IMPLEMENTED                                 ; New tab.
-    , NOT_IMPLEMENTED                                 ; Close tab.
-    , NOT_IMPLEMENTED)                                ; Undo close tab.
+    , bind("JoplinRunPaletteCmd", JOPLIN_CMD_SWITCH_RIGHT)   ; Next tab
+    , bind("JoplinRunPaletteCmd", JOPLIN_CMD_SWITCH_LEFT)    ; Prev tab
+    , Func("JoplinToggleRecent")                             ; Recently used tab
+    , NOT_IMPLEMENTED                                        ; Go to tab by number.
+    , bind("JoplinRunPaletteCmd", JOPLIN_CMD_MOVE_TAB_RIGHT) ; Move tab right.
+    , bind("JoplinRunPaletteCmd", JOPLIN_CMD_MOVE_TAB_LEFT)  ; Move tab left.
+    , NO_BOUND_ACTION_MSGBOX                                 ; Move tab first.
+    , NO_BOUND_ACTION_MSGBOX                                 ; Move tab last.
+    , NOT_IMPLEMENTED                                        ; New tab.
+    , NOT_IMPLEMENTED                                        ; Close tab.
+    , NOT_IMPLEMENTED)                                       ; Undo close tab.
 
   ImplementHistoryInterface("Joplin.exe"
     , JOPLIN_COMBO_GO_BACK        ; History back
     , JOPLIN_COMBO_GO_FORWARD)    ; History forward
 
   ImplementSeekAndSelInterface("Joplin.exe"
-    , JOPLIN_COMBO_GOTO_ANYTHING          ; Ctrl + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
-    , JOPLIN_COMBO_GOTO_ANYTHING . "@"    ; Alt + Space
-    , JOPLIN_COMBO_GOTO_ANYTHING . ":"    ; Alt + Shift + Space
-    , JOPLIN_COMBO_GOTO_ANYTHING . "{raw}#" ; Win + Space
-    , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
+    , JOPLIN_COMBO_GOTO_ANYTHING                          ; Ctrl + Space
+    , NO_BOUND_ACTION_MSGBOX                              ; Ctrl + Shift + Space
+    , JOPLIN_COMBO_GOTO_ANYTHING . JOPLIN_NOTEBOOK_PREFIX ; Alt + Space
+    , JOPLIN_COMBO_GOTO_ANYTHING . JOPLIN_CMD_PREFIX      ; Alt + Shift + Space
+    , JOPLIN_COMBO_GOTO_ANYTHING . JOPLIN_TAG_PREFIX      ; Win + Space
+    , NO_BOUND_ACTION_MSGBOX)                             ; Win + Shift + Space
 
   ImplementSettingsInterface("Joplin.exe"
-    , LCtrlCombo(","))                    ; Open settings.
+    , JOPLIN_COMBO_SETTINGS)                    ; Open settings.
 return
 
 ; Add some new shortcuts to Chrome.
@@ -87,10 +106,10 @@ return
   <!>^n::
   >#<!>^n:: SendInputIsolated(JOPLIN_COMBO_TOGGLE_NOTELIST)
   <!>^f::
-  >#<!>^f:: JoplinRunPaletteCmd("favsToggleVisibility")
+  >#<!>^f:: JoplinRunPaletteCmd(JOPLIN_CMD_TOGGLE_FAVS_VISIBILITY) 
   ; Toggles all panes.
   >#<!>^a::
-    JoplinRunPaletteCmd("favsToggleVisibility")
+    JoplinRunPaletteCmd(JOPLIN_CMD_TOGGLE_FAVS_VISIBILITY)
     SendInputIsolated(JOPLIN_COMBO_TOGGLE_SIDEBAR)
     SendInputIsolated(JOPLIN_COMBO_TOGGLE_NOTELIST)
   return
@@ -102,8 +121,8 @@ return
   >#<!s:: SendInputIsolated(JOPLIN_COMBO_FOCUS_SIDEBAR)
 
   ; Pin/Unpin tab.
-  >#<^p::  JoplinRunPaletteCmd("tabsPinNote")
-  >#<^u::  JoplinRunPaletteCmd("tabsUnpinNote")
+  >#<^p::  JoplinRunPaletteCmd(JOPLIN_CMD_PIN_TAB)
+  >#<^u::  JoplinRunPaletteCmd(JOPLIN_CMD_UNPIN_TAB)
 
   ;<^0::   Actual size
   ;<^-::   Reduce size
@@ -118,8 +137,7 @@ return
 /*
   Runs a command in joplin. First it launches the command palette,
   writes the command and finally, hits enter.
-  params:
-    cmd -- Command to execute.
+  cmd -- Command to execute.
 */
 JoplinRunPaletteCmd(cmd) {
   FreeModifiers()
@@ -152,7 +170,7 @@ JoplinToggleRecent() {
   gVim. In gVim, issue command to open current file in external app (in my 
   case chrome) and close gVim (in my vim configuration, it is bound to
   <VIM_COMBO_EXT_OPEN_FILE>). Then focus back joplin to toggle note editing 
-  off (in joplin it is bound to <JOPLIN_COMBO_tOGGLE_EDIT>). 
+  off (in joplin it is bound to <JOPLIN_COMBO_TOGGLE_EDIT>). 
   Finally, focus chrome and activate web page. 
 */
 JoplinOpenInChrome() {
