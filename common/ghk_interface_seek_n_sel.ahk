@@ -11,12 +11,12 @@ SeekAndSelInterfaceAutoExec:
   global __SEEK_N_SEL_ID__ := "SEEK_N_SEL_INTERFACE"
 
   ; Interface's actions.
-  global ACTION_CTRL_SPACE :=            {id: "__CtrlSpace()__", default: NOT_IMPLEMENTED}
-  global ACTION_CTRL_SHIFT_SPACE :=      {id: "__CtrlShiftSpace()__", default: NOT_IMPLEMENTED}
-  global ACTION_ALT_SPACE :=             {id: "__AltSpace()__", default: NOT_IMPLEMENTED}
-  global ACTION_ALT_SHIFT_SPACE :=       {id: "__AltShiftSpace()__", default: NOT_IMPLEMENTED}
-  global ACTION_WIN_SPACE :=             {id: "__WinSpace()__", default: NOT_IMPLEMENTED}
-  global ACTION_WIN_SHIFT_SPACE :=       {id: "__WinShiftSpace()__", default: NOT_IMPLEMENTED}
+  global ACTION_CTRL_SPACE :=       {id: "__CtrlSpace()__", default: NOT_IMPLEMENTED}
+  global ACTION_CTRL_SHIFT_SPACE := {id: "__CtrlShiftSpace()__", default: NOT_IMPLEMENTED}
+  global ACTION_ALT_SPACE :=        {id: "__AltSpace()__", default: NOT_IMPLEMENTED}
+  global ACTION_ALT_SHIFT_SPACE :=  {id: "__AltShiftSpace()__", default: NOT_IMPLEMENTED}
+  global ACTION_WIN_SPACE :=        {id: "__WinSpace()__", default: NOT_IMPLEMENTED}
+  global ACTION_WIN_SHIFT_SPACE :=  {id: "__WinShiftSpace()__", default: NOT_IMPLEMENTED}
 return
 
 ;----------------------------------------------------------------------  
