@@ -55,11 +55,8 @@ FocusOrLaunchApp(appExe := "", appTitle := "", appRun := "", hidden := true, app
     if ((hidden) && (hwnd = 0)) {
       DetectHiddenWindows, On
       hwnd := WinExist(winTitle)
-      ;LOG.log("Detected in different desktop " . hwnd)
       DetectHiddenWindows, Off
     }
-    ;LOG.log("EXE: " . appExe . " Title: " . winTitle . " appRun + params: " . appRun . " " . appRunParam)
-    ;LOG.log("hwnd: " . hwnd . " (hidden=" . hidden . ")")
 
     ; If app is running, activate it.
     if %hwnd% {
@@ -71,10 +68,8 @@ FocusOrLaunchApp(appExe := "", appTitle := "", appRun := "", hidden := true, app
       if %ownerHwnd%
         hwnd := ownerHwnd
 
-  ;    LOG.log("(checked owner) hwnd: " . hwnd . " (hidden=" . hidden . ")")
       ; Check if the app is in the same desktop. If not, change desktop.
       desktop := GetDesktop(hwnd)
-  ;    LOG.log("hwnd desktop: " . desktop)
       if (desktop < 1) ; Sanity check for some special apps that return -1.
         desktop := 1
       currentDesktop := GetDesktop()
@@ -96,17 +91,10 @@ FocusOrLaunchApp(appExe := "", appTitle := "", appRun := "", hidden := true, app
     WinWait, %winTitle%,,3
     if ErrorLevel 
     {
-      ;LOG.log("Errorlevel " . ErrorLevel . " con " . winTitle)
       return 0
     }
-    ; Si quitas esto comprueba que pasa al cambiar de desktop.
-    ; Si lo dejas, falla por ejemplo al cargar gvim, pq activa una
-    ; ventana que luego no es la principal.
-    ;WinShow, %winTitle%
-    ;WinActivate, %winTitle%
     return 2
   }
-
   return 0
 }
 
@@ -125,8 +113,7 @@ FocusOrLaunchFileExplorer(dir := "") {
   GroupAdd, Explorer, ahk_class CabinetWClass
 
   ; Is File Explorer already opened?
-  if WinExist("ahk_group Explorer")
-  {
+  if WinExist("ahk_group Explorer") {
     WinActivate
     ControlFocus, DirectUIHWND2, A
     WinWait, ahk_group Explorer,,3
@@ -151,134 +138,276 @@ FocusOrLaunchFileExplorer(dir := "") {
 ;      Help functions to launch/focus common applications.
 ;-----------------------------------------------------------------------------
 
+/*
+  Focus or launch Atana.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchAtani(hidden := true) {
   return FocusOrLaunchApp("Atani.exe",, HOME_FOLDER . "\AppData\Local\Programs\Atani\Atani.exe", hidden)
 }
 
+/*
+  Focus or launch Brave.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchBrave(hidden := true) {
   return FocusOrLaunchApp("brave.exe",, "C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe", hidden)
 }
 
+/*
+  Focus or launch Everything.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchEverything(hidden := true) {
   ToggleEverythingApp()
   return 1
   ;return FocusOrLaunchApp("everything.exe",, "C:\Program Files\Everything\Everything.exe", hidden,,, "{RAlt Down}{LCtrl}{RAlt up}")
 }
 
+/*
+  Focus or launch VirtualBox.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchVirtualBox(hidden := true) {
   return FocusOrLaunchApp("VirtualBoxVM.exe",, "C:\Program Files\Oracle\VirtualBox\VirtualBox.exe", hidden)
 }
 
+/*
+  Focus or launch Blender.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchBlender(hidden := true) {
 ; TODO
   return FocusOrLaunchApp(, "Blender", "C:\Program Files\Blender Foundation\Blender 2.93\blender.exe", hidden)
 }
 
+/*
+  Focus or launch Edge.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchEdge(hidden := true) {
   return FocusOrLaunchApp("msedge.exe",, "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", hidden)
 }
 
+/*
+  Focus or launch VSCode.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchVSCode(hidden := true) {
   return FocusOrLaunchApp("code.exe",, "code", hidden)
 }
 
+/*
+  Focus or launch Discord.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchDiscord(hidden := true) {
   return FocusOrLaunchApp(,"Discord", HOME_FOLDER . "\AppData\Local\Discord\Update.exe", hidden, "--processStart Discord.exe")
 }
 
+/*
+  Focus or launch GoldenDict.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchGoldenDict(hidden := true) {
   return FocusOrLaunchApp(, "GoldenDict", "C:\Program Files (x86)\GoldenDict\GoldenDict.exe", hidden)
 }
 
+/*
+  Focus or launch Fusion360.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchFusion360(hidden := true) {
   return FocusOrLaunchApp("fusion360.exe",, HOME_FOLDER . "\AppData\Local\Autodesk\webdeploy\production\6a0c9611291d45bb9226980209917c3d\FusionLauncher.exe", hidden)
 }
 
+/*
+  Focus or launch Joplin.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchJoplin(hidden := true) {
   return FocusOrLaunchApp(, "Joplin", HOME_FOLDER . "\AppData\Local\Programs\Joplin\Joplin.exe", hidden)
 }
 
+/*
+  Focus or launch KeePassXC.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchKeePassXC(hidden := true) {
   return FocusOrLaunchApp("KeePassXC.exe",, "C:\Program Files\KeePassXC\KeePassXC.exe", hidden)
 }
 
+/*
+  Focus or launch OneCommander.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchOneCommander(hidden := true) {
   SendInputFree(ONE_COMMANDER_FOCUS_COMBO)
 ;  return FocusOrLaunchApp("OneCommander.exe", , HOME_FOLDER . "\bin\windows\OneCommander\OneCommander.exe", hidden,,,ONE_COMMANDER_FOCUS_COMBO)
 ;  return FocusOrLaunchApp(, "ahk_class HwndWrapper[OneCommander.exe;;85e0a275-8de1-4c9e-9606-f3f0f273150b]", HOME_FOLDER . "\bin\windows\OneCommander\OneCommander.exe", hidden)
 }
 
+/*
+  Focus or launch Opera.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchOpera(hidden := true) {
   return FocusOrLaunchApp("opera.exe",, HOME_FOLDER . "\AppData\Local\Programs\Opera\launcher.exe", hidden)
 }
 
 
+/*
+  Focus or launch FreeFileSync.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchFreeFileSync(hidden := true) {
   return FocusOrLaunchApp("FreeFileSync.exe",, "C:\Program Files\FreeFileSync\FreeFileSync.exe", hidden)
 }
 
+/*
+  Focus or launch Firefox.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchFirefox(hidden := true) {
   return FocusOrLaunchApp("firefox.exe",, "firefox.exe", hidden)
 }
 
+/*
+  Focus or launch Chrome.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchChrome(hidden := true, params := "") {
   return FocusOrLaunchApp("chrome.exe",, "chrome.exe", hidden, params)
 }
 
+/*
+  Focus or launch Word.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchWord(hidden := true) {
 ;If you use ahk_class instead of title, use this --- >!o:: FocusOrLaunchApp( , "OpusApp", "C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE")
   return FocusOrLaunchApp( , "ahk_class OpusApp", "C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE")
   ;return FocusOrLaunchApp("WINWORD.EXE",, "C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE", false)
 }
 
+/*
+  Focus or launch AffinityPhoto.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchAffinityPhoto(hidden := true) {
   return FocusOrLaunchApp(, "Affinity Photo", "C:\Program Files\Affinity\Photo\Photo.exe", hidden)
 }
 
+/*
+  Focus or launch AffinityDesigner.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchAffinityDesigner(hidden := true) {
   return FocusOrLaunchApp(, "Affinity Designer", "C:\Program Files\Affinity\Designer\Designer.exe", hidden)
 }
 
+/*
+  Focus or launch Spotify.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchSpotify(hidden := true) {
   return FocusOrLaunchApp("Spotify.exe",, HOME_FOLDER . "\AppData\Roaming\Spotify\Spotify.exe", hidden)
 }
 
+/*
+  Focus or launch WindowsTerminal.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+  params -- Command line params to set if Windows terminal is launched.
+*/
 FocusOrLaunchWindowsTerminal(hidden := true, params := "") {
   return FocusOrLaunchApp("WindowsTerminal.exe",, "wt.exe", hidden, params)
 }
 
+/*
+  Focus or launch Telegram.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+  params -- Command line params to set if Windows terminal is launched.
+*/
 FocusOrLaunchTelegram(hidden := true, params := "") {
   return FocusOrLaunchApp(, "Telegram", HOME_FOLDER . "\AppData\Roaming\Telegram Desktop\Telegram.exe", hidden, params)
 }
 
+/*
+  Focus or launch Cura.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchCura(hidden := true) {
 ; TODO
   return FocusOrLaunchApp("cura.exe",, "C:\Program Files\Ultimaker Cura 4.11.0\Cura.exe", hidden)
 }
 
+/*
+  Focus or launch Vim.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchVim(hidden := true, params := "") {
   return FocusOrLaunchApp("gvim.exe",, "gvim", hidden, params)
 }
 
+/*
+  Focus or launch Whatsapp.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchWhatsApp(hidden := true) {
   return FocusOrLaunchApp(, "WhatsApp", HOME_FOLDER . "\AppData\Local\WhatsApp\WhatsApp.exe", hidden)
 }
 
+/*
+  Focus or launch Excel.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchExcel(hidden := true) {
 ;If you use ahk_class instead of title, use this --- >!x:: 
   return FocusOrLaunchApp( , "ahk_class XLMAIN", "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
   ;return FocusOrLaunchApp("EXCEL.EXE" , , "C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE", hidden)
 }
 
+/*
+  Focus or launch Typora.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchTypora(hidden := true, params := "", forceLaunch := false) {
   return FocusOrLaunchApp("Typora.exe",, HOME_FOLDER . "\AppData\Local\Programs\Typora\Typora.exe", hidden, params, forceLaunch)
 }
 
+/*
+  Focus or launch Zeal.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+*/
 FocusOrLaunchZeal(hidden := true) {
   return FocusOrLaunchApp("zeal.exe",, "C:\Program Files\Zeal\zeal.exe", hidden)
 }
-
-;-----------------------------------------------------------------------------
-;                       Explorer helper functions.
-;-----------------------------------------------------------------------------
-
