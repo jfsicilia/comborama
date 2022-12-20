@@ -1,83 +1,111 @@
+/*
+  This module enables some combos to manage Windows File Explorer application.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_apps.ahk
 #include %A_ScriptDir%\lib_folders.ahk
 #include %A_ScriptDir%\lib_misc.ahk
 
 FileExplorerAutoExec:
-  global FILE_EXPLORER_ADDRESS_BAR := CtrlCombo("l")
+  global FILE_EXPLORER_COMBO_OPEN_FILE_FOLDER = "{enter}"
+  global FILE_EXPLORER_COMBO_GO_PARENT = "!{up}"
+  global FILE_EXPLORER_COMBO_RENAME_FILE = "{F2}"
+  global FILE_EXPLORER_COMBO_REFRESH = "{F5}"
+  global FILE_EXPLORER_COMBO_SHOW_INFO = "!{enter}"
+  global FILE_EXPLORER_COMBO_FIND = "{F3}"
+  global FILE_EXPLORER_COMBO_DUPLICATE = "^c^v"
+  global FILE_EXPLORER_COMBO_SELECT_ALL = "^a"
+  global FILE_EXPLORER_COMBO_NEW_FOLDER = "^+n"
+  global FILE_EXPLORER_COMBO_CONTEXT_MENU = "+{F10}"
+
+  global FILE_EXPLORER_COMBO_ADDRESS_BAR := "!d"
+
+  global FILE_EXPLORER_COMBO_NEW_TAB := "^t"
   global FILE_EXPLORER_COMBO_PREV_TAB := ShiftCtrlCombo("{Tab}")
   global FILE_EXPLORER_COMBO_NEXT_TAB := CtrlCombo("{Tab}")
-  global FILE_EXPLORER_NAVIGATE_UP := AltCombo("{Up}")
-  global FILE_EXPLORER_TOGGLE_PREVIEW := AltCombo("p")
-  global FILE_EXPLORER_TOGGLE_SIDEBAR := AltCombo("V") . "N{Enter}"
+  global FILE_EXPLORER_COMBO_HISTORY_BACK := "!{left}"
+  global FILE_EXPLORER_COMBO_HISTORY_FORWARD := "!{right}"
+
+  global FILE_EXPLORER_COMBO_COPY := "^c"
+  global FILE_EXPLORER_COMBO_COPY_PATH := "^+c"
+  global FILE_EXPLORER_COMBO_CUT := "^x"
+  global FILE_EXPLORER_COMBO_PASTE := "^v"
+  global FILE_EXPLORER_COMBO_HISTORY_PASTE := "#v"
 
   ImplementTabsInterface("Explorer.EXE"
-    , FILE_EXPLORER_COMBO_NEXT_TAB       ; Next tab
-    , FILE_EXPLORER_COMBO_PREV_TAB       ; Prev tab
-    , NO_BOUND_ACTION_MSGBOX             ; Recently used tab
-    , DEFAULT_IMPLEMENTATION             ; Go to tab by number.
-    , NO_BOUND_ACTION_MSGBOX             ; Move tab right.
-    , NO_BOUND_ACTION_MSGBOX             ; Move tab left.
-    , NO_BOUND_ACTION_MSGBOX             ; Move tab first.
-    , NO_BOUND_ACTION_MSGBOX             ; Move tab last.
-    , func("ExplorerNewTab")             ; New tab.
-    , DEFAULT_IMPLEMENTATION             ; Close tab.
-    , DEFAULT_IMPLEMENTATION)            ; Undo close tab.
+    , FILE_EXPLORER_COMBO_NEXT_TAB         ; Next tab
+    , FILE_EXPLORER_COMBO_PREV_TAB         ; Prev tab
+    , NO_BOUND_ACTION_MSGBOX               ; Recently used tab
+    , DEFAULT_IMPLEMENTATION               ; Go to tab by number.
+    , NO_BOUND_ACTION_MSGBOX               ; Move tab right.
+    , NO_BOUND_ACTION_MSGBOX               ; Move tab left.
+    , NO_BOUND_ACTION_MSGBOX               ; Move tab first.
+    , NO_BOUND_ACTION_MSGBOX               ; Move tab last.
+    , func("ExplorerNewTab")               ; New tab.
+    , DEFAULT_IMPLEMENTATION               ; Close tab.
+    , DEFAULT_IMPLEMENTATION)              ; Undo close tab.
 
   ImplementPanesInterface("Explorer.exe"
-    , func("ActivateAppNextWindow")       ; Recent pane
-    , NOT_IMPLEMENTED                     ; Go pane by number
-    , func("ActivateAppNextWindow")       ; Go left pane
-    , func("ActivateAppNextWindow")       ; Go right pane
-    , func("ActivateAppNextWindow")       ; Go down pane
-    , func("ActivateAppNextWindow")       ; Go up pane
-    , NOT_IMPLEMENTED                     ; Move left pane   
-    , NOT_IMPLEMENTED                     ; Move right pane
-    , NOT_IMPLEMENTED                     ; Move down pane   
-    , NOT_IMPLEMENTED                     ; Move up pane
-    , NOT_IMPLEMENTED                     ; Resize left pane 
-    , NOT_IMPLEMENTED                     ; Resize right pane
-    , NOT_IMPLEMENTED                     ; Resize down pane 
-    , NOT_IMPLEMENTED                     ; Resize up pane   
-    , NOT_IMPLEMENTED                     ; Swap left pane   
-    , NOT_IMPLEMENTED                     ; Swap right pane
-    , NOT_IMPLEMENTED                     ; Swap down pane 
-    , NOT_IMPLEMENTED                     ; Swap up pane   
-    , NOT_IMPLEMENTED                     ; Max/Restore pane
-    , NOT_IMPLEMENTED                     ; Horizontal pane split.
-    , NOT_IMPLEMENTED                     ; Vertical pane split.
-    , NOT_IMPLEMENTED)                    ; Close pane.
+    , func("ActivateAppNextWindow")        ; Recent pane
+    , NOT_IMPLEMENTED                      ; Go pane by number
+    , func("ActivateAppNextWindow")        ; Go left pane
+    , func("ActivateAppNextWindow")        ; Go right pane
+    , func("ActivateAppNextWindow")        ; Go down pane
+    , func("ActivateAppNextWindow")        ; Go up pane
+    , NOT_IMPLEMENTED                      ; Move left pane   
+    , NOT_IMPLEMENTED                      ; Move right pane
+    , NOT_IMPLEMENTED                      ; Move down pane   
+    , NOT_IMPLEMENTED                      ; Move up pane
+    , NOT_IMPLEMENTED                      ; Resize left pane 
+    , NOT_IMPLEMENTED                      ; Resize right pane
+    , NOT_IMPLEMENTED                      ; Resize down pane 
+    , NOT_IMPLEMENTED                      ; Resize up pane   
+    , NOT_IMPLEMENTED                      ; Swap left pane   
+    , NOT_IMPLEMENTED                      ; Swap right pane
+    , NOT_IMPLEMENTED                      ; Swap down pane 
+    , NOT_IMPLEMENTED                      ; Swap up pane   
+    , NOT_IMPLEMENTED                      ; Max/Restore pane
+    , NOT_IMPLEMENTED                      ; Horizontal pane split.
+    , NOT_IMPLEMENTED                      ; Vertical pane split.
+    , NOT_IMPLEMENTED)                     ; Close pane.
 
   ImplementHistoryInterface("Explorer.exe"
-    , "!{left}"                          ; History back
-    , "!{right}")                        ; History forward
+    , FILE_EXPLORER_COMBO_HISTORY_BACK     ; History back
+    , FILE_EXPLORER_COMBO_HISTORY_FORWARD) ; History forward
 
   ImplementAddressInterface("Explorer.exe"
-    , FILE_EXPLORER_ADDRESS_BAR)         ; Focus address bar. 
+    , FILE_EXPLORER_COMBO_ADDRESS_BAR)         ; Focus address bar. 
 
   ImplementFavsInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , func("ExplorerGoToFav"))           ; Go to favourite.
 
   ImplementEditInterface("Explorer.exe"
-    , bind("ShiftSwitch", "^c", "^+c")                                ; Copy
-    , DEFAULT_IMPLEMENTATION                                          ; Cut        
-    , bind("ShiftSwitch", "^v", Func("FileExplorerMoveFiles"), "#v")  ; Paste
-    , DEFAULT_IMPLEMENTATION                                          ; Undo        
-    , DEFAULT_IMPLEMENTATION                                          ; Redo        
-    , DEFAULT_IMPLEMENTATION)                                         ; Delete
+    , bind("ShiftSwitch"                         ; Copy
+         , FILE_EXPLORER_COMBO_COPY
+         , FILE_EXPLORER_COMBO_COPY_PATH)                  
+    , DEFAULT_IMPLEMENTATION                     ; Cut        
+    , bind("ShiftSwitch"                         ; Paste
+        , FILE_EXPLORER_COMBO_PASTE
+        , Func("FileExplorerMoveFiles")
+        , FILE_EXPLORER_COMBO_HISTORY_PASTE)  
+    , DEFAULT_IMPLEMENTATION                     ; Undo        
+    , DEFAULT_IMPLEMENTATION                     ; Redo        
+    , DEFAULT_IMPLEMENTATION)                    ; Delete
 
   ImplementFileManagerInterface("Explorer.exe"
-    , ""                      ; Prefiew file/folder
-    , "{enter}"               ; Open file/folder
-    , "!{up}"                 ; Go parent folder
-    , "{F2}"                  ; Rename file/folder
-    , "{F5}"                  ; Refresh file manager
-    , "!{Enter}"              ; Show info of file/folder
-    , "{F3}"                  ; Find
-    , "^c^v"                  ; Duplicate file/folder
-    , "^a"                    ; Select all files/folders
-    , func("CreateNewFile")   ; New file
-    , "^+n"                   ; New folder
-    , "+{F10}"                ; Context menu
+    , ""                                    ; Prefiew file/folder
+    , FILE_EXPLORER_COMBO_OPEN_FILE_FOLDER  ; Open file/folder
+    , FILE_EXPLORER_COMBO_GO_PARENT         ; Go parent folder
+    , FILE_EXPLORER_COMBO_RENAME_FILE       ; Rename file/folder
+    , FILE_EXPLORER_COMBO_REFRESH           ; Refresh file manager
+    , FILE_EXPLORER_COMBO_SHOW_INFO         ; Show info of file/folder
+    , FILE_EXPLORER_COMBO_FIND              ; Find
+    , FILE_EXPLORER_COMBO_DUPLICATE         ; Duplicate file/folder
+    , FILE_EXPLORER_COMBO_SELECT_ALL        ; Select all files/folders
+    , func("CreateNewFile")                 ; New file
+    , FILE_EXPLORER_COMBO_NEW_FOLDER        ; New folder
+    , FILE_EXPLORER_COMBO_CONTEXT_MENU      ; Context menu
     ; View file/folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__Chrome__"))) 
     ; Edit file/folder.
@@ -87,15 +115,15 @@ FileExplorerAutoExec:
     ; Explore folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__WindowsTerminal__"))
                         , bind("__OpenSelectedItemsWith__", Func("__OneCommander__")))
-    , func("CopyOtherPane")   ; Copy to other pane
-    , func("MoveOtherPane"))        ; Move to other pane
+    , func("CopyOtherPane")                 ; Copy to other pane
+    , func("MoveOtherPane"))                ; Move to other pane
 
   DefaultImplementationOpenWithInterface("Explorer.exe")
 
   DefaultImplementationAltCursorInterface("Explorer.exe")
 
   ImplementSeekAndSelInterface("Explorer.exe"
-    , FILE_EXPLORER_ADDRESS_BAR           ; Ctrl + Space
+    , FILE_EXPLORER_COMBO_ADDRESS_BAR           ; Ctrl + Space
     , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
     , bind("ShowFavFoldersListBox", func("ExplorerGoTo"))       ; Alt + Space
     , NO_BOUND_ACTION_MSGBOX              ; Alt + Shift + Space
@@ -126,9 +154,9 @@ return
   path -- Path to go.
 */
 ExplorerGoTo(path) {
-  SendInput(LCtrlCombo("l"))
-  Sleep, 50
-  SendInput(path . "{Enter}")
+  SendInputIsolated(FILE_EXPLORER_COMBO_ADDRESS_BAR)
+  Sleep, 800
+  SendInputIsolated(path . "{Enter}")
 }
 
 /*
@@ -144,28 +172,28 @@ ExplorerGoToFav(key) {
   Create a new tab and also set it to the DEFAULT_FOLDER.
 */
 ExplorerNewTab() {
-  SendInput("^t")
-  Sleep, 600
+  SendInputIsolated(FILE_EXPLORER_COMBO_NEW_TAB)
+  Sleep, 800
   ExplorerGoTo(DEFAULT_FOLDER)
 }
 
 CopyOtherPane() {
-  SendInput("^c")
+  SendInputIsolated(FILE_EXPLORER_COMBO_COPY)
   sleep, 500
   if ActivateAppNextWindow() {
     sleep, 500
-    SendInput("^v")
+    SendInputIsolated(FILE_EXPLORER_COMBO_PASTE)
     sleep, 500
     RecentActiveWindow()
   }
 }
 
 MoveOtherPane() {
-  SendInput("^x")
+  SendInputIsolated(FILE_EXPLORER_COMBO_CUT)
   sleep, 500
   if ActivateAppNextWindow() {
     sleep, 500
-    SendInput("^v")
+    SendInputIsolated(FILE_EXPLORER_COMBO_PASTE)
     sleep, 500
     RecentActiveWindow()
   }
