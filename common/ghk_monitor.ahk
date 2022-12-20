@@ -1,3 +1,8 @@
+/*
+  This module enables some key combos to work with more than one monitor.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_window.ahk
 
 ;----------------------------------------------------------------------------
