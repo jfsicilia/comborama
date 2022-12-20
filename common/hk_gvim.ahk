@@ -1,3 +1,8 @@
+/*
+  This module enables some combos to manage GVim application.
+
+  @jfsicilia 2022.
+*/
 GVimAutoExec:
   ; Toggle flag used when maximizing/restoring pane.
   gvimMaximizedPane := false
@@ -38,6 +43,8 @@ GVimAutoExec:
   global GVIM_COMBO_CLOSE_BUFFER := "{Esc}:bd{Enter}"
   ; New buffer
   global GVIM_COMBO_NEW_BUFFER := "{Esc}:enew{Enter}"
+  ; Settings
+  global GVIM_COMBO_SETTINGS := ",v"
 
   ImplementTabsInterface("gvim.exe"
     , GVIM_COMBO_GOTO_NEXT_TAB            ; Next tab
@@ -85,9 +92,10 @@ GVimAutoExec:
     , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
 
   ImplementSettingsInterface("gvim.exe"
-    , ",v")                    ; Open settings.
+    , GVIM_COMBO_SETTINGS)                ; Open settings.
 return
 
+; This allows to load file/tab in normal mode and autocomplete in insert mode.
 #if (WinActive("ahk_exe gvim.exe"))
   SC055 & space:: SendInput(GVIM_COMBO_GOTO_TAB_OR_LOAD_FILE)
 #if
