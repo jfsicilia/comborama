@@ -39,6 +39,12 @@ OneCmdrAutoExec:
   global ONE_COMMANDER_COMBO_UNDO = "^z"
   global ONE_COMMANDER_COMBO_REDO = "^y"
 
+  global ONE_COMMANDER_COMBO_COPY := "^c"
+  global ONE_COMMANDER_COMBO_COPY_PATH := "^+c"
+  global ONE_COMMANDER_COMBO_COPY_FOLDER_PATH := "^!+c"
+  global ONE_COMMANDER_COMBO_PASTE := "^v"
+  global ONE_COMMANDER_COMBO_HISTORY_PASTE := "#v"
+
   ImplementTabsInterface("OneCommander.exe"
     , ONE_COMMANDER_NEXT_TAB_COMBO       ; Next tab
     , ONE_COMMANDER_PREV_TAB_COMBO       ; Prev tab
@@ -87,12 +93,18 @@ OneCmdrAutoExec:
     , func("OneCommanderGoToFav"))      ; Go to fav.
 
   ImplementEditInterface("OneCommander.exe"
-    , bind("ShiftSwitch", "^c", "^!+c", "^+c")                        ; Copy
-    , DEFAULT_IMPLEMENTATION                                          ; Cut        
-    , bind("ShiftSwitch", "^v", Func("OneCommanderMoveFiles"), "#v")  ; Paste
-    , func("OneCommanderUndo")                                        ; Undo 
-    , func("OneCommanderRedo")                                        ; Redo
-    , DEFAULT_IMPLEMENTATION)                                         ; Delete
+    , bind("ShiftSwitch"                           ; Copy
+         , ONE_COMMANDER_COMBO_COPY
+         , ONE_COMMANDER_COMBO_COPY_FOLDER_PATH
+         , ONE_COMMANDER_COMBO_COPY_PATH)           
+    , DEFAULT_IMPLEMENTATION                       ; Cut        
+    , bind("ShiftSwitch"                           ; Paste
+         , ONE_COMMANDER_COMBO_PASTE
+         , Func("OneCommanderMoveFiles")
+         , ONE_COMMANDER_COMBO_HISTORY_PASTE)  
+    , func("OneCommanderUndo")                     ; Undo 
+    , func("OneCommanderRedo")                     ; Redo
+    , DEFAULT_IMPLEMENTATION)                      ; Delete
 
   ImplementFileManagerInterface("OneCommander.exe"
     , ""                      ; Prefiew file/folder

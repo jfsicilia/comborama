@@ -23,6 +23,7 @@ VSCodeAutoExec:
   global VSCODE_COMBO_GOTO_RECENTLY_USED_IN_GROUP := ShiftAltCtrlCombo(",")
   global VSCODE_COMBO_GOTO_PREV_TAB := ShiftCtrlCombo("{Tab}")
   global VSCODE_COMBO_GOTO_NEXT_TAB := CtrlCombo("{Tab}")
+  global VSCODE_COMBO_GOTO_PANE := "^+"                                
 
   global VSCODE_COMBO_SPLIT_VERTICAL := LShiftLCtrlCombo("\")
   global VSCODE_COMBO_SPLIT_HORIZONTAL := LShiftLCtrlCombo("-")
@@ -99,7 +100,7 @@ return
   n -- Numero of pane.
 */
 VSCodeGoPane(n) {
-  SendInputIsolated("^+" . n)
+  SendInputIsolated(VSCODE_COMBO_GOTO_PANE . n)
 }
 
 ;----------------------------------------------------------------------------
