@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e6e6e7;
+}
+
+#content {
+    padding: 10px;
+    margin: auto;
+}
+
+#search_box {
+    background-image: url('../images/searchicon.png');
+    background-position: 8px 10px;
+    background-repeat: no-repeat;
+    display: block;
+    margin: auto;
+    width: 50%;
+    font-size: 16px;
+    padding: 12px 20px 12px 50px;
+    border: 1px solid #888;
+    margin-bottom: 12px;
+}
+
+.combos_list {
+    list-style-type: none;
+    width: 98%;
+    display: block;
+    margin: auto;
+}
+
+.combos_list li {
+  margin-top: 8px;
+}
+.combos_list li a {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block
+}
+
+.combos_list li H2 {
+    padding-top: 20px;
+}
+
+.combos_list li H3 {
+    padding-top: 20px;
+}
+
+.combos_list li a:hover:not(.header) {
+    background-color: #eee;
+}
+
+.modifier {
+    background-color: #ccc;
+    padding: 4px;
+    margin: 4px;
+}
+
+.key {
+    color: white;
+    background-color: #444444;
+    padding: 2px 5px 2px 5px;
+}
+
+.column {
+    float: left;
+}
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
