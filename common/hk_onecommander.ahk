@@ -1,5 +1,7 @@
 /*
+  This module enables some combos to manage OneCommander application.
 
+  @jfsicilia 2022.
 */
 #include %A_ScriptDir%\lib_misc.ahk
 #include %A_ScriptDir%\ghk_interface_tabs.ahk
@@ -19,6 +21,23 @@ OneCmdrAutoExec:
   global ONE_COMMANDER_BACK_HISTORY := "!{left}"
   global ONE_COMMANDER_FORWARD_HISTORY := "!{right}"
   global ONE_COMMANDER_ADDRESS_BAR := "\"
+
+  global ONE_COMMANDER_COMBO_OPEN_FILE_FOLDER = "{enter}"
+  global ONE_COMMANDER_COMBO_GO_PARENT = "!{up}"
+  global ONE_COMMANDER_COMBO_RENAME_FILE = "{F2}"
+  global ONE_COMMANDER_COMBO_REFRESH = "{F5}"
+  global ONE_COMMANDER_COMBO_SHOW_INFO = "^i"
+  global ONE_COMMANDER_COMBO_FIND = "{F3}"
+  global ONE_COMMANDER_COMBO_DUPLICATE = "^d"
+  global ONE_COMMANDER_COMBO_SELECT_ALL = "^a"
+  global ONE_COMMANDER_COMBO_NEW_FILE = "^n"
+  global ONE_COMMANDER_COMBO_NEW_FOLDER = "^+n"
+  global ONE_COMMANDER_COMBO_CONTEXT_MENU = "{F9}"
+  global ONE_COMMANDER_COMBO_COPY_OTHER_PANE = "!c"
+  global ONE_COMMANDER_COMBO_MOVE_OTHER_PANE = "!m"
+
+  global ONE_COMMANDER_COMBO_UNDO = "^z"
+  global ONE_COMMANDER_COMBO_REDO = "^y"
 
   ImplementTabsInterface("OneCommander.exe"
     , ONE_COMMANDER_NEXT_TAB_COMBO       ; Next tab
@@ -77,17 +96,17 @@ OneCmdrAutoExec:
 
   ImplementFileManagerInterface("OneCommander.exe"
     , ""                      ; Prefiew file/folder
-    , "{enter}"               ; Open file/folder
-    , "!{up}"                 ; Go parent folder
-    , "{F2}"                  ; Rename file/folder
-    , "{F5}"                  ; Refresh file manager
-    , "^i"                    ; Show info of file/folder
-    , "{F3}"                  ; Find
-    , "^d"                    ; Duplicate file/folder
-    , "^a"                    ; Select all files/folders
-    , "^n"                    ; New file
-    , "^+n"                   ; New folder
-    , "{F9}"                  ; Context menu
+    , ONE_COMMANDER_COMBO_OPEN_FILE_FOLDER     ; Open file/folder
+    , ONE_COMMANDER_COMBO_GO_PARENT            ; Go parent folder
+    , ONE_COMMANDER_COMBO_RENAME_FILE          ; Rename file/folder
+    , ONE_COMMANDER_COMBO_REFRESH              ; Refresh file manager
+    , ONE_COMMANDER_COMBO_SHOW_INFO            ; Show info of file/folder
+    , ONE_COMMANDER_COMBO_FIND                 ; Find
+    , ONE_COMMANDER_COMBO_DUPLICATE            ; Duplicate file/folder
+    , ONE_COMMANDER_COMBO_SELECT_ALL           ; Select all files/folders
+    , ONE_COMMANDER_COMBO_NEW_FILE             ; New file
+    , ONE_COMMANDER_COMBO_NEW_FOLDER           ; New folder
+    , ONE_COMMANDER_COMBO_CONTEXT_MENU         ; Context menu
     ; View file/folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__Chrome__"))) 
     ; Edit file/folder.
@@ -98,8 +117,8 @@ OneCmdrAutoExec:
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__WindowsTerminal__"))
                         , "{F10}"  ; Open in CMD
                         , bind("__OpenSelectedItemsWith__", Func("__FileExplorer__")))
-    , "!c"                    ; Copy to other pane
-    , "!m")                   ; Move to other pane
+    , ONE_COMMANDER_COMBO_COPY_OTHER_PANE      ; Copy to other pane
+    , ONE_COMMANDER_COMBO_MOVE_OTHER_PANE)     ; Move to other pane
 
   DefaultImplementationOpenWithInterface("OneCommander.exe")
 
@@ -123,7 +142,7 @@ return
 */
 OneCommanderGoTo(path) {
   FreeModifiers()
-  SendInput("\")
+  SendInput(ONE_COMMANDER_ADDRESS_BAR)
   Sleep, 50
   SendInput(path . "{Enter}")
   SetModifiers()
@@ -145,7 +164,7 @@ OneCommanderGoToFav(key) {
 */
 OneCommanderUndo() {
   FocusOrLaunchFileExplorer()    
-  SendInputIsolated("^z")
+  SendInputIsolated(ONE_COMMANDER_COMBO_UNDO)
   FocusOrLaunchOneCommander()
 
 }
@@ -157,7 +176,7 @@ OneCommanderUndo() {
 */
 OneCommanderRedo() {
   FocusOrLaunchFileExplorer()    
-  SendInputIsolated("^y")
+  SendInputIsolated(ONE_COMMANDER_COMBO_REDO)
   FocusOrLaunchOneCommander()
 }
 
