@@ -108,10 +108,8 @@ return
 #if
 ; Split horizontal/vertical.
 #if (IsActionImplemented(__PANES_ID__, ACTION_VSPLIT_PANE.id) && (!altTabLaunched))
-  >#<!\::
-  <^+\:: RunPanesActionIsolated(ACTION_VSPLIT_PANE.id)
-  >#<!-::
-  <^+-:: RunPanesActionIsolated(ACTION_HSPLIT_PANE.id)   
+  >#<!\:: RunPanesActionIsolated(ACTION_VSPLIT_PANE.id)
+  >#<!-:: RunPanesActionIsolated(ACTION_HSPLIT_PANE.id)   
 #if
 ; Close pane
 #if (IsActionImplemented(__PANES_ID__, ACTION_CLOSE_PANE.id) && (!altTabLaunched))
