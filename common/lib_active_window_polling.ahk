@@ -1,9 +1,11 @@
-;#Persistent
-#include %A_ScriptDir%\lib_desktop.ahk
+/*
+  This module sets a timer to check periodically if the active window has 
+  changed. If so and callback functions have been registered, those will
+  be called whenever a change in the active window is detected.
 
-; This module sets a timer to check periodically if the active window has 
-; changed. If so and callback functions have been registered, those will
-; be called whenever a change in the active window is detected.
+  @jfsicilia 2022.
+*/
+#include %A_ScriptDir%\lib_desktop.ahk
 
 LibActiveWindowPollingAutoExec:
   ; Array with functions to call if active window has changed. Functions will
