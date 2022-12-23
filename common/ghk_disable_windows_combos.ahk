@@ -18,9 +18,9 @@
 >#<#space:: return
 
 ; Disable some other key combos.
-#l::              ; This one is used for locking the workstation. Same
-                  ; functionality will be achieved with <#l. >#l will be
-                  ; use to snap a window to the right of the screen.
+;#l::              ; This one is used for locking the workstation. Same
+;                  ; functionality will be achieved with <#l. >#l will be
+;                  ; use to snap a window to the right of the screen.
 #!^Shift::
 #^+Alt::
 #!+Ctrl::
