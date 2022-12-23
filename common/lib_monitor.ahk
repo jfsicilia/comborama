@@ -1,7 +1,8 @@
 #include %A_ScriptDir%\lib_window.ahk
 
 LibMonitorAutoExec:
-  N_MONITORS := 4
+  ; Number of monitors.
+  global N_MONITORS := 4
 return
 
 /*
