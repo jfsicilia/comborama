@@ -18,15 +18,15 @@ LibDesktopAutoExec:
   DLLPath := A_ScriptDir . "\move_to_desktop\VirtualDesktopAccessor_20088.dll"
 
   ; DLL functions handlers.
-  hVirtualDesktopAccessor := DllCall("LoadLibrary", Str, DLLPath, "Ptr") 
-  GoToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GoToDesktopNumber", "Ptr")
-  IsPinnedWindowProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsPinnedWindow", "Ptr")
-  GetCurrentDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetCurrentDesktopNumber", "Ptr")
-  GetWindowDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetWindowDesktopNumber", "Ptr")
-  MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "MoveWindowToDesktopNumber", "Ptr")
-  RestartVirtualDesktopAccessorProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "RestartVirtualDesktopAccessor", "Ptr")
-  ViewSetFocusProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "ViewSetFocus", "Ptr")
-  ViewSwitchToProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "ViewSwitchTo", "Ptr")
+  global hVirtualDesktopAccessor := DllCall("LoadLibrary", Str, DLLPath, "Ptr") 
+  global GoToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GoToDesktopNumber", "Ptr")
+  global IsPinnedWindowProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsPinnedWindow", "Ptr")
+  global GetCurrentDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetCurrentDesktopNumber", "Ptr")
+  global GetWindowDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetWindowDesktopNumber", "Ptr")
+  global MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "MoveWindowToDesktopNumber", "Ptr")
+  global RestartVirtualDesktopAccessorProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "RestartVirtualDesktopAccessor", "Ptr")
+  global ViewSetFocusProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "ViewSetFocus", "Ptr")
+  global ViewSwitchToProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "ViewSwitchTo", "Ptr")
 
   ; Restart the virtual desktop accessor when Explorer.exe crashes, or 
   ; restarts (e.g. when coming from fullscreen game)
@@ -34,7 +34,7 @@ LibDesktopAutoExec:
   OnMessage(explorerRestartMsg, "OnExplorerRestart")
 
   ; Number of desktops. This global variable is updated in __GetCurrentDesktop().
-  global N_DESKTOPS := 2 
+  global N_DESKTOPS := 4 
   ; Saves current active window per desktop. Key: Desktop (1..N_DESKTOPS), 
   ; Value: Active window handler
   global _desktopActiveWindow := {} 
@@ -52,7 +52,6 @@ return
   Restarts VirtualDesktopAccessor. Params are dismissed.
 */
 OnExplorerRestart(wParam, lParam, msg, hwnd) {
-    global RestartVirtualDesktopAccessorProc
     result := ""
     try DllCall(RestartVirtualDesktopAccessorProc, UInt, result)
 }
@@ -61,14 +60,16 @@ OnExplorerRestart(wParam, lParam, msg, hwnd) {
 ;                       DESKTOPS FUNCTIONALITY
 ;-----------------------------------------------------------------------------
 
-; Return current desktop. If param hwnd is passed, then it will return the 
-; desktop where that window can be found.
-; param hwnd Optional. Window handler to find in which desktop is.
-; return Current desktop or desktop of the window passed (hwnd). 1..N_DESKTOPS.
+/*
+  Returns current desktop. If param hwnd is passed, then it will return the 
+  desktop where that window can be found.
+  hwnd -- Optional. Window handler to find in which desktop is.
+  return -- Current desktop or desktop of the window passed (hwnd). 
+            1..N_DESKTOPS.
+*/
 GetDesktop(hwnd:=0) {
-  global GetCurrentDesktopNumberProc, GetWindowDesktopNumberProc
-  
-  if (hwnd = 0)
+  if (hwnd == 0)
+    ; NOTE __GetCurrentDesktop is more realiable than the dll call.
     ;result := DllCall(GetCurrentDesktopNumberProc, UInt) + 1
     result := __GetCurrentDesktop()
   else
@@ -81,11 +82,11 @@ GetDesktop(hwnd:=0) {
   return 1
 }
 
-; Move active window to indicated desktop.
-; param nDesktop Destiny desktop (1..N_DESKTOPS).
+/*
+  Move active window to indicated desktop.
+  nDesktop -- Destiny desktop (1..N_DESKTOPS).
+*/
 MoveActiveWindowToDesktop(nDesktop) {
-  global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc, _desktopActiveWindow, GetCurrentDesktopNumberProc
-
   WinGet, activeHwnd, ID, A
   _desktopActiveWindow[nDesktop] := 0 ; Do not activate
   DllCall(MoveWindowToDesktopNumberProc, UInt, activeHwnd, UInt, nDesktop-1)
@@ -93,54 +94,52 @@ MoveActiveWindowToDesktop(nDesktop) {
   return
 }
 
-; Move active window to prev desktop. Previous desktop of desktop 1 is the
-; final desktop (N_DESKTOP).
+/*
+  Move active window to prev desktop. Previous desktop of desktop 1 is the
+  final desktop (N_DESKTOP).
+*/
 MoveActiveWindowToPrevDesktop() {
-  global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc, _desktopActiveWindow, GetCurrentDesktopNumberProc
-
   current := GetDesktop()
   prev := current = 1 ? N_DESKTOPS : current - 1
   MoveActiveWindowToDesktop(prev)
 }
 
-; Move active window to next desktop. Next desktop of final desktop is the
-; first desktop.
+/*
+  Move active window to next desktop. Next desktop of final desktop is the
+  first desktop.
+*/
 MoveActiveWindowToNextDesktop() {
-  global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc, _desktopActiveWindow, GetCurrentDesktopNumberProc
-
   current := GetDesktop()
   next := current = N_DESKTOPS ? 1 : current + 1
   MoveActiveWindowToDesktop(next)
 }
 
-;
-; num - 1..N_DESKTOPS
-; hwnd - Window handler to activate when desktop change has been done. If
-;        0 (default) and used_saved_active window is true, last active 
-;        window in the new desktop will be tried to activate. 
-; useSavedActiveWindow - If true, use saved last active window in new 
-;                           desktop, if no hwnd is specified. If false,
-;                           and hwnd is not specified, only change desktop.
-; showDesktopId - If true, it will show a splash text with the id of the new
-;                 desktop.
-; Returns desktop num (1..N_DESKTOPS) if successfully gone to that desktop. 
-; -1 if error.
+/*
+  Goes to the indicated desktop.
+  num -- 1..N_DESKTOPS
+  hwnd -- Window handler to activate when desktop change has been done. If
+          0 (default) and used_saved_active window is true, last active 
+          window in the new desktop will be tried to activate. 
+  useSavedActiveWindow -- If true, use saved last active window in new 
+                          desktop, if no hwnd is specified. If false,
+                          and hwnd is not specified, only change desktop.
+  showDesktopId -- If true, it will show a splash text with the id of the new
+                   desktop.
+  return -- desktop num (1..N_DESKTOPS) if successfully gone to that desktop. 
+  -1 if error.
+*/
 GoToDesktop(num, hwnd:=0, useSavedActiveWindow:=true, showDesktopId:=true) {
-	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, IsPinnedWindowProc, _desktopActiveWindow
-
   ; Sanity check.
   if (num < 1)
     num := 1
   if (num > N_DESKTOPS)
     num := N_DESKTOPS
-  ;LOG.log("Goto desktop " . num)
 
 	WinGet, activeHwnd, ID, A
   current := GetDesktop()
 
 	; Store the active window of old desktop, if it is not pinned
 	isPinned := DllCall(IsPinnedWindowProc, UInt, activeHwnd)
-  ;LOG.log("isPinned:" . isPinned)
   if (isPinned == 0) 
     _desktopActiveWindow[current] := activeHwnd
 
@@ -180,68 +179,42 @@ ShowDesktopId(millisecs=300) {
   return desktop
 }
 
-; Go to previous desktop.
-; hwnd - Window handler to activate when desktop change has been done. If
-;        0 (default) last active window in the new desktop will be tried 
-;        to activate. 
+/*
+  Go to previous desktop.
+  hwnd -- Window handler to activate when desktop change has been done. If
+          0 (default) last active window in the new desktop will be tried 
+          to activate. 
+*/
 GoToPrevDesktop(hwnd:=0) {
-	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, N_DESKTOPS
-
   current := GetDesktop()
   prev := current = 1 ? N_DESKTOPS : current - 1
-  ;LOG.log("Current: " . current . " prev: " . prev)
   GoToDesktop(prev, hwnd)
 }
 
-; Go to next desktop.
-; hwnd - Window handler to activate when desktop change has been done. If
-;        0 (default) last active window in the new desktop will be tried 
-;        to activate. 
+/*
+  Go to next desktop.
+  hwnd -- Window handler to activate when desktop change has been done. If
+          0 (default) last active window in the new desktop will be tried 
+          to activate. 
+*/
 GoToNextDesktop(hwnd:=0) {
-	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, N_DESKTOPS
-
   current := GetDesktop()
   next := current = N_DESKTOPS ? 1 : current + 1
-  ;LOG.log("Current: " . current . " next: " . next)
   GoToDesktop(next, hwnd)
 }						
 
-;; Go to previous desktop.
-;; hwnd - Window handler to activate when desktop change has been done. If
-;;        0 (default) last active window in the new desktop will be tried 
-;;        to activate. 
-;GoToPrevDesktop(hwnd:=0) {
-;	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, N_DESKTOPS
-;
-;  SendInputIsolated("#^{left}")
-;  sleep, 200
-;  ShowDesktopId()
-;}
-;
-;; Go to next desktop.
-;; hwnd - Window handler to activate when desktop change has been done. If
-;;        0 (default) last active window in the new desktop will be tried 
-;;        to activate. 
-;GoToNextDesktop(hwnd:=0) {
-;	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, N_DESKTOPS
-;
-;  SendInputIsolated("#^{right}")
-;  sleep, 200
-;  ShowDesktopId()
-;}						
-
-;
-; This function creates a new virtual desktop and switches to it
-;
+/*
+  Creates a new virtual desktop and switches to it
+*/
 CreateDesktop() {
   SendInputFree(CREATE_DESKTOP_COMBO)
   __MapDesktopsFromRegistry(desktop, N_DESKTOPS)
   GoToDesktop(N_DESKTOPS)
 }
 
-;
-; This function deletes the current virtual desktop
-;
+/*
+  Deletes the current virtual desktop
+*/
 DeleteDesktop() {
   SendInputFree(DELETE_DESKTOP_COMBO)
   Sleep, 500
@@ -249,15 +222,22 @@ DeleteDesktop() {
 }
 
 /*
+  Activates last recent desktop. 
 */
 ToggleRecentDesktop() {
   GoToDesktop(LAST_RECENT_DESKTOP)
 }
 
-; This function examines the registry to build an accurate list of the current virtual desktops and which one we're currently on.
-; Current desktop UUID appears to be in HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\1\VirtualDesktops
-; List of desktops appears to be in HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops
-;
+/*
+  This function examines the registry to build an accurate list of the current 
+  virtual desktops and which one we're currently on. Current desktop UUID 
+  appears to be in 
+  HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\1\VirtualDesktops
+  List of desktops appears to be in 
+  HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops
+  desktop -- Current desktop is return in this byref param.
+  numDesktops -- Number of desktops is return in this byref param.
+*/
 __MapDesktopsFromRegistry(ByRef desktop, ByRef numDesktops)
 {
     ; Get the current desktop UUID. Length should be 32 always, but there's no guarantee this couldn't change in a later Windows release so we check.
@@ -273,7 +253,6 @@ __MapDesktopsFromRegistry(ByRef desktop, ByRef numDesktops)
         
         ; Windows 11
         RegRead, CurrentDesktopId, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops, CurrentVirtualDesktop
-        ; OutputDebug, debug -> %CurrentDesktopId%
         if (CurrentDesktopId) {
             idLength := StrLen(CurrentDesktopId)
         }
@@ -284,7 +263,7 @@ __MapDesktopsFromRegistry(ByRef desktop, ByRef numDesktops)
     ; Windows 10
     ; RegRead, DesktopList, HKEY_CURRENT_USER, SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops, VirtualDesktopIDs
 
-    ; Windwos 11
+    ; Windows 11
     RegRead, DesktopList, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\VirtualDesktops, VirtualDesktopIDs
     if (DesktopList) {
         DesktopListLength := StrLen(DesktopList)
@@ -313,9 +292,10 @@ __MapDesktopsFromRegistry(ByRef desktop, ByRef numDesktops)
     }
 }
 
-;
-; This functions finds out ID of current session.
-;
+/*
+  Finds out ID of current session.
+  return Sessing id.
+*/
 __GetSessionId()
 {
     processId := DllCall("GetCurrentProcessId", "UInt")
@@ -335,15 +315,20 @@ __GetSessionId()
     return sessionId
 }
 
+/*
+  Returns the current desktop (1..N_DESKTOPS)
+  return -- Current desktop.
+*/
 __GetCurrentDesktop()
 {
-  global N_DESKTOPS
   __MapDesktopsFromRegistry(desktop, N_DESKTOPS)
   return desktop
 }
 
+/*
+  Dumps the information of the active windows by desktop.
+*/
 __DumpDesktopActiveWindow() {
-  global _desktopActiveWindow
   msg := "Active Windows by Desktop`n`n"
   for i, hwnd in _desktopActiveWindow {
     msg .= "[" . i . "]= " . hwnd . "`n"
