@@ -1,11 +1,17 @@
+/*
+  This library deals with favourite folders in file managers. It holds a 
+  dictionary with letters as keys and folders as values. It also provides
+  a function to show a dialog window with all the favourite folders, which
+  can be selected and the go to.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_apps.ahk
 
-; Script that deals with favourite folders in File Explorer. It bounds some
-; key combos to the folders and it also allows to show a GUI ListBox to 
-; select it from there.
 LibFoldersAutoExec:
   ; Default folders.
   EnvGet, userProfile, USERPROFILE
+  ; Home and default folder.
   global USER:=A_Username
   global HOME_FOLDER:=userProfile
   global DEFAULT_FOLDER:= HOME_FOLDER . "\_"
@@ -39,19 +45,19 @@ LibFoldersAutoExec:
   }
 
   ; Choice selected in GUI. 
-  global favFolderChoice := ""
+  global _favFolderChoice := ""
   ; Handler of the app window where GUI Listbox was launched.
-  global favFolderAppHwnd := ""
+  global _favFolderAppHwnd := ""
   ; Function to go to folder.
-  global favFolderGoFolderFunc := ""
+  global _favFolderGoFolderFunc := ""
 return
 
 /*
   Shows a listbox with all favourite folders to choose from.
 */
 ShowFavFoldersListBox(goToFolderFunc) {
-  favFolderAppHwnd := WinExist("A")
-  favFolderGoFolderFunc := goToFolderFunc
+  _favFolderAppHwnd := WinExist("A")
+  _favFolderGoFolderFunc := goToFolderFunc
 
   Gui, FavFolderGUI:New, -MinimizeBox
   Gui, FavFolderGUI:Add, ListBox, gFavFolderAction vfavFolderChoice W500 R20, %FAV_FOLDERS_GUI_OPTIONS%
@@ -67,8 +73,8 @@ ShowFavFoldersListBox(goToFolderFunc) {
       Return 
     Gui, FavFolderGUI:Submit
     Gui, FavFolderGUI:Destroy
-    WinActivate, ahk_id %favFolderAppHwnd%
-    favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH[SubStr(favFolderChoice,1,1)])
+    WinActivate, ahk_id %_favFolderAppHwnd%
+    _favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH[SubStr(_favFolderChoice,1,1)])
   return 
 
   ~Up::  ;  <-- Keys listed here WILL NOT trigger a selection. 
@@ -78,7 +84,7 @@ ShowFavFoldersListBox(goToFolderFunc) {
   Esc::  ; <-- Cancel.
   SC055::
     Gui, FavFolderGUI:Destroy
-    WinActivate, ahk_id %favFolderAppHwnd%
+    WinActivate, ahk_id %_favFolderAppHwnd%
   return
 #if
 
