@@ -168,6 +168,15 @@ RunTaskManager() {
 }
 
 /*
+  Check if ESC has been pressed 3 times in a short time. If that happens,
+  FreeModifiers is called.
+*/
+FreeModifiersIf3TimesPressedEsc() {
+  if (NTimesPressed("ESC", 3,, Func("FreeModifiers"))) 
+    ShowTrayTip("Modifiers released.",,2000)
+}
+
+/*
   Shutdown, hibernate or sleep computer. If alt key is pressed then shutdown 
   is issued, if shift is pressed then hibernate is issued. If none of those
   two are pressed, then sleep is issued.
