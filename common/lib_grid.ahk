@@ -1486,7 +1486,6 @@ __DumpGridWndStacks() {
   Dumps the window location dictionary.
 */
 __DumpGridWindowLocation() {
-  global _wndLocation
   msg := "Window locations`n`n"
   for hwnd, location in _wndLocation {
     msg .= "[" . hwnd . "] .desktop=" . location.desktop . " .monitor=" . location.monitor . " .zone=" . location.zone . "`n"
