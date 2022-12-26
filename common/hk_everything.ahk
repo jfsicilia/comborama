@@ -55,7 +55,7 @@ EverythingAutoExec:
                         , bind("__OpenSelectedItemsWith__", Func("__Typora__")))
     ; Explore folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__WindowsTerminal__"))
-                        , "{F10}"  ; Open in CMD
+                        , bind("__OpenSelectedItemsWith__", Func("__OneCommander__"))
                         , bind("__OpenSelectedItemsWith__", Func("__FileExplorer__")))
     , NOT_IMPLEMENTED          ; Copy to other pane
     , NOT_IMPLEMENTED)         ; Move to other pane
