@@ -1,3 +1,12 @@
+/*
+  This library provides a callback function for the lib_active_window_polling.
+  Module lib_active_window_polling, allows to register functions that will
+  be called whenever a window changes it's size or position. The function
+  callback provided in this library allows to draw a marquee around the current
+  active window, whenever a window is activated, moved or resized. 
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_active_window_polling.ahk
 
 LibHighlightActiveWindowAutoExec:
@@ -5,11 +14,8 @@ LibHighlightActiveWindowAutoExec:
   BORDER_THICKNESS := 4
   BORDER_COLOR := "FF0000"
 
-  ; Flag that configs if a window border hightlight is draw or not.
+  ; Flag that configs if a window border hightlight is drawn or not.
   _highlightWindow := false
-
-  ; 2022/08/13 -- On Windows 11, there is an option to accent the active
-  ; window, therefore __HighlightWindowCallback is deprecated.
 
   ; Register function to be called when active window changes.
   RegisterActiveWindowChangedCallback(Func("__HighlightWindowCallback"))
@@ -18,6 +24,11 @@ return
 /*
   Highlights the active window by drawing a rectangle in the outer border,
   only if the window is not maximized.
+
+  active -- Object with the active window current info: hwnd, maximized 
+            (boolean), x, y, w, h, desktop and monitor.
+  prev -- Object with the active window previous info: hwnd, maximized 
+            (boolean), x, y, w, h, desktop and monitor.
 */
 __HighlightWindowCallback(active, prev) {
   global BORDER_THICKNESS, BORDER_COLOR, _highlightWindow
@@ -25,14 +36,11 @@ __HighlightWindowCallback(active, prev) {
   maximized := active.maximized
 
   if ((maximized) OR (!_highlightWindow)) {
-;    WinSet, Region, 0-0 0-0 0-0 0-0 0-0 0-0 0-0 0-0 0-0 0-0 
-;    Try {
-;      Gui, Show, w0 h0 x0 y0 NoActivate, Highlight rectangle off
-      Gui, Destroy
-;    }
+    Gui, Destroy
     return
   }
 
+  ; Prepare a gui with a hollow interior that will be our marquee.
   Gui, +Lastfound +AlwaysOnTop +Toolwindow
   iw:= w - BORDER_THICKNESS 
   ih:= h - BORDER_THICKNESS
