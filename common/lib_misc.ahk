@@ -49,6 +49,23 @@ ShowProgressText(text, millisecs=300) {
 }
 
 /*
+  Creates a string with the options for a gui listbox. The string will be
+  a string with the optins separated with |.
+  optionsDict -- Dictionary with options to show. The format for each option
+                 will be: "<key> - <value>"
+*/
+GenGuiOptions(optionsDict) {
+  ; Create a string with all the options separated with |.
+  sep := ""
+  guiOptions := ""
+  for key, value in optionsDict {
+    guiOptions .= sep . key . " - " . value
+    sep := "|"
+  }
+  return guiOptions
+}
+
+/*
   This function allows to send text or call a function depending on the 
   LShift/RShift key state. If both shifts keys are not pressed, noShift param
   will be used. If LShift is pressed, LShift param is used. If LShift is not
