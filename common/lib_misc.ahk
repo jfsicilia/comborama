@@ -1,11 +1,16 @@
+/*
+  This libary miscellanea functionality. 
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_com.ahk
 
-; Several miscellanea functions.
 LibMiscAutoExec:
   ; Dictionary with keys and bound modifiers. Key SC056 is used as RWin modifier.
-  ; SC055 key is used as RCtrl modifier.
+  ; SC055 key is used as a modifier (sometimes as RCtrl but not always).
   global ALL_MODIFIERS := {"LAlt":"LAlt", "RAlt":"RAlt", "LCtrl":"LCtrl", "RCtrl":"RCtrl", "LShift":"LShift", "RShift":"RShift", "LWin":"LWin", "RWin":"RWin", "SC056":"RWin", "Tab":"Tab", "SC055":"SC055", "LShift":"LShift", "RShift":"RShift"}
 
+  ; Combo to close a window/app in Windows.
   global CLOSE_WINDOW_COMBO := "!{F4}"
 return
 
@@ -17,7 +22,8 @@ CloseWindow() {
 }
 
 /*
-  Show a text in the middle of the screen for a short time.
+  Show a text in the middle of the screen for a short time. A GUI will be
+  used to show the text.
   text -- Text to show.
   millisecs -- Time that text lasts on screent.
 */
@@ -29,6 +35,12 @@ ShowSplashText(text, millisecs=300) {
   Gui, destroy
 }
 
+/*
+  Show a text in the middle of the screen for a short time. Deprecated function
+  Progress will be used to show the text.
+  text -- Text to show.
+  millisecs -- Time that text lasts on screent.
+*/
 ShowProgressText(text, millisecs=300) {
   width := StrLen(text) * 37 
   Progress, zh0 B W%width% fs50, %text%
@@ -37,6 +49,17 @@ ShowProgressText(text, millisecs=300) {
 }
 
 /*
+  This function allows to send text or call a function depending on the 
+  LShift/RShift key state. If both shifts keys are not pressed, noShift param
+  will be used. If LShift is pressed, LShift param is used. If LShift is not
+  pressed and RShift is pressed, RShift param is used. If RShift is "",
+  LShift will be used if LShift key or RShift key is pressed.
+
+  noShift -- Text to send (SendInput) or function to call, if LShift/RShift
+             keys are not pressed.
+  LShift -- Text to send (SendInput) or function to call, if LShift is pressed.
+  RShift -- Text to send (SendInput) or function to call, if RShift is pressed,
+            and LShift is not pressed.
 */
 ShiftSwitch(noShift="", LShift="", RShift="") {
   if (RShift == "")
@@ -52,8 +75,8 @@ ShiftSwitch(noShift="", LShift="", RShift="") {
 
 /*
   Check if a directory exists.
-  path - Path to check.
-  Returns true if path is a a corrent path to a directory.
+  path -- Path to check.
+  return -- True if path is a a correct path to a directory.
 */
 DirExist(path) {
   local AttributeString := FileExist(path)
@@ -64,6 +87,10 @@ DirExist(path) {
   Checks if path is a directory, a file or it doesn't exist.
   Returns "D" if path is a directory, "F" if path is a file, "" if path doesn't
   exist.
+
+  path -- Path to check.
+  return -- "" if path doesn't exist. "D" if path is a directory. "F" if path
+            is a file.
 */
 IsFileOrDir(path) {
   result := FileExist(path)
@@ -75,6 +102,14 @@ IsFileOrDir(path) {
 }
 
 /*
+  Returns a path (no file, just a directory), from the path paramenter. If
+  the passed path doesn't exist, it will return "". If path is a directory it
+  will return it without modification. If path is a file, it will remove the
+  file and will return only the path to the parent folder.
+
+  path -- Path to get dir from.
+  return -- "" if path doesn't exist, otherwise a path to a folder will be
+            returned.
 */
 GetDirFromPath(path) {
   result := IsFileOrDir(path)
@@ -87,6 +122,8 @@ GetDirFromPath(path) {
 
 /*
   Returns the hexadecimal notation of an int.
+  int -- Int to convert to hex.
+  return -- Hexadecimal representation of the int (28 -> "0x1C").
 */
 int2hex(int)
 {
@@ -103,6 +140,8 @@ int2hex(int)
 
 /*
   Returns the hexadecimal notation of an int.
+  int -- Int to convert to hex.
+  return -- Hexadecimal representation of the int (28 -> "0x1C").
 */
 int2hex2(int)
 {
@@ -115,16 +154,15 @@ int2hex2(int)
 /*
   Checks if a value is in a range: (start, end) or (start, end] or [start, end)
   or [start, end].
+
   value - Value to check.
   start - Range start.
   end - Range end.
   startIncluded - If true start is included in range, if not it is exlcluded.
   endIncluded - If true end is included in range, if not it is exlcluded.
-
-  Returns true if value is between start and end. If startIncluded is true
-  value must be equal or greater, if false only greater, than start. If 
-  endIncluded is true, value must be equal or less, if false only less, than
-  end.
+  return -- True if value is between start and end. If startIncluded is true
+  value must be equal or greater than start, if false only greater. If 
+  endIncluded is true, value must be equal or less than end, if false only less.
 */
 Between(value, start, end, startIncluded:=true, endIncluded:=true)
 {
@@ -134,13 +172,15 @@ Between(value, start, end, startIncluded:=true, endIncluded:=true)
 
 /*
   Return the last element of and array (it doesn't remove it).
+  a -- Array.
+  return -- Last element of array.
 */
 Last(a) {
   return a[a.MaxIndex()]
 }
 
 /*
-  Sometimes, when a window has no effective gain focus, there
+  Sometimes, when a window has not effectively gained focus, there
   is no keyboard shortcut to regain focus. This function, simulates
   a click in the middle of the window, to set focus.
 */
@@ -156,6 +196,11 @@ ClickWndCenter() {
 
 /*
   Binds function with arguments, returning a callable object.
+  fn -- Fuction object.
+  args* -- Arguments to bind to the function.
+  return -- BoundFunc object (it behaves as a Func object with predefined
+            arguments). This object has a method Call, to call the function 
+            with the predefined arguments.
 */
 bind(fn, args*) {
     return new BoundFunc(fn, args*)
@@ -178,20 +223,21 @@ class BoundFunc {
 }
 
 /*
-  Checks if a key has been pressed n times.
-  If true, data will be send with sendInput.
+  Checks if a key has been pressed n times. When that happens, the data 
+  parameter is used to SentInput or to call functions, depending if data
+  is a string or a function.
+
   key - Key to check (eg. "LCtrl", "Alt", "RWin", "LShift", ...).
   nTimes - Times to detect key pressed before calling functions.
-  delay - Delay between SendInput calls.
+  delay - Delay between SendInput/Function calls.
   data - Functions to call (without parameters) or data to send using sendInput 
          (eg. "#{Tab}", "#!^h", "{Blind}{Ctrl Down}l{Ctrl Up}"). If more than 
-         one data param is passed, the will be sent in sequence, making pauses 
-         in between if delay param has been specified greater than 0.
-  Returns true if a double pressed of the key has been detected.
+         one data param is passed, they will be sent/call in sequence, making 
+         pauses in between if delay param has been specified greater than 0.
+  Returns True if key has been pressed ntimes. False otherwise.
 */
 NTimesPressed(key, nTimes, delay:=0, data*) {
   static nTimesPressed := 1
-  ;LOG.log("Prior key4: " . A_PriorHotKey . " current key: " . key . " A_TimeSincePriorHotkey: " . A_TimeSincePriorHotkey . " nTimesPressed: " . nTimesPressed . " InStr: " . InStr(A_PriorHotkey, key))
   activated := false 
   if ((InStr(A_PriorHotKey, key)) AND (A_TimeSincePriorHotkey < 400)) 
     nTimesPressed := nTimesPressed + 1
@@ -211,16 +257,28 @@ NTimesPressed(key, nTimes, delay:=0, data*) {
   return activated
 }
 
-MsgBox(test:="") {
-  msgbox, %test%
+/*
+  Open msgbox (Mimics MsgBox command)..
+  text -- Text to show.
+*/
+MsgBox(text:="") {
+  msgbox, %text%
 }
 
+/*
+  Wait for a key to be released (Mimics KeyWait command).
+  key -- Key to wait for.
+*/
 KeyWait(key:="") {
   KeyWait, %key%
 }
 
-Sleep(time:=0) {
-  Sleep, %time%
+/*
+  Sleep n milliseconds (Mimics Sleep command).
+  millisecs -- Milliseconds to wait.
+*/
+Sleep(millisecs:=0) {
+  Sleep, %millisecs%
 }
 
 /*
@@ -232,10 +290,9 @@ SendInput(string:="") {
 }
 
 /*
-  Send input keys, releasing before any held modifier. If after this method
-  is called you want to use the same modifiers combo, you have to physically
-  release them and pressed them again.
-  data -  Data to send.
+  Send input keys, releasing before the send, any held modifier. 
+  data -  Data to send. If more than one paramenter is passed, all the data
+          will be sent sequentially.
   e.g. If for example, SendInputFree("{Tab}") is called while RCtrl and LShift
   is pressed down, it will be translated to:
     SendInput, {RCtrl up}{LShift up}{Tab}
@@ -246,15 +303,15 @@ SendInputFree(data*) {
 
   ; Send data without active modifiers.
   for i, d in data {
-    ;LOG.log("SendInputFree: " . prefix . d)
     SendInput, %prefix%%d%
   }
 }
 
 /*
-  Send input keys, releasing before any held modifier and pressing them again
-  after if physical key is still pressed.
-  data -  Data to send.
+  Send input keys, releasing before the send, any held modifier and pressing 
+  them again after if physical key is still pressed.
+  data -  Data to send. If more than one paramenter is passed, all the data
+          will be sent sequentially.
   e.g. If for example, SendInputIsolated("{Tab}") is called while RCtrl and LShift
   is pressed down, it will be translated to:
     SendInput, {RCtrl up}{LShift up}{Tab}{LShift down}{RCtrl down}
@@ -266,14 +323,26 @@ SendInputIsolated(data*) {
 
   ; Send data without active modifiers.
   for i, d in data {
-    ;LOG.log("SendInputIsolated " . prefix . d . suffix)
     SendInput, %prefix%%d%%suffix%
   }
 }
 
 /*
-  Call function/s, releasing before any held modifier and pressing them again
-  after if physical key is still pressed.
+  Call function/s, releasing before called, any held modifier.
+  functions - Functions to call.
+*/
+CallFree(functions*) {
+  ; Free all active modifiers.
+  FreeModifiers()
+
+  ; Call functions without active modifiers.
+  for i, f in functions
+    f.Call()
+}
+
+/*
+  Call function/s, releasing before called, any held modifier and pressing 
+  them again after if physical key is still pressed.
   functions - Functions to call.
 */
 CallIsolated(functions*) {
@@ -284,11 +353,9 @@ CallIsolated(functions*) {
   for i, f in functions
     f.Call()
 
-  ;sleep, 50
   ; Enable modifiers that are still pressed.
   SetModifiers()
 }
-
 
 /* 
   Dump to log modifiers state.
@@ -302,43 +369,16 @@ LogModifiersState() {
   }
 }
 
-;/*
-;  Set modifiers.
-;  modifiers - Name of the modifiers to set (e.g. "Alt", "RCtrl", "LWin", "Shift").
-;              If no modifiers are passed, all physically pressed modifiers keys
-;              are set.
-;*/
-;GetSetModifiers(modifiers*) {
-;  data := ""
-;  if (modifiers.MaxIndex() == "") {
-;    for key, modifier in ALL_MODIFIERS
-;      if GetKeyState(key, "P") 
-;        data := "{" . modifier . " down}" . data
-;  }
-;  else {
-;    for i, modifier in modifiers 
-;      data := "{" . modifier . " down}" . data
-;  }
-;  LOG.log("SetModifiers: " . data)
-;  return data
-;}
-;
-
-;GetFreeModifiers(modifiers*) {
-;  data := ""
-;  if (modifiers.MaxIndex() == "") {
-;    for key, modifier in ALL_MODIFIERS
-;      if GetKeyState(key) 
-;        data := data . "{" . modifier . " up}"
-;  }
-;  else {
-;    for i, modifier in modifiers
-;      data := data . "{" . modifier . " up}"
-;  }
-;  LOG.log("GetFreeModifiers: " . data)
-;  return data
-;}
-
+/*
+  Get free modifiers string. It checks which modifiers are pressed, and 
+  generates a string with the next format: "{<modifier> up}". For example
+  if LCtrl and LShift are pressed, "{LCtrl up}{LShift up}" will be returned.
+  modifiers - Name of the modifiers to check (e.g. "Alt", "RCtrl", "LWin", "Shift").
+              If no modifiers are passed, ALL_MODIFIERS constant is used, and
+              all active modifiers will be checked.
+  ALL_MODIFIERS will be used.
+  return -- String with all pressed modifiers with the format {<modifier> up}.
+*/
 GetFreeModifiers(modifiers*) {
   data := ""
   if (modifiers.MaxIndex() == "")
@@ -346,25 +386,17 @@ GetFreeModifiers(modifiers*) {
   for key, modifier in modifiers
     if GetKeyState(key) 
       data := data . "{" . modifier . " up}"
-  ;LOG.log("GetFreeModifiers: " . data)
   return data
 }
 
 /*
-  Releases modifiers.
-  modifiers - Name of the modifiers to free (e.g. "Alt", "RCtrl", "LWin", "Shift").
-              If no modifiers are passed, all active modifiers will be released.
-*/
-FreeModifiers(modifiers*) {
-  data := GetFreeModifiers(modifiers*)
-  SendInput, %data%
-}
-
-/*
-  Set modifiers.
-  modifiers - Name of the modifiers to set (e.g. "Alt", "RCtrl", "LWin", "Shift").
-              If no modifiers are passed, all physically pressed modifiers keys
-              are set.
+  Get Set modifiers string. It checks which modifiers are pressed, and 
+  generates a string with the next format: "{<modifier> down}". For example
+  if LCtrl and LShift are pressed, "{LCtrl down}{LShift down}" will be returned.
+  modifiers - Name of the modifiers to check (e.g. "Alt", "RCtrl", "LWin", "Shift").
+              If no modifiers are passed, ALL_MODIFIERS constant is used, and
+              all physically pressed modifiers keys are checked.
+  return -- String with all pressed modifiers with the format {<modifier> down}.
 */
 GetSetModifiers(modifiers*) {
   data := ""
@@ -373,26 +405,31 @@ GetSetModifiers(modifiers*) {
   for key, modifier in modifiers
     if GetKeyState(key, "P") 
       data := "{" . modifier . " down}" . data
-  ;LOG.log("GetSetModifiers: " . data)
   return data
 }
 
 /*
-  Set modifiers.
-  modifiers - Name of the modifiers to set (e.g. "Alt", "RCtrl", "LWin", "Shift").
-              If no modifiers are passed, all physically pressed modifiers keys
-              are set.
+  Releases pressed modifiers.
+  modifiers - Name of the modifiers to check and free if pressed (e.g. "Alt", 
+              "RCtrl", "LWin", "Shift"). If no modifiers are passed, 
+              ALL_MODIFIERS constant is used for checking, and all pressed 
+              modifiers will be released.
 */
-SetModifiers(modifiers*) {
-  data := GetSetModifiers(modifiers*)
+FreeModifiers(modifiers*) {
+  data := GetFreeModifiers(modifiers*)
   SendInput, %data%
 }
 
 /*
+  Set pressed modifiers.
+  modifiers - Name of the modifiers to check and set if pressed (e.g. "Alt", 
+              "RCtrl", "LWin", "Shift"). If no modifiers are passed, 
+              ALL_MODIFIERS constant is used for checking, and all pressed 
+              modifiers will be set.
 */
-FreeModifiersIf3TimesPressedEsc() {
-  if (NTimesPressed("ESC", 3,, Func("FreeModifiers"))) 
-    ShowTrayTip("Modifiers released.",,2000)
+SetModifiers(modifiers*) {
+  data := GetSetModifiers(modifiers*)
+  SendInput, %data%
 }
 
 /*
@@ -449,34 +486,36 @@ ShellRun(prms*) {
 #define HTMLDLG_ALLOW_UNKNOWN_THREAD     0x0200 // IE7+
 */
 
-/*  Options: one or more of the following semicolon-delimited values:
-dialogHeight:sHeight
-    Sets the height of the dialog window.
-    Valid unit-of-measure prefixes: cm, mm, in, pt, pc, em, ex, px
-dialogLeft:sXPos
-    Sets the left position of the dialog window relative to the upper-left
-    corner of the desktop.
-dialogTop:sYPos
-    Sets the top position of the dialog window relative to the upper-left
-    corner of the desktop.
-dialogWidth:sWidth
-    Sets the width of the dialog window.
-    Valid unit-of-measure prefixes: cm, mm, in, pt, pc, em, ex, px
-center:{ yes | no | 1 | 0 | on | off }
-    Specifies whether to center the dialog window within the desktop. Default: yes
-dialogHide:{ yes | no | 1 | 0 | on | off }
-    Specifies whether the dialog window is hidden when printing or using print
-    preview. Default: no
-edge:{ sunken | raised }
-    Specifies the edge style of the dialog window. Default: raised
-resizable:{ yes | no | 1 | 0 | on | off }
-    Specifies whether the dialog window has fixed dimensions. Default: no
-scroll:{ yes | no | 1 | 0 | on | off }
-    Specifies whether the dialog window displays scrollbars. Default: yes
-status:{ yes | no | 1 | 0 | on | off }
-    Specifies whether the dialog window displays a status bar. Default: no
-unadorned:{ yes | no | 1 | 0 | on | off }
-    Specifies whether the dialog window displays the window border.
+/*  
+  Options: one or more of the following semicolon-delimited values:
+
+  dialogHeight:sHeight
+      Sets the height of the dialog window.
+      Valid unit-of-measure prefixes: cm, mm, in, pt, pc, em, ex, px
+  dialogLeft:sXPos
+      Sets the left position of the dialog window relative to the upper-left
+      corner of the desktop.
+  dialogTop:sYPos
+      Sets the top position of the dialog window relative to the upper-left
+      corner of the desktop.
+  dialogWidth:sWidth
+      Sets the width of the dialog window.
+      Valid unit-of-measure prefixes: cm, mm, in, pt, pc, em, ex, px
+  center:{ yes | no | 1 | 0 | on | off }
+      Specifies whether to center the dialog window within the desktop. Default: yes
+  dialogHide:{ yes | no | 1 | 0 | on | off }
+      Specifies whether the dialog window is hidden when printing or using print
+      preview. Default: no
+  edge:{ sunken | raised }
+      Specifies the edge style of the dialog window. Default: raised
+  resizable:{ yes | no | 1 | 0 | on | off }
+      Specifies whether the dialog window has fixed dimensions. Default: no
+  scroll:{ yes | no | 1 | 0 | on | off }
+      Specifies whether the dialog window displays scrollbars. Default: yes
+  status:{ yes | no | 1 | 0 | on | off }
+      Specifies whether the dialog window displays a status bar. Default: no
+  unadorned:{ yes | no | 1 | 0 | on | off }
+      Specifies whether the dialog window displays the window border.
 */
 ShowHTMLDialog(URL, argIn="", Options="", hwndParent=0, Flags=0)
 {
@@ -582,6 +621,7 @@ ActivateAppNextWindow() {
 }
 
 /*
+  Locks Windows session.
 */
 LockWorkstation() {
   ;lock workstation (note: requires 2 'run as admin' registry writes)
