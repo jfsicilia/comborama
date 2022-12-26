@@ -27,6 +27,11 @@ EverythingAutoExec:
   global EVERYTHING_COMBO_FOCUS_SEARCH_TXTBOX := LCtrlCombo("l")
   global EVERYTHING_COMBO_FOCUS_FIND_TXTBOX := EVERYTHING_COMBO_SHOW_EVERYTHING
 
+  ; Dictionary with favourite searches, and key associated.
+  global FAV_EVERYTHING_SEARCHES := {"p":"books\ python *.pdf"
+                                   , "e":"books/ electronics/ *.pdf"
+                                   , "m":"books/ mathematics/ *.pdf"}
+
   ImplementHistoryInterface("Everything.exe"
     , Func("EverythingBackInHistory")         ; History back
     , Func("EverythingBackInHistory"))        ; History forward
@@ -65,12 +70,12 @@ EverythingAutoExec:
   DefaultImplementationAltCursorInterface("Everything.exe")
 
   ImplementSeekAndSelInterface("Everything.exe"
-    , EVERYTHING_COMBO_FOCUS_FIND_TXTBOX  ; Ctrl + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
-    , func("ShowFavSearchesListBox")      ; Alt + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Alt + Shift + Space
-    , EVERYTHING_COMBO_SHOW_HISTORY       ; Win + Space
-    , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
+    , EVERYTHING_COMBO_FOCUS_FIND_TXTBOX                      ; Ctrl + Space
+    , NO_BOUND_ACTION_MSGBOX                                  ; Ctrl + Shift + Space
+    , bind("ShowFavSearchesListBox", FAV_EVERYTHING_SEARCHES) ; Alt + Space
+    , NO_BOUND_ACTION_MSGBOX                                  ; Alt + Shift + Space
+    , EVERYTHING_COMBO_SHOW_HISTORY                           ; Win + Space
+    , NO_BOUND_ACTION_MSGBOX)                                 ; Win + Shift + Space
 
   ImplementFavsInterface("Everything.exe"
     , func("EverythingGoToFav"))           ; Go to favourite.
@@ -148,10 +153,10 @@ EverythingSearch(search) {
 
 /*
   Go to favourite search by key. The key param will be the key in the 
-  FAV_SEARCHES_PATH dictionary to retrive a path. 
-  key -- Key to retrieve a path in the FAV_SEARCHERS_PATH dictionary.
+  FAV_EVERYTHING_SEARCHES dictionary to retrive a path. 
+  key -- Key to retrieve a path in the FAV_EVERYTHING_SEARCHERS dictionary.
 */
 EverythingGoToFav(key) {
-  EverythingSearch(FAV_SEARCHES_PATH[key])
+  EverythingSearch(FAV_EVERYTHING_SEARCHES[key])
 }
 

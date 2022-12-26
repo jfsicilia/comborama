@@ -10,33 +10,24 @@
 ; key combos to the searches and it also allows to show a GUI ListBox to 
 ; select it from there.
 LibSearchesAutoExec:
-  ; Dictionary with al favourite searches and it's key shortcut.
-  global FAV_SEARCHES_PATH := {"p":"books\ python *.pdf"
-                             , "e":"books/ electronics/ *.pdf"
-                             , "m":"books/ mathematics/ *.pdf"}
-
-  ; String with all favourite searches ready for Gui Add Listbox option.
-  global FAV_SEARCHES_GUI_OPTIONS := ""
-  sep := ""
-  for key, value in FAV_SEARCHES_PATH {
-    FAV_SEARCHES_GUI_OPTIONS .= sep . key . " - " . value
-    sep := "|"
-  }
-
   ; Choice selected in GUI. 
-  global favSearchChoice := ""
+  global _favSearchChoice := ""
   ; Handler of the Everything window where GUI Listbox was launched.
-  global favSearchAppHwnd := ""
+  global _favSearchAppHwnd := ""
 return
 
 /*
-  Shows a listbox with all favourite folders to choose from.
+  Shows a listbox with all favourite searches to choose from.
+  optionsDict -- Dictionary with options to show. Key will be key associated to
+                 the favourite search and value is the favourite search string.
 */
-ShowFavSearchesListBox() {
-  favSearchAppHwnd := WinExist("A")
+ShowFavSearchesListBox(optionsDict) {
+  _favSearchAppHwnd := WinExist("A")
+
+  guiOptions := GenGuiOptions(optionsDict)
 
   Gui, FavSearchGUI:New, -MinimizeBox
-  Gui, FavSearchGUI:Add, ListBox, gFavSearchAction vfavSearchChoice W500 R20, %FAV_SEARCHES_GUI_OPTIONS%
+  Gui, FavSearchGUI:Add, ListBox, gFavSearchAction v_favSearchChoice W500 R20, %guiOptions%
   Gui, FavSearchGUI:Show,, Choose_search
 }
 
@@ -49,8 +40,8 @@ ShowFavSearchesListBox() {
       Return 
     Gui, FavSearchGUI:Submit
     Gui, FavSearchGUI:Destroy
-    WinActivate, ahk_id %favSearchAppHwnd%
-    search := SubStr(favSearchChoice, 5)
+    WinActivate, ahk_id %_favSearchAppHwnd%
+    search := SubStr(_favSearchChoice, 5)
     EverythingSearch(search)
   return 
 
@@ -61,6 +52,6 @@ ShowFavSearchesListBox() {
   Esc::  ; <-- Cancel.
   SC055::
     Gui, FavSearchGUI:Destroy
-    WinActivate, ahk_id %favSearchAppHwnd%
+    WinActivate, ahk_id %_favSearchAppHwnd%
   return
 #if
