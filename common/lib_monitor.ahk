@@ -1,3 +1,8 @@
+/*
+  This libary provides functionality to manage monitors.
+
+  @jfsicilia 2022.
+*/
 #include %A_ScriptDir%\lib_window.ahk
 
 LibMonitorAutoExec:
@@ -7,6 +12,7 @@ return
 
 /*
   Returns active monitor (1..N).
+  return -- Monitor id.
 */
 GetMonitor() {
   WinGet, hwnd, ID, A
@@ -14,7 +20,7 @@ GetMonitor() {
 }
 
 /*
-  Return the monitor's index (0..N) of the current active window.
+  Move active window to next monitor.
 */
 MoveActiveWindowToNextMonitor() {
   WinGet, hwnd, ID, A
@@ -28,7 +34,8 @@ MoveActiveWindowToNextMonitor() {
 
 /*
   Get window's monitor index.
-  Returns active monitor (1..N).
+  windowHandle -- Handle of the window to check.
+  return -- Monitor id of the window.
 */
 GetMonitorIndexFromWindow(windowHandle)
 {
