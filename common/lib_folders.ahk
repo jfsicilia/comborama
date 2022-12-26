@@ -35,15 +35,7 @@ LibFoldersAutoExec:
                             , "t":DEFAULT_FOLDER . "\tmp"
                             , "w":"\\wsl$\ubuntu\home\" . A_UserName . "\_"
                             , "x":DEFAULT_FOLDER . "\cloud\dropbox"}
-
-  ; String with all favourite folders ready for Gui Add Listbox option.
-  global FAV_FOLDERS_GUI_OPTIONS := ""
-  sep := ""
-  for key, value in FAV_FOLDERS_PATH {
-    FAV_FOLDERS_GUI_OPTIONS .= sep . key . " - " . value
-    sep := "|"
-  }
-
+;
   ; Choice selected in GUI. 
   global _favFolderChoice := ""
   ; Handler of the app window where GUI Listbox was launched.
@@ -54,13 +46,18 @@ return
 
 /*
   Shows a listbox with all favourite folders to choose from.
+  optionsDict -- Dictionary with options to show. Key will be key associated to
+                 the favourite folder and value is the favourite folder path.
+  goToFolderFunc -- Function to go to the selected folder.
 */
-ShowFavFoldersListBox(goToFolderFunc) {
+ShowFavFoldersListBox(optionsDict, goToFolderFunc) {
   _favFolderAppHwnd := WinExist("A")
   _favFolderGoFolderFunc := goToFolderFunc
 
+  guiOptions := GenGuiOptions(optionsDict)
+
   Gui, FavFolderGUI:New, -MinimizeBox
-  Gui, FavFolderGUI:Add, ListBox, gFavFolderAction vfavFolderChoice W500 R20, %FAV_FOLDERS_GUI_OPTIONS%
+  Gui, FavFolderGUI:Add, ListBox, gFavFolderAction v_favFolderChoice W500 R20, %guiOptions%
   Gui, FavFolderGUI:Show,, Choose_folder
 }
 

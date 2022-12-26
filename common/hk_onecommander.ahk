@@ -137,12 +137,13 @@ OneCmdrAutoExec:
   DefaultImplementationAltCursorInterface("OneCommander.exe")
 
   ImplementSeekAndSelInterface("OneCommander.exe"
-    , ONE_COMMANDER_ADDRESS_BAR           ; Ctrl + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
-    , bind("ShowFavFoldersListBox", func("OneCommanderGoTo"))       ; Alt + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Alt + Shift + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Win + Space
-    , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
+    , ONE_COMMANDER_ADDRESS_BAR                        ; Ctrl + Space
+    , NO_BOUND_ACTION_MSGBOX                           ; Ctrl + Shift + Space
+    , bind("ShowFavFoldersListBox"
+         , FAV_FOLDERS_PATH, func("OneCommanderGoTo")) ; Alt + Space
+    , NO_BOUND_ACTION_MSGBOX                           ; Alt + Shift + Space
+    , NO_BOUND_ACTION_MSGBOX                           ; Win + Space
+    , NO_BOUND_ACTION_MSGBOX)                          ; Win + Shift + Space
 return
 
 #if (WinActive("ahk_exe OneCommander.exe"))

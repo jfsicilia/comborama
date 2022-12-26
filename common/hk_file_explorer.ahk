@@ -123,12 +123,13 @@ FileExplorerAutoExec:
   DefaultImplementationAltCursorInterface("Explorer.exe")
 
   ImplementSeekAndSelInterface("Explorer.exe"
-    , FILE_EXPLORER_COMBO_ADDRESS_BAR           ; Ctrl + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
-    , bind("ShowFavFoldersListBox", func("ExplorerGoTo"))       ; Alt + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Alt + Shift + Space
-    , NO_BOUND_ACTION_MSGBOX              ; Win + Space
-    , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
+    , FILE_EXPLORER_COMBO_ADDRESS_BAR              ; Ctrl + Space
+    , NO_BOUND_ACTION_MSGBOX                       ; Ctrl + Shift + Space
+    , bind("ShowFavFoldersListBox"
+         , FAV_FOLDERS_PATH, func("ExplorerGoTo")) ; Alt + Space
+    , NO_BOUND_ACTION_MSGBOX                       ; Alt + Shift + Space
+    , NO_BOUND_ACTION_MSGBOX                       ; Win + Space
+    , NO_BOUND_ACTION_MSGBOX)                      ; Win + Shift + Space
 return
 
 ; Keybinding to set focus in file explorer.
