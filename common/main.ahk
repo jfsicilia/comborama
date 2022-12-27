@@ -68,7 +68,6 @@ GoSub FirefoxAutoExec
 GoSub BraveAutoExec
 GoSub JoplinAutoExec
 GoSub AltCharsAutoExec
-GoSub TabModifierAutoExec
 
 ; Load default implementations of interfaces 
 DefaultImplementationCursorInterface(ANY_APP_ID)
