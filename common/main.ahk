@@ -1,12 +1,11 @@
-; TODO FileExplorer -- Non selecting file navigation.
-;                      Seer.
-; TODO windowterminal -- Check why SC055 combo T and W doesn't work.
-; TODO apps -- Remove SC055 + LWin to navigate tabs.
-; TODO desktop -- Install Seer.
-;              -- Change task scheduler.
-;              -- Test dll for desktop manipulation.
+/*
+  This script is the main script that launches all the other scripts. It
+  also calls some subs in those scripts to load global variables and
+  functions.
 
-; This script is a launcher of many other scripts.
+  @jfsicilia 2022.
+*/
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #SingleInstance Force
 
@@ -55,15 +54,14 @@ GoSub SeekAndSelInterfaceAutoExec
 GoSub SettingsInterfaceAutoExec
 GoSub MiscAutoExec
 GoSub WindowAutoExec
-;GoSub FileManagerAutoExe
-GoSub FileExplorerAutoExec
 GoSub GVimAutoExec
 GoSub VSCodeAutoExec
 GoSub WindowsTerminalAutoExec
-GoSub EverythingAutoExec
-GoSub OneCmdrAutoExec
 GoSub LibFoldersAutoExec
 GoSub LibSearchesAutoExec
+GoSub FileExplorerAutoExec
+GoSub EverythingAutoExec
+GoSub OneCmdrAutoExec
 GoSub ChromeAutoExec
 GoSub EdgeAutoExec
 GoSub FirefoxAutoExec
@@ -81,6 +79,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 ; Libraries.
 #include %A_ScriptDir%\lib_log.ahk
 #include %A_ScriptDir%\lib_active_window_polling.ahk
+
 ; Modifiers.
 ; mod_great_less.ahk Converts the spanish "< >" key in a modifier (SC053 code).
 ; NOTE: If this script is loaded here it interferes with other modifiers, therefore
@@ -88,6 +87,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 ; #include %A_ScriptDir%\mod_great_less.ahk
 #include %A_ScriptDir%\mod_capslock.ahk
 #include %A_ScriptDir%\mod_tab.ahk
+
 ; Global hotkeys (interfaces).
 #include %A_ScriptDir%\ghk_interface_edit.ahk
 #include %A_ScriptDir%\ghk_interface_tabs.ahk
@@ -102,6 +102,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\ghk_interface_terminal.ahk
 #include %A_ScriptDir%\ghk_interface_seek_n_sel.ahk
 #include %A_ScriptDir%\ghk_interface_settings.ahk
+
 ; Global hotkeys.
 #include %A_ScriptDir%\ghk_disable_windows_combos.ahk
 #include %A_ScriptDir%\ghk_misc.ahk
@@ -113,8 +114,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\ghk_help.ahk
 #include %A_ScriptDir%\ghk_fav_apps.ahk
 #include %A_ScriptDir%\ghk_debug.ahk
-;#include %A_ScriptDir%\ghk_file_manager.ahk
-;#include %A_ScriptDir%\ghk_text_edit.ahk
+
 ; Apps hotkeys.
 #include %A_ScriptDir%\hk_vscode.ahk
 #include %A_ScriptDir%\hk_file_explorer.ahk
@@ -127,9 +127,6 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\hk_joplin.ahk
 #include %A_ScriptDir%\hk_gvim.ahk
 #include %A_ScriptDir%\hk_windows_terminal.ahk
+
 ; Hotstrings.
 #include %A_ScriptDir%\hs_misc.ahk
-
-;#include %A_ScriptDir%\..\gcts\captura_vacaciones.ahk
-
-
