@@ -1,3 +1,11 @@
+/*
+  The SC056 key will be used as a modifier when pressed with another key.
+
+  The SC056 + <key> combo is translated to RWin + <key>, all combos defined
+  with ">#" can be fired when pressing SC056.
+
+  @jfsicilia 2022.
+*/
 #HotkeyInterval 9000 
 #MaxHotkeysPerInterval 1000
 #SingleInstance Force
