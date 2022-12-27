@@ -1,8 +1,8 @@
-;
-; Tab is used as modifier by creating custom combinations (Tab & <key>:: ...). 
-;
-TabModifierAutoExec:
-return
+/*
+  Tab is used as modifier by creating custom combinations (Tab & <key>:: ...). 
+
+  @jfsicilia 2022.
+*/
 
 ; This hotkey allows to send tab when tab key is
 ; released, if no other key was pressed before letting go.
