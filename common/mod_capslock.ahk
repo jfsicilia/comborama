@@ -7,9 +7,11 @@
   The SC055 key will be used as ESC when pressed alone, and as a modifier
   when pressed with another key.
 
-  By default, the SC055 + <key> combo is translated to Ctrl + <key>. This 
+  By default, the SC055 + <key> combo is translated to RCtrl + <key>. This 
   behaviour could be changed in other scripts, just redefining the 
   SC055 + <key> combo inside a #if ... #if statement.
+
+  @jfsicilia 2022.
 */
 
 ; If this hotkey is detected, it means that the SC055 key was pressed alone,
