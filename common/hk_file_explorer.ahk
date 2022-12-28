@@ -138,16 +138,16 @@ return
   || WinActive("ahk_class #32770"))
 
   ; This will set focus on the list of files.
-  F8:: ControlFocus, DirectUIHWND2, A
+  SC055 & F8:: ControlFocus, DirectUIHWND2, A
   
   ; This will set focus on the navigation pane. 
-  F7:: ControlFocus, SysTreeView321, A
+  SC055 & F7:: ControlFocus, SysTreeView321, A
 #if
 
 ; Keybinding to set focus in file explorer (Open and Save As dialogs).
 #if WinActive("ahk_class #32770")
   ; This will set focus on the filename textbox.
-  F6::ControlFocus, Edit1, A
+  SC055 & F6::ControlFocus, Edit1, A
 #If
 
 /*
