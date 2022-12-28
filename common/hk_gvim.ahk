@@ -45,6 +45,9 @@ GVimAutoExec:
   global GVIM_COMBO_NEW_BUFFER := "{Esc}:enew{Enter}"
   ; Settings
   global GVIM_COMBO_SETTINGS := ",v"
+  ; Vim jumping back and forward combos.
+  global GVIM_COMBO_JUMP_BACK := "^o"
+  global GVIM_COMBO_JUMP_FORWARD := "^i"
 
   ImplementTabsInterface("gvim.exe"
     , GVIM_COMBO_GOTO_NEXT_TAB            ; Next tab
@@ -82,6 +85,10 @@ GVimAutoExec:
     , GVIM_COMBO_SPLIT_HORIZONTAL         ; Horizontal pane split.
     , GVIM_COMBO_SPLIT_VERTICAL           ; Vertical pane split.
     , GVIM_COMBO_CLOSE_PANE)              ; Close pane.
+
+  ImplementHistoryInterface("gvim.exe"
+    , GVIM_COMBO_JUMP_BACK                ; History back
+    , GVIM_COMBO_JUMP_FORWARD)            ; History forward
 
   ImplementSeekAndSelInterface("gvim.exe"
     , GVIM_COMBO_GOTO_TAB_OR_LOAD_FILE    ; Ctrl + Space
