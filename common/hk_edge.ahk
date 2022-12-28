@@ -43,6 +43,9 @@ EdgeAutoExec:
     , EDGE_COMBO_SETTINGS)               ; Open settings.
 return
 
+#ifWinActive ahk_exe msedge.exe
+#if
+
 /*
   Back in history.
 */
@@ -64,7 +67,4 @@ edgeForwardHistory() {
   Sleep, 50
   SendInput, !{right}
 }
-
-#ifWinActive ahk_exe msedge.exe
-#if
 

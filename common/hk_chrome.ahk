@@ -96,5 +96,5 @@ return
 ; Add some new shortcuts to Chrome.
 #IfWinActive ahk_exe chrome.exe
   ; Set focus on web page.
-  F8:: ClickWndCenter()
+  SC055 & F8:: ClickWndCenter()
 #if

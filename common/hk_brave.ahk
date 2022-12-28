@@ -56,6 +56,6 @@ return
 
 #IfWinActive ahk_exe brave.exe
   ; Set focus on web page.
-  F8:: ClickWndCenter()
+  SC055 & F8:: ClickWndCenter()
 #if
 

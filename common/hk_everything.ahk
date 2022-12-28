@@ -88,9 +88,10 @@ return
   ESC:: ToggleEverythingApp()
 
   ; Focus Files
-  F8:: EverythingFocusFiles()
+  SC055 & F8:: EverythingFocusFiles()
   ; Focus preview
   ;NOTE F9 focus preview
+  SC055 & F9:: F9
   ;F9::  ; Already built in everything.
 
   <!p:: SendInputIsolated(EVERYTHING_COMBO_TOGGLE_PREVIEW)
