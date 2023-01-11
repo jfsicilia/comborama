@@ -43,6 +43,10 @@ VSCodeAutoExec:
   global VSCODE_COMBO_SETTINGS_JSON := "^+p open user json{enter}"
   global VSCODE_COMBO_KEYBINDINGS_JSON := "^+p open keyboard json{enter}"
 
+  ; VSCode vim mode jumping back and forward combos.
+  global VSCODE_COMBO_JUMP_BACK := "^k^!o"
+  global VSCODE_COMBO_JUMP_FORWARD := "^k^!i"
+
   ImplementTabsInterface("Code.exe"
     , VSCODE_COMBO_GOTO_NEXT_TAB                ; Next tab
     , VSCODE_COMBO_GOTO_PREV_TAB                ; Prev tab
@@ -79,6 +83,10 @@ VSCodeAutoExec:
     , VSCODE_COMBO_SPLIT_HORIZONTAL       ; Horizontal pane split.
     , VSCODE_COMBO_SPLIT_VERTICAL         ; Vertical pane split.
     , VSCODE_COMBO_CLOSE_PANE)            ; Close pane.
+
+  ImplementHistoryInterface("Code.exe"
+    , VSCODE_COMBO_JUMP_BACK              ; History back
+    , VSCODE_COMBO_JUMP_FORWARD)          ; History forward
 
   ImplementSeekAndSelInterface("Code.exe"
     , VSCODE_COMBO_OPEN_FILE              ; Ctrl + Space
