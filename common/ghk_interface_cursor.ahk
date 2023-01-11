@@ -50,8 +50,10 @@ return
 
 ; Move to start/end of line or select to start/end of line.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_START_LINE.id) && (!altTabLaunched))
+  <^left::
   SC055 & left:: ShiftSwitch(bind("RunCursorActionFree", ACTION_START_LINE.id)
                            , bind("RunCursorActionFree", ACTION_SHIFT_START_LINE.id))
+  <^right::
   SC055 & right:: ShiftSwitch(bind("RunCursorActionFree", ACTION_END_LINE.id)
                             , bind("RunCursorActionFree", ACTION_SHIFT_END_LINE.id))
 #if
