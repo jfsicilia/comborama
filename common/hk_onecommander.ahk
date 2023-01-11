@@ -176,10 +176,12 @@ OneCommanderGoToFav(key) {
   then come back to OneCommander.
 */
 OneCommanderUndo() {
+  MsgBox, 4,, Would you like to undo?
+  IfMsgBox No
+    return
   FocusOrLaunchFileExplorer()    
   SendInputIsolated(ONE_COMMANDER_COMBO_UNDO)
   FocusOrLaunchOneCommander()
-
 }
 
 /*
@@ -188,6 +190,9 @@ OneCommanderUndo() {
   then come back to OneCommander.
 */
 OneCommanderRedo() {
+  MsgBox, 4,, Would you like to redo?
+  IfMsgBox No
+    return
   FocusOrLaunchFileExplorer()    
   SendInputIsolated(ONE_COMMANDER_COMBO_REDO)
   FocusOrLaunchOneCommander()

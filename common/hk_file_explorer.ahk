@@ -16,6 +16,8 @@ FileExplorerAutoExec:
   global FILE_EXPLORER_COMBO_FIND = "{F3}"
   global FILE_EXPLORER_COMBO_DUPLICATE = "^c^v"
   global FILE_EXPLORER_COMBO_SELECT_ALL = "^a"
+  global FILE_EXPLORER_COMBO_UNDO = "^z"
+  global FILE_EXPLORER_COMBO_REDO = "^+z"
   global FILE_EXPLORER_COMBO_NEW_FOLDER = "^+n"
   global FILE_EXPLORER_COMBO_CONTEXT_MENU = "+{F10}"
 
@@ -89,8 +91,8 @@ FileExplorerAutoExec:
         , FILE_EXPLORER_COMBO_PASTE
         , Func("FileExplorerMoveFiles")
         , FILE_EXPLORER_COMBO_HISTORY_PASTE)  
-    , DEFAULT_IMPLEMENTATION                     ; Undo        
-    , DEFAULT_IMPLEMENTATION                     ; Redo        
+    , Func("FileExplorerUndo")                   ; Undo        
+    , Func("FileExplorerRedo")                   ; Redo        
     , DEFAULT_IMPLEMENTATION)                    ; Delete
 
   ImplementFileManagerInterface("Explorer.exe"
@@ -219,6 +221,30 @@ CreateNewFile() {
   }
   path := path . "\" . userInput
   FileAppend, ,%path%	
+}
+
+/*
+  Undo last operation in OneCommander. OneCommander is not allowed to do that
+  in Windows OS, therefore we switch to Windows File Explorer, undo there, and
+  then come back to OneCommander.
+*/
+FileExplorerUndo() {
+  MsgBox, 4,, Would you like to undo?
+  IfMsgBox No
+    return
+  SendInputIsolated(FILE_EXPLORER_COMBO_UNDO)
+}
+
+/*
+  Redo last operation in OneCommander. OneCommander is not allowed to do that
+  in Windows OS, therefore we switch to Windows File Explorer, redo there, and
+  then come back to OneCommander.
+*/
+FileExplorerRedo() {
+  MsgBox, 4,, Would you like to redo?
+  IfMsgBox No
+    return
+  SendInputIsolated(FILE_EXPLORER_COMBO_REDO)
 }
 
 /*
