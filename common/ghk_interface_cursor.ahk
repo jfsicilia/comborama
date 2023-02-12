@@ -50,9 +50,11 @@ return
 
 ; Move to start/end of line or select to start/end of line.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_START_LINE.id) && (!altTabLaunched))
+  <^+left::
   <^left::
   SC055 & left:: ShiftSwitch(bind("RunCursorActionFree", ACTION_START_LINE.id)
                            , bind("RunCursorActionFree", ACTION_SHIFT_START_LINE.id))
+  <^+right::
   <^right::
   SC055 & right:: ShiftSwitch(bind("RunCursorActionFree", ACTION_END_LINE.id)
                             , bind("RunCursorActionFree", ACTION_SHIFT_END_LINE.id))
@@ -84,8 +86,10 @@ return
 
 ; Move to next/prev word.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_NEXT_WORD.id) && (!altTabLaunched))
+  <!+Left::
   <!Left:: ShiftSwitch(bind("RunCursorActionIsolated", ACTION_PREV_WORD.id)
                      , bind("RunCursorActionIsolated", ACTION_SHIFT_PREV_WORD.id))
+  <!+Right::
   <!Right:: ShiftSwitch(bind("RunCursorActionIsolated", ACTION_NEXT_WORD.id)
                       , bind("RunCursorActionIsolated", ACTION_SHIFT_NEXT_WORD.id))
 #if
