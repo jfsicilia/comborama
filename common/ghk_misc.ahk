@@ -80,9 +80,10 @@ PrintScreen::send #{PrintScreen}
 ;----------------------------------------------------------------------------
 
 ; Sync WSL folders with free file sync.
-#if true
-  Tab & s:: SyncWSL()
-#if
+;#if true
+;  20230306 - Now WSL folders sync is done with Unison.
+;  Tab & s:: SyncWSL()
+;#if
 
 ;----------------------------------------------------------------------------
 ;                              Widgets
