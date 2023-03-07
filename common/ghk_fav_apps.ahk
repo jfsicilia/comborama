@@ -52,6 +52,8 @@ RAlt & LCtrl:: ToggleEverythingApp()
 ; >!space:: ; This combo is defined in the keypirinha settings.
 ; ------ Chro'm'e ------
 >!m:: FocusOrLaunchChrome()
+; ------ C'M'D ------
+>!+m:: FocusOrLaunchCmd()
 ; ------ O'n'e Commander -------
 >!n:: FocusOrLaunchOneCommander()
 ; ------ 'o'pera ------
