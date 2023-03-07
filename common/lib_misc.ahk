@@ -138,6 +138,26 @@ GetDirFromPath(path) {
 }
 
 /*
+  Converts window path to wsl format path.
+  If the path begins with <letter>:\... (like c:\...), it will be converted to
+  /mnt/<letter>/...
+  If the path begins with \\wsl$\<distro>\..., it will be converted to /...
+  
+  path -- Path to convert.
+  return -- Wsl formatted path.
+*/
+Path2WslPath(path) {
+  ; Detect the type of path: \\wsl$\<distro>\... vs <letter>:\...
+  if (InStr(path, "\\wsl$")) 
+    path := SubStr(path, InStr(path, "\", , , 4))
+  else if (SubStr(path, 2, 2) == ":\") 
+    path := "/mnt/" . Format("{:L}", SubStr(path, 1, 1)) . "/" . SubStr(path, 4)
+  path := StrReplace(path, "\", "/")
+  return path
+}
+
+
+/*
   Returns the hexadecimal notation of an int.
   int -- Int to convert to hex.
   return -- Hexadecimal representation of the int (28 -> "0x1C").
