@@ -88,7 +88,7 @@ FocusOrLaunchApp(appExe := "", appTitle := "", appRun := "", hidden := true, app
     ; launching this script in elevation mode.
     ShellRun(appRun, appRunParam)
 
-    WinWait, %winTitle%,,3
+    WinWait, %winTitle%,,2
     if ErrorLevel 
     {
       return 0
@@ -343,6 +343,17 @@ FocusOrLaunchSpotify(hidden := true) {
 */
 FocusOrLaunchWindowsTerminal(hidden := true, params := "") {
   return FocusOrLaunchApp("WindowsTerminal.exe",, "wt.exe", hidden, params)
+}
+
+/*
+  Focus or launch CMD.
+  hidden -- If true forces to look for the app even if it's hidden or in 
+            another desktop.
+  params -- Command line params to set if Windows terminal is launched.
+*/
+FocusOrLaunchCmd(hidden := true, params := "") {
+  ;return FocusOrLaunchApp(,"C:\Windows\system32\cmd.exe", "cmd.exe", hidden, params)
+  return FocusOrLaunchApp("WindowsTerminal.exe",, "cmd.exe", hidden, params)
 }
 
 /*
