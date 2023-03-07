@@ -116,6 +116,7 @@ FileExplorerAutoExec:
                         , bind("__OpenSelectedItemsWith__", Func("__Typora__")))
     ; Explore folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__WindowsTerminal__"))
+                        , bind("__OpenSelectedItemsWith__", Func("__CMD__")) 
                         , bind("__OpenSelectedItemsWith__", Func("__OneCommander__")))
     , func("CopyOtherPane")                 ; Copy to other pane
     , func("MoveOtherPane"))                ; Move to other pane
