@@ -4,6 +4,7 @@
   @jfsicilia 2022.
 */
 #include %A_ScriptDir%\interface.ahk
+#include %A_ScriptDir%\ghk_interface_panes.ahk
 
 TabsInterfaceAutoExec:
   ; Name of interface.
