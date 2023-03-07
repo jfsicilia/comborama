@@ -112,11 +112,11 @@ VSCodeAutoExec:
     , LShiftLCtrlCombo("f")                ; Find
     , NOT_IMPLEMENTED                      ; Duplicate file/folder
     , LCtrlCombo("a")                      ; Select all files/folders
-    , LCtrlCombo("n")                      ; New note
+    , LCtrlCombo("n")                      ; New file
     , LShiftLCtrlCombo("n")                ; New folder
     , NOT_IMPLEMENTED                      ; Context menu
-    , NOT_IMPLEMENTED                      ; View file/folder.
-    , "{Enter}"                            ; Edit note.
+    , NOT_IMPLEMENTED                      ; View file/folder
+    , "{Enter}"                            ; Edit file.
     , NOT_IMPLEMENTED                      ; Explore folder.
     , NOT_IMPLEMENTED                      ; Copy to other pane
     , NOT_IMPLEMENTED)                     ; Move to other pane
