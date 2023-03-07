@@ -32,11 +32,13 @@ WindowsTerminalAutoExec:
   global WT_COMBO_SETTINGS_JSON := "^+,"
   global WT_COMBO_DEFAULTS_JSON := "^!,"
 
+  global WT_WSL_LINUX_DISTRO := "Ubuntu";
+
   ImplementTabsInterface("WindowsTerminal.exe"
     , WT_COMBO_NEXT_TAB                  ; Next tab
     , WT_COMBO_PREV_TAB                  ; Prev tab
     , WT_COMBO_RECENT_TAB                ; Recently used tab
-    , Func("wtGoToTab")                  ; Go to tab by number.
+    , Func("WTGoToTab")                  ; Go to tab by number.
     , NO_BOUND_ACTION_MSGBOX             ; Move tab right.
     , NO_BOUND_ACTION_MSGBOX             ; Move tab left.
     , NO_BOUND_ACTION_MSGBOX             ; Move tab first.
@@ -82,15 +84,42 @@ WindowsTerminalAutoExec:
          , WT_COMBO_SETTINGS
          , WT_COMBO_SETTINGS_JSON
          , WT_COMBO_DEFAULTS_JSON))       
+
+  ImplementFavsInterface("WindowsTerminal.exe"
+    , func("WTGoToFav"))      ; Go to fav.
 return
 
 /*
   Go to tab by number.
   n -- Number of the tab.
 */
-wtGoToTab(n) {
+WTGoToTab(n) {
   SendInputIsolated(LAltLCtrlCombo(n))
 }
+
+/*
+  Go to path.
+  path -- Path to go.
+*/
+WTGoTo(path) {
+  FreeModifiers()
+  path := GetDirFromPath(path) ; Make sure we are dealing with a dir not a file.
+  WinGetActiveTitle, title
+  if (InStr(title, WT_WSL_LINUX_DISTRO))
+    path := Path2WslPath(path)   ; Convert path to wsl's path format.
+  SendInput, cd "%path%"{Enter}
+  SetModifiers()
+}
+
+/*
+  Go to favourite folder by key. The key param will be the key in the 
+  FAV_FOLDERS_PATH dictionary to retrive a path. 
+  key -- Key to retrieve a path in the FAV_FOLDERS_PATH dictionary.
+*/
+WTGoToFav(key) {
+  WTGoTo(FAV_FOLDERS_PATH[key])
+}
+
 
 ; Windows terminal keybindings.
 #if WinActive("ahk_exe WindowsTerminal.exe")
