@@ -17,6 +17,7 @@ LibFoldersAutoExec:
   global DEFAULT_FOLDER:= HOME_FOLDER . "\_"
 
   ; Dictionary with al favourite folders and it's key shortcut.
+  ; Available: a, l, n, q, r, u, v, y.
   global FAV_FOLDERS_PATH := {"_":DEFAULT_FOLDER
                             , "b":DEFAULT_FOLDER . "\read\books"
                             , "c":DEFAULT_FOLDER . "\inbox\scans"
@@ -33,8 +34,9 @@ LibFoldersAutoExec:
                             , "p":DEFAULT_FOLDER . "\personal"
                             , "s":DEFAULT_FOLDER . "\settings"
                             , "t":DEFAULT_FOLDER . "\tmp"
-                            , "w":"\\wsl$\ubuntu\home\" . A_UserName . "\_"
-                            , "x":DEFAULT_FOLDER . "\cloud\dropbox"}
+                            , "w":"\\wsl$\ubuntu\home\" . A_UserName . "\_\wsl_projects"
+                            , "x":DEFAULT_FOLDER . "\cloud\dropbox"
+                            , "z":"\\wsl$\ubuntu\home\" . A_UserName . "\_"}
 ;
   ; Choice selected in GUI. 
   global _favFolderChoice := ""
