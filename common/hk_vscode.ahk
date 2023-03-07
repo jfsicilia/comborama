@@ -101,6 +101,25 @@ VSCodeAutoExec:
       , VSCODE_COMBO_SETTINGS
       , VSCODE_COMBO_SETTINGS_JSON
       , VSCODE_COMBO_KEYBINDINGS_JSON))       
+
+  ImplementFileManagerInterface("Code.exe"
+    , NOT_IMPLEMENTED                      ; Prefiew file/folder
+    , "{Enter}"                            ; Open file/folder
+    , "{Left}"                             ; Go parent folder
+    , "{F2}"                               ; Rename file/folder
+    , NOT_IMPLEMENTED                      ; Refresh file manager
+    , NOT_IMPLEMENTED                      ; Show info of file/folder
+    , LShiftLCtrlCombo("f")                ; Find
+    , NOT_IMPLEMENTED                      ; Duplicate file/folder
+    , LCtrlCombo("a")                      ; Select all files/folders
+    , LCtrlCombo("n")                      ; New note
+    , LShiftLCtrlCombo("n")                ; New folder
+    , NOT_IMPLEMENTED                      ; Context menu
+    , NOT_IMPLEMENTED                      ; View file/folder.
+    , "{Enter}"                            ; Edit note.
+    , NOT_IMPLEMENTED                      ; Explore folder.
+    , NOT_IMPLEMENTED                      ; Copy to other pane
+    , NOT_IMPLEMENTED)                     ; Move to other pane
 return
 
 /*
