@@ -16,6 +16,7 @@ OpenWithInterfaceAutoExec:
   ; Dictionary with bound keys to functions to open items with apps.
   global __OPEN_WITH_FUNCS__ :=  {"v":Func("__Vim__")
                                 , "m":Func("__Chrome__")
+                                , "M":Func("__CMD__")
                                 , "y":Func("__Typora__")
                                 , "e":Func("__FileExplorer__")
                                 , "n":Func("__OneCommander__")
@@ -42,6 +43,7 @@ return
   >!>^k:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "k")
   >!>^l:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "l")
   >!>^m:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "m")
+  >!>^+m:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "M")
   >!>^n:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "n")
   >!>^o:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "o")
   >!>^p:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "p")
@@ -112,6 +114,8 @@ __OpenWithDefaultAction__(key) {
 */
 __WindowsTerminal__(index, path) {
   path := GetDirFromPath(path) ; Make sure we are dealing with a dir not a file.
+  path := Path2WslPath(path)   ; Convert path to wsl's path format.
+
   ; Windows Terminal is tried to be launch only in first file (index = 1). If
   ; it's tried to be launched it will check if it's already running, in that
   ; case a new tab will be created and set to path.
@@ -124,8 +128,32 @@ __WindowsTerminal__(index, path) {
     SendInput, % CtrlCombo("{numpad5}")
     sleep, 300
     ; Set path (wslpath is used to convert path from windows to wsl).
-    SendInput, cd $(wslpath "%path%"){Enter}
+    SendInput, cd "%path%"{Enter}
+    ; There's no need to use wslpath anymore. No the path conversion is done
+    ; adhoc at the beginning of this function.
+    ;SendInput, cd $(wslpath "%path%"){Enter}
   }
+  else ; WindowsTerminal was not running, wait until it loads.
+    sleep, 500
+}
+
+/*
+  Help function that currently handles opening a path in cmd.exe.
+  index -- Index of the file. It allows special treatment for 1st item.
+  path -- Path to open.
+*/
+__CMD__(index, path) {
+  path := GetDirFromPath(path) ; Make sure we are dealing with a dir not a file.
+
+  result := FocusOrLaunchCmd()
+  sleep, 200
+  ; If not the first path or cmd was already opened, open a new tab.
+  if (index > 1) || (result = 1) {
+    ; Open new tab (Shift+Ctrl+2 is the shortcut to create a cmd window tab).
+    SendInput, % ShiftCtrlCombo("2")
+    sleep, 200
+  }
+  SendInput, cd "%path%"{Enter}
 }
 
 /*
@@ -196,29 +224,55 @@ __OneCommander__(index, path) {
           in a new editor tab. A folder path is set in VSCode as a root
           project path.
 */
+;__VSCode__(index, path) {
+;  ; Before the first path is processed, focus or launch VSCode.
+;  if (index = 1) {
+;    result := FocusOrLaunchVSCode()
+;    ; If vscode has been launched, wait until is ready.
+;    if (result = 2) {
+;      WinWait, % "ahk_exe code.exe"
+;      WinActivate, % "ahk_exe code.exe"
+;      sleep, 1500
+;    }
+;  }
+;  
+;  file_or_dir := IsFileOrDir(path)
+;  if (file_or_dir = "D") { ; It's a folder?
+;    SendInput, ^k^o
+;    sleep, 300
+;    SendInput, %path%{Enter}{Enter}
+;    return
+;  }
+;  if (file_or_dir = "F") { ; It's a file?
+;    SendInput, ^o
+;    sleep, 300
+;    SendInput, %path%{Enter}
+;  }
+;}
+
+/*
+  Help function that currently handles opening a path in VSCode.
+  index -- Index of the path to process. If 1 launch or focus VSCode 
+           before trying to open path.
+  path -- Path can be a file path or a folder path. A file path it's opened
+          in a new editor tab. A folder path is set in VSCode as a root
+          project path.
+*/
 __VSCode__(index, path) {
-  ; Before the first path is processed, focus or launch VSCode.
-  if (index = 1) {
-    result := FocusOrLaunchVSCode()
-    ; If vim has been launched, wait until is ready.
-    if (result = 2) {
-      WinWait, % "ahk_exe code.exe"
-      WinActivate, % "ahk_exe code.exe"
-    }
-  }
-  
   file_or_dir := IsFileOrDir(path)
-  if (file_or_dir = "D") { ; It's a folder?
-    SendInput, ^k^o
-    sleep, 300
-    SendInput, %path%{Enter}{Enter}
-    return
+  ; Open WindowsTerminal if dealing with a wsl path or Cmd otherwise.
+  if (InStr(path, "\\wsl$\") > 0) {
+    __WindowsTerminal__(index, path)
+    path := Path2WslPath(path)
   }
-  if (file_or_dir = "F") { ; It's a file?
-    SendInput, ^o
-    sleep, 300
-    SendInput, %path%{Enter}
-  }
+  else
+    __CMD__(index, path)
+
+  ; Open folder if path is a folder or file if it is a file.
+  if (file_or_dir = "D")            ; It's a folder? 
+    SendInput, code .{Enter}
+  else                              ; It's a file.
+    SendInput, code "%path%"{Enter} 
 }
 
 
