@@ -76,6 +76,26 @@ JoplinAutoExec:
 
   ImplementSettingsInterface("Joplin.exe"
     , JOPLIN_COMBO_SETTINGS)                    ; Open settings.
+
+  ImplementFileManagerInterface("Joplin.exe"
+    , NOT_IMPLEMENTED                      ; Prefiew file/folder
+    , NOT_IMPLEMENTED                      ; Open file/folder
+    , NO_BOUND_ACTION_MSGBOX               ; Go parent folder
+    , NOT_IMPLEMENTED                      ; Rename file/folder
+    , NOT_IMPLEMENTED                      ; Refresh file manager
+    , NOT_IMPLEMENTED                      ; Show info of file/folder
+    , NOT_IMPLEMENTED                      ; Find
+    , NOT_IMPLEMENTED                      ; Duplicate file/folder
+    , NOT_IMPLEMENTED                      ; Select all files/folders
+    , JOPLIN_COMBO_NEW_NOTE                ; New note
+    ; New notebook/subnotebook
+    , bind("ShiftSwitch", JOPLIN_COMBO_NEW_NOTEBOOK, JOPLIN_COMBO_NEW_SUBNOTEBOOK)                 
+    , NOT_IMPLEMENTED                      ; Context menu
+    , NOT_IMPLEMENTED                      ; View file/folder.
+    , JOPLIN_COMBO_TOGGLE_EDIT             ; Edit note.
+    , NOT_IMPLEMENTED                      ; Explore folder.
+    , NOT_IMPLEMENTED                      ; Copy to other pane
+    , NOT_IMPLEMENTED)                     ; Move to other pane
 return
 
 ; Add some new shortcuts to Chrome.
