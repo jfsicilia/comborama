@@ -72,17 +72,17 @@ FileExplorerAutoExec:
     , NOT_IMPLEMENTED                      ; Vertical pane split.
     , NOT_IMPLEMENTED)                     ; Close pane.
 
-  ImplementHistoryInterface("Explorer.exe"
+  ImplementHistoryInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , FILE_EXPLORER_COMBO_HISTORY_BACK     ; History back
     , FILE_EXPLORER_COMBO_HISTORY_FORWARD) ; History forward
 
-  ImplementAddressInterface("Explorer.exe"
+  ImplementAddressInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , FILE_EXPLORER_COMBO_ADDRESS_BAR)         ; Focus address bar. 
 
   ImplementFavsInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , func("ExplorerGoToFav"))           ; Go to favourite.
 
-  ImplementEditInterface("Explorer.exe"
+  ImplementEditInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , bind("ShiftSwitch"                         ; Copy
          , FILE_EXPLORER_COMBO_COPY
          , FILE_EXPLORER_COMBO_COPY_PATH)                  
@@ -95,7 +95,7 @@ FileExplorerAutoExec:
     , Func("FileExplorerRedo")                   ; Redo        
     , DEFAULT_IMPLEMENTATION)                    ; Delete
 
-  ImplementFileManagerInterface("Explorer.exe"
+  ImplementFileManagerInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , ""                                    ; Prefiew file/folder
     , FILE_EXPLORER_COMBO_OPEN_FILE_FOLDER  ; Open file/folder
     , FILE_EXPLORER_COMBO_GO_PARENT         ; Go parent folder
@@ -121,11 +121,11 @@ FileExplorerAutoExec:
     , func("CopyOtherPane")                 ; Copy to other pane
     , func("MoveOtherPane"))                ; Move to other pane
 
-  DefaultImplementationOpenWithInterface("Explorer.exe")
+  DefaultImplementationOpenWithInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"])
 
-  DefaultImplementationAltCursorInterface("Explorer.exe")
+  DefaultImplementationAltCursorInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"])
 
-  ImplementSeekAndSelInterface("Explorer.exe"
+  ImplementSeekAndSelInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
     , FILE_EXPLORER_COMBO_ADDRESS_BAR              ; Ctrl + Space
     , NO_BOUND_ACTION_MSGBOX                       ; Ctrl + Shift + Space
     , bind("ShowFavFoldersListBox"
@@ -150,7 +150,7 @@ return
 ; Keybinding to set focus in file explorer (Open and Save As dialogs).
 #if WinActive("ahk_class #32770")
   ; This will set focus on the filename textbox.
-  SC055 & F6::ControlFocus, Edit1, A
+  SC055 & F6::ControlFocus, Edit2, A
 #If
 
 /*
