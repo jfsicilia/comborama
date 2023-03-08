@@ -33,7 +33,10 @@ JoplinAutoExec:
   global JOPLIN_COMBO_NEW_SUBNOTEBOOK := LShiftLAltLCtrlCombo("s")
   global JOPLIN_COMBO_NEW_TODO := LAltLCtrlCombo("d")
   global JOPLIN_COMBO_SEARCH_IN_NOTE := "/"
-  global VIM_COMBO_EXT_OPEN_FILE := "gX"
+
+  global VIM_COMBO_EXT_OPEN_IN_TYPORA := "gO"
+  global VIM_COMBO_EXT_OPEN_IN_CHROME := "gX"
+  global VIM_COMBO_EXT_OPEN_IN_VSCODE := "gZ"
 
   global JOPLIN_COMBO_SETTINGS := LCtrlCombo(",")                    
 
@@ -89,10 +92,15 @@ JoplinAutoExec:
     , NOT_IMPLEMENTED                      ; Select all files/folders
     , JOPLIN_COMBO_NEW_NOTE                ; New note
     ; New notebook/subnotebook
-    , bind("ShiftSwitch", JOPLIN_COMBO_NEW_NOTEBOOK, JOPLIN_COMBO_NEW_SUBNOTEBOOK)                 
+    , bind("ShiftSwitch", JOPLIN_COMBO_NEW_NOTE
+                        , JOPLIN_COMBO_NEW_NOTEBOOK
+                        , JOPLIN_COMBO_NEW_SUBNOTEBOOK)                 
     , NOT_IMPLEMENTED                      ; Context menu
-    , NOT_IMPLEMENTED                      ; View file/folder.
-    , JOPLIN_COMBO_TOGGLE_EDIT             ; Edit note.
+    , func("JoplinOpenInChrome")           ; View file/folder.
+    ; Edit note.
+    , bind("ShiftSwitch", Func("JoplinEditInVim")   
+                        , Func("JoplinEditInVSCode")
+                        , Func("JoplinEditInTypora"))
     , NOT_IMPLEMENTED                      ; Explore folder.
     , NOT_IMPLEMENTED                      ; Copy to other pane
     , NOT_IMPLEMENTED)                     ; Move to other pane
@@ -135,10 +143,11 @@ return
   return
 
   ; Focus panes.
-  >#<!b:: SendInputIsolated(JOPLIN_COMBO_FOCUS_BODY)
-  >#<!n:: SendInputIsolated(JOPLIN_COMBO_FOCUS_NOTELIST)
-  >#<!t:: SendInputIsolated(JOPLIN_COMBO_FOCUS_TITLE)
-  >#<!s:: SendInputIsolated(JOPLIN_COMBO_FOCUS_SIDEBAR)
+  >#<!:: return
+  >#<!b:: SendInputFree(JOPLIN_COMBO_FOCUS_BODY)
+  >#<!n:: SendInputFree(JOPLIN_COMBO_FOCUS_NOTELIST)
+  >#<!t:: SendInputFree(JOPLIN_COMBO_FOCUS_TITLE)
+  >#<!s:: SendInputFree(JOPLIN_COMBO_FOCUS_SIDEBAR)
 
   ; Pin/Unpin tab.
   >#<^p::  JoplinRunPaletteCmd(JOPLIN_CMD_PIN_TAB)
@@ -187,24 +196,50 @@ JoplinToggleRecent() {
 
 /*
   Open note in chrome. To do this, open note in external editor (in my case
-  gVim. In gVim, issue command to open current file in external app (in my 
-  case chrome) and close gVim (in my vim configuration, it is bound to
-  <VIM_COMBO_EXT_OPEN_FILE>). Then focus back joplin to toggle note editing 
+  gVim. In gVim, issue command to open current file in external app 
+  (vimOpenCommand) and close gVim. Then focus back joplin to toggle note editing 
   off (in joplin it is bound to <JOPLIN_COMBO_TOGGLE_EDIT>). 
   Finally, focus chrome and activate web page. 
 */
-JoplinOpenInChrome() {
+JoplinOpenIn(vimOpenCommand) {
   FreeModifiers()
   SendInput, %JOPLIN_COMBO_TOGGLE_EDIT%
   Sleep, 500
-  SendInput, %VIM_COMBO_EXT_OPEN_FILE%
+  SendInput, %vimOpenCommand%
   Sleep, 1000
   FocusOrLaunchJoplin()
   Sleep, 300
   SendInput, %JOPLIN_COMBO_TOGGLE_EDIT%
   Sleep, 300
+  SetModifiers()
+}
+
+JoplinOpenInChrome() {
+  JoplinOpenIn(VIM_COMBO_EXT_OPEN_IN_CHROME) 
   FocusOrLaunchChrome()
   ClickWndCenter()
+}
+
+JoplinEditIn(vimOpenCommand) {
+  FreeModifiers()
+  SendInput, %JOPLIN_COMBO_TOGGLE_EDIT%
+  Sleep, 500
+  SendInput, %vimOpenCommand%
+  Sleep, 1000
   SetModifiers()
+}
+
+JoplinEditInVim() {
+  SendInputIsolated(JOPLIN_COMBO_TOGGLE_EDIT)
+}
+
+JoplinEditInVSCode() {
+  JoplinEditIn(VIM_COMBO_EXT_OPEN_IN_VSCODE) 
+  FocusOrLaunchVSCode()
+}
+
+JoplinEditInTypora() {
+  JoplinEditIn(VIM_COMBO_EXT_OPEN_IN_TYPORA) 
+  FocusOrLaunchTypora()
 }
 
