@@ -58,8 +58,8 @@ GenGuiOptions(optionsDict) {
   ; Create a string with all the options separated with |.
   sep := ""
   guiOptions := ""
-  for key, value in optionsDict {
-    guiOptions .= sep . key . " - " . value
+  for key in optionsDict {
+    guiOptions .= sep . key . " - " . optionsDict.item(key)
     sep := "|"
   }
   return guiOptions

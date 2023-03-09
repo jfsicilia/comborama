@@ -169,7 +169,7 @@ ExplorerGoTo(path) {
   key -- Key to retrieve a path in the FAV_FOLDERS_PATH dictionary.
 */
 ExplorerGoToFav(key) {
-  ExplorerGoTo(FAV_FOLDERS_PATH[key])
+  ExplorerGoTo(FAV_FOLDERS_PATH.item(key))
 }
 
 /*

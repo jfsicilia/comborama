@@ -28,9 +28,10 @@ EverythingAutoExec:
   global EVERYTHING_COMBO_FOCUS_FIND_TXTBOX := EVERYTHING_COMBO_SHOW_EVERYTHING
 
   ; Dictionary with favourite searches, and key associated.
-  global FAV_EVERYTHING_SEARCHES := {"p":"books\ python *.pdf"
-                                   , "e":"books/ electronics/ *.pdf"
-                                   , "m":"books/ mathematics/ *.pdf"}
+  global FAV_EVERYTHING_SEARCHES := ComObjCreate("Scripting.Dictionary")
+  FAV_EVERYTHING_SEARCHES.item("p") := "books\ python *.pdf"
+  FAV_EVERYTHING_SEARCHES.item("e") := "books/ electronics/ *.pdf"
+  FAV_EVERYTHING_SEARCHES.item("m") := "books/ mathematics/ *.pdf"
 
   ImplementHistoryInterface("Everything.exe"
     , Func("EverythingBackInHistory")         ; History back
@@ -158,6 +159,6 @@ EverythingSearch(search) {
   key -- Key to retrieve a path in the FAV_EVERYTHING_SEARCHERS dictionary.
 */
 EverythingGoToFav(key) {
-  EverythingSearch(FAV_EVERYTHING_SEARCHES[key])
+  EverythingSearch(FAV_EVERYTHING_SEARCHES.item(key))
 }
 

@@ -15,29 +15,34 @@ LibFoldersAutoExec:
   global USER:=A_Username
   global HOME_FOLDER:=userProfile
   global DEFAULT_FOLDER:= HOME_FOLDER . "\_"
+  global WSL_HOME_FOLDER:= "\\wsl$\ubuntu\home\" . USER
+  global WSL_DEFAULT_FOLDER:= WSL_HOME_FOLDER . "\_"
 
   ; Dictionary with al favourite folders and it's key shortcut.
   ; Available: a, l, n, q, r, u, v, y.
-  global FAV_FOLDERS_PATH := {"_":DEFAULT_FOLDER
-                            , "b":DEFAULT_FOLDER . "\read\books"
-                            , "c":DEFAULT_FOLDER . "\inbox\scans"
-                            , "d":DEFAULT_FOLDER . "\inbox\downloads"
-                            , "e":DEFAULT_FOLDER . "\job\enaire"
-                            , "f":DEFAULT_FOLDER . "\image\photo"
-                            , "g":"\\192.168.1.10\"
-                            , "h":HOME_FOLDER
-                            , "i":DEFAULT_FOLDER . "\inbox"
-                            , "j":DEFAULT_FOLDER . "\projects"
-                            , "k":DEFAULT_FOLDER . "\settings\autohotkey\common"
-                            , "m":"\\192.168.3.10\"
-                            , "o":HOME_FOLDER . "\Pictures\Screenshots"
-                            , "p":DEFAULT_FOLDER . "\personal"
-                            , "s":DEFAULT_FOLDER . "\settings"
-                            , "t":DEFAULT_FOLDER . "\tmp"
-                            , "w":"\\wsl$\ubuntu\home\" . A_UserName . "\_\wsl_projects"
-                            , "x":DEFAULT_FOLDER . "\cloud\dropbox"
-                            , "z":"\\wsl$\ubuntu\home\" . A_UserName . "\_"}
-;
+  global FAV_FOLDERS_PATH := ComObjCreate("Scripting.Dictionary")
+  FAV_FOLDERS_PATH.item("_") := DEFAULT_FOLDER
+  FAV_FOLDERS_PATH.item("-") := WSL_DEFAULT_FOLDER
+  FAV_FOLDERS_PATH.item("b") := DEFAULT_FOLDER . "\read\books"
+  FAV_FOLDERS_PATH.item("c") := DEFAULT_FOLDER . "\inbox\scans"
+  FAV_FOLDERS_PATH.item("d") := DEFAULT_FOLDER . "\inbox\downloads"
+  FAV_FOLDERS_PATH.item("e") := DEFAULT_FOLDER . "\job\enaire"
+  FAV_FOLDERS_PATH.item("f") := DEFAULT_FOLDER . "\image\photo"
+  FAV_FOLDERS_PATH.item("g") := "\\192.168.1.10\"
+  FAV_FOLDERS_PATH.item("h") := HOME_FOLDER
+  FAV_FOLDERS_PATH.item("H") := WSL_HOME_FOLDER
+  FAV_FOLDERS_PATH.item("i") := DEFAULT_FOLDER . "\inbox"
+  FAV_FOLDERS_PATH.item("j") := DEFAULT_FOLDER . "\projects"
+  FAV_FOLDERS_PATH.item("J") := WSL_DEFAULT_FOLDER . "\wsl_projects"
+  FAV_FOLDERS_PATH.item("k") := DEFAULT_FOLDER . "\settings\autohotkey\common"
+  FAV_FOLDERS_PATH.item("m") := "\\192.168.3.10\"
+  FAV_FOLDERS_PATH.item("o") := HOME_FOLDER . "\Pictures\Screenshots"
+  FAV_FOLDERS_PATH.item("p") := DEFAULT_FOLDER . "\personal"
+  FAV_FOLDERS_PATH.item("s") := DEFAULT_FOLDER . "\settings"
+  FAV_FOLDERS_PATH.item("t") := DEFAULT_FOLDER . "\tmp"
+  FAV_FOLDERS_PATH.item("T") := WSL_DEFAULT_FOLDER . "\tmp"
+  FAV_FOLDERS_PATH.item("x") := DEFAULT_FOLDER . "\cloud\dropbox"
+
   ; Choice selected in GUI. 
   global _favFolderChoice := ""
   ; Handler of the app window where GUI Listbox was launched.
@@ -59,7 +64,7 @@ ShowFavFoldersListBox(optionsDict, goToFolderFunc) {
   guiOptions := GenGuiOptions(optionsDict)
 
   Gui, FavFolderGUI:New, -MinimizeBox
-  Gui, FavFolderGUI:Add, ListBox, gFavFolderAction v_favFolderChoice W500 R20, %guiOptions%
+  Gui, FavFolderGUI:Add, ListBox, gFavFolderAction v_favFolderChoice W500 R22, %guiOptions%
   Gui, FavFolderGUI:Show,, Choose_folder
 }
 
@@ -73,7 +78,7 @@ ShowFavFoldersListBox(optionsDict, goToFolderFunc) {
     Gui, FavFolderGUI:Submit
     Gui, FavFolderGUI:Destroy
     WinActivate, ahk_id %_favFolderAppHwnd%
-    _favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH[SubStr(_favFolderChoice,1,1)])
+    _favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH.item(SubStr(_favFolderChoice,1,1)))
   return 
 
   ~Up::  ;  <-- Keys listed here WILL NOT trigger a selection. 

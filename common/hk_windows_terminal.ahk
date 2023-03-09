@@ -117,7 +117,7 @@ WTGoTo(path) {
   key -- Key to retrieve a path in the FAV_FOLDERS_PATH dictionary.
 */
 WTGoToFav(key) {
-  WTGoTo(FAV_FOLDERS_PATH[key])
+  WTGoTo(FAV_FOLDERS_PATH.item(key))
 }
 
 
