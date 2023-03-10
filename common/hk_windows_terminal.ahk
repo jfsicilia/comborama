@@ -32,7 +32,7 @@ WindowsTerminalAutoExec:
   global WT_COMBO_SETTINGS_JSON := "^+,"
   global WT_COMBO_DEFAULTS_JSON := "^!,"
 
-  global WT_WSL_LINUX_DISTRO := "Ubuntu"
+  global WT_WSL_LINUX_DISTRO := "Linux"
 
   ImplementTabsInterface("WindowsTerminal.exe"
     , WT_COMBO_NEXT_TAB                  ; Next tab
