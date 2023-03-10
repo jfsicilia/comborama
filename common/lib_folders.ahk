@@ -19,10 +19,12 @@ LibFoldersAutoExec:
   global WSL_DEFAULT_FOLDER:= WSL_HOME_FOLDER . "\_"
 
   ; Dictionary with al favourite folders and it's key shortcut.
-  ; Available: a, l, n, q, r, u, v, y.
+  ; Available: a, l, n, q, r, u.
   global FAV_FOLDERS_PATH := ComObjCreate("Scripting.Dictionary")
   FAV_FOLDERS_PATH.item("_") := DEFAULT_FOLDER
   FAV_FOLDERS_PATH.item("-") := WSL_DEFAULT_FOLDER
+  FAV_FOLDERS_PATH.item("a") := DEFAULT_FOLDER . "\projects\dev\javascript"
+  FAV_FOLDERS_PATH.item("A") := DEFAULT_FOLDER . "\wsl_projects\dev\javascript"
   FAV_FOLDERS_PATH.item("b") := DEFAULT_FOLDER . "\read\books"
   FAV_FOLDERS_PATH.item("c") := DEFAULT_FOLDER . "\inbox\scans"
   FAV_FOLDERS_PATH.item("d") := DEFAULT_FOLDER . "\inbox\downloads"
@@ -41,6 +43,10 @@ LibFoldersAutoExec:
   FAV_FOLDERS_PATH.item("s") := DEFAULT_FOLDER . "\settings"
   FAV_FOLDERS_PATH.item("t") := DEFAULT_FOLDER . "\tmp"
   FAV_FOLDERS_PATH.item("T") := WSL_DEFAULT_FOLDER . "\tmp"
+  FAV_FOLDERS_PATH.item("v") := DEFAULT_FOLDER . "\projects\dev"
+  FAV_FOLDERS_PATH.item("V") := WSL_DEFAULT_FOLDER . "\wsl_projects\dev"
+  FAV_FOLDERS_PATH.item("y") := DEFAULT_FOLDER . "\projects\dev\python"
+  FAV_FOLDERS_PATH.item("Y") := WSL_DEFAULT_FOLDER . "\wsl_projects\dev\python"
   FAV_FOLDERS_PATH.item("x") := DEFAULT_FOLDER . "\cloud\dropbox"
 
   ; Choice selected in GUI. 
@@ -64,7 +70,7 @@ ShowFavFoldersListBox(optionsDict, goToFolderFunc) {
   guiOptions := GenGuiOptions(optionsDict)
 
   Gui, FavFolderGUI:New, -MinimizeBox
-  Gui, FavFolderGUI:Add, ListBox, gFavFolderAction v_favFolderChoice W500 R22, %guiOptions%
+  Gui, FavFolderGUI:Add, ListBox, gFavFolderAction v_favFolderChoice W500 R30, %guiOptions%
   Gui, FavFolderGUI:Show,, Choose_folder
 }
 
