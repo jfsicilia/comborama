@@ -40,6 +40,7 @@ LibFoldersAutoExec:
   FAV_FOLDERS_PATH.item("m") := "\\192.168.3.10\"
   FAV_FOLDERS_PATH.item("o") := HOME_FOLDER . "\Pictures\Screenshots"
   FAV_FOLDERS_PATH.item("p") := DEFAULT_FOLDER . "\personal"
+  FAV_FOLDERS_PATH.item("r") := DEFAULT_FOLDER . "\resources"
   FAV_FOLDERS_PATH.item("s") := DEFAULT_FOLDER . "\settings"
   FAV_FOLDERS_PATH.item("t") := DEFAULT_FOLDER . "\tmp"
   FAV_FOLDERS_PATH.item("T") := WSL_DEFAULT_FOLDER . "\tmp"
