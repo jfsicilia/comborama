@@ -56,8 +56,8 @@ GoSub MiscAutoExec
 GoSub WindowAutoExec
 GoSub GVimAutoExec
 GoSub VSCodeAutoExec
-GoSub WindowsTerminalAutoExec
 GoSub LibFoldersAutoExec
+GoSub WindowsTerminalAutoExec
 GoSub LibSearchesAutoExec
 GoSub FileExplorerAutoExec
 GoSub EverythingAutoExec
