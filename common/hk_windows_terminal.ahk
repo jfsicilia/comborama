@@ -3,6 +3,16 @@
 
   @jfsicilia 2022.
 */
+
+#include %A_ScriptDir%\lib_misc.ahk
+#include %A_ScriptDir%\ghk_interface_tabs.ahk
+#include %A_ScriptDir%\ghk_interface_history.ahk
+#include %A_ScriptDir%\ghk_interface_address.ahk
+#include %A_ScriptDir%\ghk_interface_favs.ahk
+#include %A_ScriptDir%\ghk_interface_edit.ahk
+#include %A_ScriptDir%\ghk_interface_file_manager.ahk
+#include %A_ScriptDir%\ghk_interface_alt_cursor.ahk
+
 WindowsTerminalAutoExec:
   global WT_COMBO_RECENT_PANE := AltCtrlCombo("{left}")
   global WT_COMBO_RIGHT_PANE := CtrlCombo("{numpad6}")
@@ -32,7 +42,7 @@ WindowsTerminalAutoExec:
   global WT_COMBO_SETTINGS_JSON := "^+,"
   global WT_COMBO_DEFAULTS_JSON := "^!,"
 
-  global WT_WSL_LINUX_DISTRO := "Ubuntu"
+  global WT_WSL_LINUX_DISTRO := "Linux"
 
   ImplementTabsInterface("WindowsTerminal.exe"
     , WT_COMBO_NEXT_TAB                  ; Next tab
@@ -87,6 +97,15 @@ WindowsTerminalAutoExec:
 
   ImplementFavsInterface("WindowsTerminal.exe"
     , func("WTGoToFav"))      ; Go to fav.
+
+  ImplementSeekAndSelInterface("WindowsTerminal.exe"
+    , LCtrlCombo("p")                                 ; Ctrl + Space
+    , NO_BOUND_ACTION_MSGBOX                          ; Ctrl + Shift + Space
+    , bind("ShowFavFoldersListBox"
+        , FAV_FOLDERS_PATH, func("WTGoTo"))           ; Alt + Space
+    , NO_BOUND_ACTION_MSGBOX                          ; Alt + Shift + Space
+    , NO_BOUND_ACTION_MSGBOX                          ; Win + Space
+    , NO_BOUND_ACTION_MSGBOX)                         ; Win + Shift + Space
 return
 
 /*
@@ -117,7 +136,7 @@ WTGoTo(path) {
   key -- Key to retrieve a path in the FAV_FOLDERS_PATH dictionary.
 */
 WTGoToFav(key) {
-  WTGoTo(FAV_FOLDERS_PATH[key])
+  WTGoTo(FAV_FOLDERS_PATH.item(key))
 }
 
 
