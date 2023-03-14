@@ -102,24 +102,21 @@ VSCodeAutoExec:
       , VSCODE_COMBO_SETTINGS_JSON
       , VSCODE_COMBO_KEYBINDINGS_JSON))       
 
-  ImplementFileManagerInterface("Code.exe"
-    , NOT_IMPLEMENTED                      ; Prefiew file/folder
-    , "{Enter}"                            ; Open file/folder
-    , "{Left}"                             ; Go parent folder
-    , "{F2}"                               ; Rename file/folder
-    , NOT_IMPLEMENTED                      ; Refresh file manager
-    , NOT_IMPLEMENTED                      ; Show info of file/folder
-    , LShiftLCtrlCombo("f")                ; Find
-    , NOT_IMPLEMENTED                      ; Duplicate file/folder
-    , LCtrlCombo("a")                      ; Select all files/folders
-    , LCtrlCombo("n")                      ; New file
-    , LShiftLCtrlCombo("n")                ; New folder
-    , NOT_IMPLEMENTED                      ; Context menu
-    , NOT_IMPLEMENTED                      ; View file/folder
-    , "{Enter}"                            ; Edit file.
-    , NOT_IMPLEMENTED                      ; Explore folder.
-    , NOT_IMPLEMENTED                      ; Copy to other pane
-    , NOT_IMPLEMENTED)                     ; Move to other pane
+  ; NOTE: Edit interface is implemented by default by all apps. We need to
+  ; disable it adhoc to let VSCode Vim mode to work properly with Capslock
+  ; combos.
+  ImplementEditInterface("Code.exe"
+    , NOT_IMPLEMENTED                     ; Copy   (Capslock + c -> Ctrl + c)
+    , NOT_IMPLEMENTED                     ; Cut    (Capslock + x -> Ctrl + x)
+    , NOT_IMPLEMENTED                     ; Paste  (Capslock + v -> Ctrl + v)   
+    , NOT_IMPLEMENTED                     ; Undo   (Capslock + z -> Ctrl + z)
+    , NOT_IMPLEMENTED                     ; Redo   (Capslock + Shift + z -> Ctrl + Shift + z)
+    ; This one will not interfere.
+    , DEFAULT_IMPLEMENTATION)             ; Delete (Capslock + Backspace -> Del)
+
+  ; NOTE: Cannot implement FileManagerInterface. It will interfere with vscode 
+  ; vim mode. Same functionality is obtained by adding commands to 
+  ; keybindings.json
 return
 
 /*
