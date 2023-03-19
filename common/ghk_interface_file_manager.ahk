@@ -114,19 +114,21 @@ return
 
 ; Preview file
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_PREVIEW.id) && (!altTabLaunched))
-  ; Open Seer app, without focusing seer popup window.
-  SC055 & space:: RunFileManagerActionIsolated(ACTION_PREVIEW.id) 
-
-  ; Focus Seer app. If already opened set focus on it, if not open it and set
-  ; focus.
-  SC055 & SC056::
-    SendInputFree(SEER_FOCUS_COMBO)
-    sleep, 100
-    if (WinActive("ahk_exe Seer.exe"))
-      return
-    SendInputFree(SEER_OPEN_COMBO)
-    sleep, 100
-    SendInputFree(SEER_FOCUS_COMBO)
+  SC055 & space:: 
+    if (!GetKeyState("Shift", "P")) {
+      ; Open Seer app, without focusing seer popup window.
+      RunFileManagerActionIsolated(ACTION_PREVIEW.id) 
+    } else {
+      ; Focus Seer app. If already opened set focus on it, if not open it and set
+      ; focus.
+      SendInputFree(SEER_FOCUS_COMBO)
+      sleep, 100
+      if (WinActive("ahk_exe Seer.exe"))
+        return
+      SendInputFree(SEER_OPEN_COMBO)
+      sleep, 100
+      SendInputFree(SEER_FOCUS_COMBO)
+    }
   return
 #if
 
@@ -138,7 +140,7 @@ return
   ESC:: CloseWindow(), FreeModifiers(), RecentActiveWindow()
 
   ; Unfocus seer app. 
-  SC055 & SC056::
+;  SC055 & SC056::
   SC055 & space:: RecentActiveWindow()
 #if
 
