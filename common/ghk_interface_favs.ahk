@@ -73,11 +73,46 @@ return
   >+<!y up::     RunFavsActionIsolated(ACTION_GO_TO_FAV.id, "Y")
   <+<!z up::     RunFavsActionIsolated(ACTION_GO_TO_FAV.id, "z")
   >+<!z up::     RunFavsActionIsolated(ACTION_GO_TO_FAV.id, "Z")
+  SC15D & space:: FavShiftSwitch("_")
+  SC15D & a::     FavShiftSwitch("a")
+  SC15D & b::     FavShiftSwitch("b")
+  SC15D & c::     FavShiftSwitch("c")
+  SC15D & d::     FavShiftSwitch("d")
+  SC15D & e::     FavShiftSwitch("e")
+  SC15D & f::     FavShiftSwitch("f")
+  SC15D & g::     FavShiftSwitch("g")
+  SC15D & h::     FavShiftSwitch("h")
+  SC15D & i::     FavShiftSwitch("i")
+  SC15D & j::     FavShiftSwitch("j")
+  SC15D & k::     FavShiftSwitch("k")
+  SC15D & l::     FavShiftSwitch("l")
+  SC15D & m::     FavShiftSwitch("m")
+  SC15D & n::     FavShiftSwitch("n")
+  SC15D & o::     FavShiftSwitch("o")
+  SC15D & p::     FavShiftSwitch("p")
+  SC15D & q::     FavShiftSwitch("q")
+  SC15D & r::     FavShiftSwitch("r")
+  SC15D & s::     FavShiftSwitch("s")
+  SC15D & t::     FavShiftSwitch("t")
+  SC15D & u::     FavShiftSwitch("u")
+  SC15D & v::     FavShiftSwitch("v")
+  SC15D & w::     FavShiftSwitch("w")
+  SC15D & x::     FavShiftSwitch("x")
+  SC15D & y::     FavShiftSwitch("y")
+  SC15D & z::     FavShiftSwitch("z")
 #if
 
 ;----------------------------------------------------------------------  
 ;------------------------ HELPER FUNCTIONS ----------------------------  
 ;----------------------------------------------------------------------  
+/*
+*/
+FavShiftSwitch(key) {                       
+  ShiftSwitch(bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, key)
+            , bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, "<+" . key)
+            , bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, ">+" . key))
+
+}
 
 /*
   Call this function to implement the interface. 
