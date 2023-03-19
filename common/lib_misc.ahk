@@ -113,7 +113,7 @@ IsFileOrDir(path) {
   result := FileExist(path)
   if (!result) ; Path does not exist.
     return ""
-  if (InStr(result, "D"))  ; It's a folder?
+  if (InStr(result, "D") || InStr(result, "X"))  ; It's a folder?
     return "D"
   return "F" ; It's a file.
 }
