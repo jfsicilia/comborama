@@ -22,32 +22,51 @@ LibFoldersAutoExec:
   ; Available: a, l, n, q, r, u.
   global FAV_FOLDERS_PATH := ComObjCreate("Scripting.Dictionary")
   FAV_FOLDERS_PATH.item("_") := DEFAULT_FOLDER
-  FAV_FOLDERS_PATH.item("-") := WSL_DEFAULT_FOLDER
-  FAV_FOLDERS_PATH.item("a") := DEFAULT_FOLDER . "\projects\dev\javascript"
-  FAV_FOLDERS_PATH.item("A") := DEFAULT_FOLDER . "\wsl_projects\dev\javascript"
+  FAV_FOLDERS_PATH.item("<+_") := DEFAULT_FOLDER
+  FAV_FOLDERS_PATH.item(">+_") := WSL_DEFAULT_FOLDER
+
   FAV_FOLDERS_PATH.item("b") := DEFAULT_FOLDER . "\read\books"
+
   FAV_FOLDERS_PATH.item("c") := DEFAULT_FOLDER . "\inbox\scans"
+
   FAV_FOLDERS_PATH.item("d") := DEFAULT_FOLDER . "\inbox\downloads"
+
   FAV_FOLDERS_PATH.item("e") := DEFAULT_FOLDER . "\job\enaire"
+
   FAV_FOLDERS_PATH.item("f") := DEFAULT_FOLDER . "\image\photo"
+
   FAV_FOLDERS_PATH.item("g") := "\\192.168.1.10\"
+
   FAV_FOLDERS_PATH.item("h") := HOME_FOLDER
-  FAV_FOLDERS_PATH.item("H") := WSL_HOME_FOLDER
+  FAV_FOLDERS_PATH.item("<+h") := HOME_FOLDER
+  FAV_FOLDERS_PATH.item(">+h") := WSL_HOME_FOLDER
+
   FAV_FOLDERS_PATH.item("i") := DEFAULT_FOLDER . "\inbox"
+
   FAV_FOLDERS_PATH.item("j") := DEFAULT_FOLDER . "\projects"
-  FAV_FOLDERS_PATH.item("J") := WSL_DEFAULT_FOLDER . "\wsl_projects"
+  FAV_FOLDERS_PATH.item("<+j") := DEFAULT_FOLDER . "\projects.win"
+  FAV_FOLDERS_PATH.item(">+j") := WSL_DEFAULT_FOLDER . "\projects.wsl"
+
   FAV_FOLDERS_PATH.item("k") := DEFAULT_FOLDER . "\settings\autohotkey\common"
+
   FAV_FOLDERS_PATH.item("m") := "\\192.168.3.10\"
+
   FAV_FOLDERS_PATH.item("o") := HOME_FOLDER . "\Pictures\Screenshots"
+
   FAV_FOLDERS_PATH.item("p") := DEFAULT_FOLDER . "\personal"
+
   FAV_FOLDERS_PATH.item("r") := DEFAULT_FOLDER . "\resources"
+
   FAV_FOLDERS_PATH.item("s") := DEFAULT_FOLDER . "\settings"
+
   FAV_FOLDERS_PATH.item("t") := DEFAULT_FOLDER . "\tmp"
-  FAV_FOLDERS_PATH.item("T") := WSL_DEFAULT_FOLDER . "\tmp"
+  FAV_FOLDERS_PATH.item("<+t") := DEFAULT_FOLDER . "\tmp"
+  FAV_FOLDERS_PATH.item(">+t") := WSL_DEFAULT_FOLDER . "\tmp"
+
   FAV_FOLDERS_PATH.item("v") := DEFAULT_FOLDER . "\projects\dev"
-  FAV_FOLDERS_PATH.item("V") := WSL_DEFAULT_FOLDER . "\wsl_projects\dev"
-  FAV_FOLDERS_PATH.item("y") := DEFAULT_FOLDER . "\projects\dev\python"
-  FAV_FOLDERS_PATH.item("Y") := WSL_DEFAULT_FOLDER . "\wsl_projects\dev\python"
+  FAV_FOLDERS_PATH.item("<+v") := DEFAULT_FOLDER . "\projects.win\dev"
+  FAV_FOLDERS_PATH.item(">+v") := WSL_DEFAULT_FOLDER . "\projects.wsl\dev"
+
   FAV_FOLDERS_PATH.item("x") := DEFAULT_FOLDER . "\cloud\dropbox"
 
   ; Choice selected in GUI. 
