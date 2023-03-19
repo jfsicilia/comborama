@@ -80,10 +80,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\lib_active_window_polling.ahk
 
 ; Modifiers.
-; mod_great_less.ahk Converts the spanish "< >" key in a modifier (SC053 code).
-; NOTE: If this script is loaded here it interferes with other modifiers, therefore
-; it must be run independently (best option run it at login with task scheduler).
-; #include %A_ScriptDir%\mod_great_less.ahk
+#include %A_ScriptDir%\mod_great_less.ahk
 #include %A_ScriptDir%\mod_capslock.ahk
 #include %A_ScriptDir%\mod_tab.ahk
 
