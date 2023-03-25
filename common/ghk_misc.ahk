@@ -39,6 +39,10 @@ LCtrl & Tab:: AltTabLaunch()
 ;                             Print Screen
 ;----------------------------------------------------------------------------
 
+#if true
+  Tab & p:: ShiftSwitch("#{PrintScreen}", "#+s")
+#if
+
 ; Capture entire screen with PrintScreen
 PrintScreen::send #{PrintScreen}
 
