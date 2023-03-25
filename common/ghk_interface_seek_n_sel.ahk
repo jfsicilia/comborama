@@ -23,7 +23,7 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
-; Ctrl + Space
+; Ctrl + Space (typical for fast access files or tabs)
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_CTRL_SPACE.id) && (!altTabLaunched))
   <^space::       RunSeekAndSelActionIsolated(ACTION_CTRL_SPACE.id)
 #if
@@ -33,7 +33,7 @@ return
   <^+space::      RunSeekAndSelActionIsolated(ACTION_CTRL_SHIFT_SPACE.id)
 #if
 
-; Alt + Space
+; Alt + Space (typical for fast access bookmarks)
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_ALT_SPACE.id) && (!altTabLaunched))
   <!space::       RunSeekAndSelActionIsolated(ACTION_ALT_SPACE.id)
 #if
@@ -43,7 +43,7 @@ return
   <!+space::      RunSeekAndSelActionIsolated(ACTION_ALT_SHIFT_SPACE.id)
 #if
 
-; Win + Space
+; Win + Space (typical for fast access history)
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_WIN_SPACE.id) && (!altTabLaunched))
   <#space::       RunSeekAndSelActionIsolated(ACTION_WIN_SPACE.id)
 #if
