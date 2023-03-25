@@ -70,8 +70,12 @@ return
 
 ; Move to start/end of text or select to start/end of text.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_END_TEXT.id) && (!altTabLaunched))
+  <^+down::
+  <^down::
   SC055 & down:: ShiftSwitch(bind("RunCursorActionFree", ACTION_END_TEXT.id)
                               , bind("RunCursorActionFree", ACTION_SHIFT_END_TEXT.id))
+  <^+up::
+  <^up::
   SC055 & up:: ShiftSwitch(bind("RunCursorActionFree", ACTION_START_TEXT.id)
                             , bind("RunCursorActionFree", ACTION_SHIFT_START_TEXT.id))
 #if
@@ -185,7 +189,7 @@ ImplementCursorInterface(appsId
   app[ACTION_PAGE_DOWN.id]        
     := (pageDown != DEFAULT_IMPLEMENTATION) ? pageDown : ACTION_PAGE_DOWN.default
   app[ACTION_SHIFT_PAGE_DOWN.id]
-    := (shiftPageDown != DEFAULT_IMPLEMENTATION) ? shiftPageDown : .default
+    := (shiftPageDown != DEFAULT_IMPLEMENTATION) ? shiftPageDown : ACTION_SHIFT_PAGE_DOWN.default
   app[ACTION_PREV_WORD.id]
     := (prevWord != DEFAULT_IMPLEMENTATION) ?  prevWord :     ACTION_PREV_WORD.default
   app[ACTION_SHIFT_PREV_WORD.id]
