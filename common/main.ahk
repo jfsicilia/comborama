@@ -45,6 +45,7 @@ GoSub PanesInterfaceAutoExec
 GoSub HistoryInterfaceAutoExec
 GoSub AddressInterfaceAutoExec
 GoSub FavsInterfaceAutoExec
+GoSub FocusAndToggleInterfaceAutoExec
 GoSub CursorInterfaceAutoExec
 GoSub AltCursorInterfaceAutoExec
 GoSub FileManagerInterfaceAutoExec
@@ -91,6 +92,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\ghk_interface_history.ahk
 #include %A_ScriptDir%\ghk_interface_address.ahk
 #include %A_ScriptDir%\ghk_interface_favs.ahk
+#include %A_ScriptDir%\ghk_interface_focus_n_toggle.ahk
 #include %A_ScriptDir%\ghk_interface_cursor.ahk
 #include %A_ScriptDir%\ghk_interface_alt_cursor.ahk
 #include %A_ScriptDir%\ghk_interface_file_manager.ahk
