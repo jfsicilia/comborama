@@ -391,7 +391,8 @@ FocusOrLaunchVim(hidden := true, params := "") {
             another desktop.
 */
 FocusOrLaunchWhatsApp(hidden := true) {
-  return FocusOrLaunchApp(, "WhatsApp", HOME_FOLDER . "\AppData\Local\WhatsApp\WhatsApp.exe", hidden)
+  ;return FocusOrLaunchApp(, "WhatsApp", HOME_FOLDER . "\AppData\Local\WhatsApp\WhatsApp.exe", hidden)
+  return FocusOrLaunchApp(, "WhatsApp", "C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2310.3.0_x64__cv1g1gvanyjgm\WhatsApp.exe", hidden)
 }
 
 /*
