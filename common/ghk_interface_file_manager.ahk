@@ -88,7 +88,7 @@ return
 
 ; Show context menu.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_CONTEXT_MENU.id) && (!altTabLaunched))
-  SC055 & RCtrl:: RunFileManagerActionIsolated(ACTION_CONTEXT_MENU.id) 
+  SC055 & SC15D:: RunFileManagerActionIsolated(ACTION_CONTEXT_MENU.id) 
 #if
 
 ; View file.
