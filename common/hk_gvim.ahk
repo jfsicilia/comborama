@@ -45,6 +45,8 @@ GVimAutoExec:
   global GVIM_COMBO_NEW_BUFFER := "{Esc}:enew{Enter}"
   ; Settings
   global GVIM_COMBO_SETTINGS := ",v"
+  ; Find
+  global GVIM_COMBO_FIND := "/"
   ; Vim jumping back and forward combos.
   global GVIM_COMBO_JUMP_BACK := "^o"
   global GVIM_COMBO_JUMP_FORWARD := "^i"
@@ -100,10 +102,13 @@ GVimAutoExec:
 
   ImplementSettingsInterface("gvim.exe"
     , GVIM_COMBO_SETTINGS)                ; Open settings.
+
+  ImplementFindAndReplaceInterface("gvim.exe"
+    , GVIM_COMBO_FIND)                   ; Search.
 return
 
-; This allows to load file/tab in normal mode and autocomplete in insert mode.
 #if (WinActive("ahk_exe gvim.exe"))
+  ; This allows to load file/tab in normal mode and autocomplete in insert mode.
   SC055 & space:: SendInput(GVIM_COMBO_GOTO_TAB_OR_LOAD_FILE)
 #if
 
