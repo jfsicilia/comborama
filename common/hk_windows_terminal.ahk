@@ -99,7 +99,7 @@ WindowsTerminalAutoExec:
     , func("WTGoToFav"))      ; Go to fav.
 
   ImplementSeekAndSelInterface("WindowsTerminal.exe"
-    , LCtrlCombo("p")                                 ; Ctrl + Space
+    , LShiftLCtrlCombo("p")                                 ; Ctrl + Space
     , NO_BOUND_ACTION_MSGBOX                          ; Ctrl + Shift + Space
     , bind("ShowFavFoldersListBox"
         , FAV_FOLDERS_PATH, func("WTGoTo"))           ; Alt + Space
@@ -107,6 +107,10 @@ WindowsTerminalAutoExec:
     , NO_BOUND_ACTION_MSGBOX                          ; Win + Space
     , NO_BOUND_ACTION_MSGBOX)                         ; Win + Shift + Space
 return
+
+; Windows terminal keybindings.
+#if WinActive("ahk_exe WindowsTerminal.exe")
+#if
 
 /*
   Go to tab by number.
@@ -140,6 +144,3 @@ WTGoToFav(key) {
 }
 
 
-; Windows terminal keybindings.
-#if WinActive("ahk_exe WindowsTerminal.exe")
-#if
