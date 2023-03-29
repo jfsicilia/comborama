@@ -113,7 +113,6 @@ OneCmdrAutoExec:
     , ONE_COMMANDER_COMBO_RENAME_FILE          ; Rename file/folder
     , ONE_COMMANDER_COMBO_REFRESH              ; Refresh file manager
     , ONE_COMMANDER_COMBO_SHOW_INFO            ; Show info of file/folder
-    , ONE_COMMANDER_COMBO_FIND                 ; Find
     , ONE_COMMANDER_COMBO_DUPLICATE            ; Duplicate file/folder
     , ONE_COMMANDER_COMBO_SELECT_ALL           ; Select all files/folders
     , ONE_COMMANDER_COMBO_NEW_FILE             ; New file
@@ -131,6 +130,9 @@ OneCmdrAutoExec:
                         , bind("__OpenSelectedItemsWith__", Func("__FileExplorer__")))
     , ONE_COMMANDER_COMBO_COPY_OTHER_PANE      ; Copy to other pane
     , ONE_COMMANDER_COMBO_MOVE_OTHER_PANE)     ; Move to other pane
+
+  ImplementFindAndReplaceInterface("OneCommander.exe"
+    , ONE_COMMANDER_COMBO_FIND)              ; Find
 
   DefaultImplementationOpenWithInterface("OneCommander.exe")
 
