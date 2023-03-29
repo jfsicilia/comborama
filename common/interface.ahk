@@ -70,8 +70,9 @@ ImplementInterface(interface, appsId, appImplementation) {
   if (!IsObject(appsId))
     appsId := [appsId]
   ; Add implementation to interface/app
-  for _, appId in appsId 
+  for _, appId in appsId {
     __interfaces__[interface][appId] := appImplementation
+  }
 }
 
 /*
@@ -134,10 +135,12 @@ GetAction(interface, combo) {
   ; window process name and class name). In that case try
   ; to find if the interface has been implemented by ANY_APP_ID.
   implementation := __interfaces__[interface][appName]
-  if (!IsObject(implementation)) 
+  if (!IsObject(implementation)) {
     implementation := __interfaces__[interface][className]
-  if (!IsObject(implementation)) 
+  }
+  if (!IsObject(implementation)) {
     implementation := __interfaces__[interface][ANY_APP_ID]
+  }
 
   ; If not implemented return accordingly.
   if (!IsObject(implementation))
@@ -164,15 +167,37 @@ __RunInterfaceAction__(freeModifiers, setModifiers, interface, combo, params*) {
   if (freeModifiers)
     FreeModifiers()
 
-;  msgbox, %action%
-  if (action != NOT_IMPLEMENTED)
-    if (IsObject(action))
-      action.Call(params*)
-    else 
-      sendInput(action)
+  RunAction(action, params*)
 
   if (setModifiers)
     SetModifiers()
+}
+
+/*
+  Runs an action. Action could be a string or a function. If it's a string,
+  then sendInput(action) would be call. If it's a function, it would be 
+  called with optional params*.
+  action -- Action to run.
+  params -- Optional params for action if it is a function.
+*/
+RunAction(action, params*) {
+  if (action != NOT_IMPLEMENTED)
+    (IsObject(action)) ? action.Call(params*) : sendInput(action)
+}
+
+/*
+  Runs an action. Action could be a string or a function. If it's a string,
+  then sendInput(action) would be call. If it's a function, it would be 
+  called with optional params*. The action would be retreived from a
+  dictionary using a key.
+  actionDict -- Dictionary that holds actions as values.
+  key -- Key to access a specific action from the dictionary.
+  params -- Optional params for action if it is a function.
+*/
+RunActionFromDict(actionDict, key, params*) {
+  action := actionDict[key]
+  if (action != NOT_IMPLEMENTED)
+    (IsObject(action)) ? action.Call(params*) : sendInput(action)
 }
 
 /*
