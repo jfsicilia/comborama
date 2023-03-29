@@ -17,9 +17,16 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ g _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;                                           
+
 ; Go to. 
 #if (IsActionImplemented(__ADDRESS_ID__, ACTION_FOCUS_ADDRESS_BAR.id) && (!altTabLaunched))
-  <^l::
   SC055 & g:: RunAddressActionIsolated(ACTION_FOCUS_ADDRESS_BAR.id) 
 #if
 
