@@ -47,6 +47,25 @@ VSCodeAutoExec:
   global VSCODE_COMBO_JUMP_BACK := "^k^!o"
   global VSCODE_COMBO_JUMP_FORWARD := "^k^!i"
 
+  ; Find.
+  global VSCODE_COMBO_FIND := LCtrlCombo("f")
+  global VSCODE_COMBO_VIM_FIND := "/"
+
+  ; Focus panes' actions dictionary.
+  global VSCODE_COMBO_FOCUS 
+  := {"m": Func("VSCodeRunPaletteCmd").bind("View: Focus Active Editor Group")
+     ,"n": Func("VSCodeRunPaletteCmd").bind("Explorer: Focus on Folder View") 
+     ,"g": VSCODE_COMBO_OPEN_FILE
+     ,"o": Func("VSCodeRunPaletteCmd").bind("Explorer: Focus on Outline View") 
+     ,"b": Func("VSCodeRunPaletteCmd").bind("Bookmarks: Focus on Explorer View") 
+     ,"t": Func("VSCodeRunPaletteCmd").bind("Terminal: Focus on Terminal") 
+     ,"p": Func("VSCodeRunPaletteCmd").bind("View: Focus Problems") 
+     ,"v": Func("VSCodeRunPaletteCmd").bind("Source control: Focus on Source Control View") }
+
+  ; Toggle panes' actions dictionary.
+  global VSCODE_COMBO_TOGGLE
+  := {"s": LCtrlCombo("b")}
+
   ImplementTabsInterface("Code.exe"
     , VSCODE_COMBO_GOTO_NEXT_TAB                ; Next tab
     , VSCODE_COMBO_GOTO_PREV_TAB                ; Prev tab
@@ -117,15 +136,16 @@ VSCodeAutoExec:
   ; NOTE: Cannot implement FileManagerInterface. It will interfere with vscode 
   ; vim mode. Same functionality is obtained by adding commands to 
   ; keybindings.json
-return
 
-/*
-  Go pane by number
-  n -- Numero of pane.
-*/
-VSCodeGoPane(n) {
-  SendInputIsolated(VSCODE_COMBO_GOTO_PANE . n)
-}
+  ImplementFocusAndToggleInterface("Code.exe"
+    , Func("RunActionFromDict").bind(VSCODE_COMBO_FOCUS)   ; Focus pane function.
+    , Func("RunActionFromDict").bind(VSCODE_COMBO_TOGGLE)) ; Toggle pane function.
+
+  ImplementFindAndReplaceInterface("Code.exe"    ; Search.
+    , bind("ShiftSwitch"
+            , VSCODE_COMBO_FIND
+            , VSCODE_COMBO_VIM_FIND))                   
+return
 
 ;----------------------------------------------------------------------------
 ;                    SC055 combos in Visual Studio Code.
@@ -199,5 +219,19 @@ SendVSCodeProxyCombo(key) {
   else 
     send, {blind}{Shift Up}{Ctrl down}k{Ctrl up}{Shift Down}
   send, {blind}^!%key%
+}
+
+VSCodeRunPaletteCmd(cmd) {
+  sendInputFree(VSCODE_COMBO_CMD_PALETTE)
+  sleep, 50
+  sendInputFree(cmd . "{enter}")
+}
+
+/*
+  Go pane by number
+  n -- Numero of pane.
+*/
+VSCodeGoPane(n) {
+  SendInputIsolated(VSCODE_COMBO_GOTO_PANE . n)
 }
 
