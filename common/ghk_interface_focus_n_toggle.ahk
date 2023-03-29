@@ -7,7 +7,7 @@
 
 FocusAndToggleInterfaceAutoExec:
   ; Name of interface.
-  global __FOCUS_N_TOGGLE_ID__ := "FAVS_INTERFACE"
+  global __FOCUS_N_TOGGLE_ID__ := "FOCUS_N_TOGGLE_INTERFACE"
 
   ; Interface's actions.
   global ACTION_FOCUS := {id: "__focus(key)__", default: NOT_IMPLEMENTED}
@@ -17,6 +17,14 @@ return
 ;----------------------------------------------------------------------  
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
+
+; RWin + LAlt + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;                  q w e r t y u i o p _ _ _ 
+;                   a s d f g _ _ _ _ _ _ 
+;                    z x c v b n m _ _ _
+;                          
 
 ; Hotkeys to go to favourite.
 #if (IsActionImplemented(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id) && (!altTabLaunched))
@@ -50,6 +58,13 @@ return
   >#<!y::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "y")
   >#<!z::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "z")
 #if
+
+; RWin + LAlt + Shift + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;                  q w e r t y u i o p _ _ _ 
+;                   a s d f g _ _ _ _ _ _ 
+;                    z x c v b n m _ _ _
 
 #if (IsActionImplemented(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id) && (!altTabLaunched))
   ; This combos are used in panes interface, they are not available.
