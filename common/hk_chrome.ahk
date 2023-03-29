@@ -36,6 +36,15 @@ ChromeAutoExec:
   global CHROME_COMBO_CLOSE_PANE := LCtrlCombo("w")
   ; Show settings.
   global CHROME_COMBO_SETTINGS := LCtrlCombo("t") . "chrome://settings{enter}"
+  ; Find.
+  global CHROME_COMBO_FIND := LCtrlCombo("f")
+  global CHROME_COMBO_VIM_FIND := "/"
+
+  ; Focus combos dictionary.
+  global CHROME_COMBO_FOCUS 
+  := {"b": CHROME_COMBO_FOCUS_BOOKMARK        ; Focus bookmarks.
+     ,"g": CHROME_COMBO_ADDRESS_BAR           ; Focus address bar. 
+     ,"m": Func("ChromeFocusBrowsingArea") }  ; Focus browsing area.
 
   ImplementAddressInterface("chrome.exe"
     , CHROME_COMBO_ADDRESS_BAR)                ; Focus address bar. 
@@ -85,16 +94,37 @@ ChromeAutoExec:
     , CHROME_COMBO_GO_TO_TAB              ; Ctrl + Space
     , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
     , CHROME_COMBO_GO_TO_BOOKMARK         ; Alt + Space
-    , CHROME_COMBO_FOCUS_BOOKMARK         ; Alt + Shift + Space
+    , NO_BOUND_ACTION_MSGBOX              ; Alt + Shift + Space
     , CHROME_COMBO_HISTORY                ; Win + Space
     , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
 
   ImplementSettingsInterface("chrome.exe"
     , CHROME_COMBO_SETTINGS)               ; Open settings.
+
+  ImplementFindAndReplaceInterface("chrome.exe"    ; Search.
+    , bind("ShiftSwitch"
+            , CHROME_COMBO_FIND
+            , CHROME_COMBO_VIM_FIND))                   
+
+  ImplementFocusAndToggleInterface("chrome.exe"
+    , Func("RunActionFromDict").bind(CHROME_COMBO_FOCUS)   ; Focus pane function.
+    , NOT_IMPLEMENTED)                                     ; Toggle pane function.
 return
 
 ; Add some new shortcuts to Chrome.
 #IfWinActive ahk_exe chrome.exe
-  ; Set focus on web page.
-  SC055 & F8:: ClickWndCenter()
+  ; Fast scrolling.
+  SC055 & space:: space
 #if
+
+;------------------ Helper functions --------------------
+
+ChromeFocusBrowsingArea() {
+  sendInput(CHROME_COMBO_ADDRESS_BAR)
+  sleep, 10
+  sendInput("{F6}")
+  sleep, 10
+  sendInput("{F6}")
+  sleep, 10
+  sendInput("{F6}")
+}
