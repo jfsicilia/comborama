@@ -42,7 +42,10 @@ WindowsTerminalAutoExec:
   global WT_COMBO_SETTINGS_JSON := "^+,"
   global WT_COMBO_DEFAULTS_JSON := "^!,"
 
+  global WT_COMBO_VIM_CTRL_P := LCtrlCombo("p")
+
   global WT_WSL_LINUX_DISTRO := "Linux"
+
 
   ImplementTabsInterface("WindowsTerminal.exe"
     , WT_COMBO_NEXT_TAB                  ; Next tab
@@ -99,7 +102,7 @@ WindowsTerminalAutoExec:
     , func("WTGoToFav"))      ; Go to fav.
 
   ImplementSeekAndSelInterface("WindowsTerminal.exe"
-    , LShiftLCtrlCombo("p")                                 ; Ctrl + Space
+    , WT_COMBO_VIM_CTRL_P                             ; Ctrl + Space
     , NO_BOUND_ACTION_MSGBOX                          ; Ctrl + Shift + Space
     , bind("ShowFavFoldersListBox"
         , FAV_FOLDERS_PATH, func("WTGoTo"))           ; Alt + Space
