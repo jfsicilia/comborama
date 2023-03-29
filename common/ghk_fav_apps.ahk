@@ -31,7 +31,7 @@ $<#e::
   ; Open file explorer with winkey+E, then goto to default folder.
   Send, <#e
   WinWait, ahk_class ExploreWClass,,3
-  ExplorerGoTo(DEFAULT_FOLDER)
+  FileExplorerGoTo(DEFAULT_FOLDER)
 return
 ; ----- 'E'verything -----
 RAlt & LCtrl:: ToggleEverythingApp()
