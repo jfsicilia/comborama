@@ -24,6 +24,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _           
+;                    z x c v _ _ _ _ _ _
+;                                           
+
 ; Copy
 #if (IsActionImplemented(__EDIT_ID__, ACTION_COPY.id) && (!altTabLaunched))
   SC055 & c:: RunEditActionIsolated(ACTION_COPY.id)

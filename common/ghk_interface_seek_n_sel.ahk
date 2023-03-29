@@ -23,32 +23,50 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
-; Ctrl + Space (typical for fast access files or tabs)
+; LCtrl + <key>  / LCtrl + Shift + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;                           space 
+
+; Fast access files or tabs.
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_CTRL_SPACE.id) && (!altTabLaunched))
   <^space::       RunSeekAndSelActionIsolated(ACTION_CTRL_SPACE.id)
 #if
-
-; Ctrl + Shift + Space
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_CTRL_SHIFT_SPACE.id) && (!altTabLaunched))
   <^+space::      RunSeekAndSelActionIsolated(ACTION_CTRL_SHIFT_SPACE.id)
 #if
 
-; Alt + Space (typical for fast access bookmarks)
+; LAlt + <key>  / LAlt + Shift + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;                           space 
+
+; Fast access bookmarks.
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_ALT_SPACE.id) && (!altTabLaunched))
   <!space::       RunSeekAndSelActionIsolated(ACTION_ALT_SPACE.id)
 #if
-
-; Alt + Shift + Space
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_ALT_SHIFT_SPACE.id) && (!altTabLaunched))
   <!+space::      RunSeekAndSelActionIsolated(ACTION_ALT_SHIFT_SPACE.id)
 #if
 
-; Win + Space (typical for fast access history)
+; LWin + <key>  / LWin + Shift + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;                           space 
+
+; Fast access history.
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_WIN_SPACE.id) && (!altTabLaunched))
   <#space::       RunSeekAndSelActionIsolated(ACTION_WIN_SPACE.id)
 #if
-
-; Win + Shift + Space
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_WIN_SHIFT_SPACE.id) && (!altTabLaunched))
   <#+space::      RunSeekAndSelActionIsolated(ACTION_WIN_SHIFT_SPACE.id)
 #if

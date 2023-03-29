@@ -38,6 +38,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key> / 3x LAlt
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;              LAlt                             
+
 ; Go to recent used pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_RECENT_PANE.id) && (!altTabLaunched))
   SC055 & LAlt:: RunPanesActionFree(ACTION_RECENT_PANE.id)
@@ -46,6 +54,15 @@ return
   ; execute correctly the action.
   ;~LAlt up:: NTimesPressed("LAlt up", 3,, bind("RunPanesActionFree", ACTION_RECENT_PANE.id))
 #if
+
+; RWin + LAlt + <key>
+;
+; Used keys:    _ 1 2 3 4 5 6 7 8 9 _ - _ _
+;               _  _ w _ _ _ _ _ _ _ _ _ _ \ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+;                          space
+
 ; Go to pane by direction.
 #if (IsActionImplemented(__PANES_ID__, ACTION_GO_PANE_RIGHT.id) && (!altTabLaunched))
   >#<!l::  
@@ -69,39 +86,6 @@ return
   >#<!8:: RunPanesActionIsolated(ACTION_GO_PANE.id, 8) 
   >#<!9:: RunPanesActionIsolated(ACTION_GO_PANE.id, 9) 
 #if
-; Resize pane.
-#if (IsActionImplemented(__PANES_ID__, ACTION_RESIZE_PANE_RIGHT.id) && (!altTabLaunched))
-  >#<!>!l::
-  >#<!>!right:: RunPanesActionIsolated(ACTION_RESIZE_PANE_RIGHT.id)
-  >#<!>!h::
-  >#<!>!left::  RunPanesActionIsolated(ACTION_RESIZE_PANE_LEFT.id)
-  >#<!>!k::
-  >#<!>!up::    RunPanesActionIsolated(ACTION_RESIZE_PANE_UP.id)
-  >#<!>!j::
-  >#<!>!down::  RunPanesActionIsolated(ACTION_RESIZE_PANE_DOWN.id)
-#if
-; Swap pane.
-#if (IsActionImplemented(__PANES_ID__, ACTION_SWAP_PANE_RIGHT.id) && (!altTabLaunched))
-  >#<!>^l::
-  >#<!>^right:: RunPanesActionIsolated(ACTION_SWAP_PANE_RIGHT.id)
-  >#<!>^h::
-  >#<!>^left::  RunPanesActionIsolated(ACTION_SWAP_PANE_LEFT.id)
-  >#<!>^k::
-  >#<!>^up::    RunPanesActionIsolated(ACTION_SWAP_PANE_UP.id)
-  >#<!>^j::
-  >#<!>^down::  RunPanesActionIsolated(ACTION_SWAP_PANE_DOWN.id)
-#if
-#if (IsActionImplemented(__PANES_ID__, ACTION_MOVE_PANE_RIGHT.id) && (!altTabLaunched))
-  ; Move pane.
-  >#<!+l:: 
-  >#<!+right:: RunPanesActionIsolated(ACTION_MOVE_PANE_RIGHT.id)
-  >#<!+h::
-  >#<!+left::  RunPanesActionIsolated(ACTION_MOVE_PANE_LEFT.id)
-  >#<!+j:: 
-  >#<!+down:: RunPanesActionIsolated(ACTION_MOVE_PANE_DOWN.id)
-  >#<!+k::
-  >#<!+up::  RunPanesActionIsolated(ACTION_MOVE_PANE_UP.id)
-#if
 ; Maximize/restore pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_MAX_RESTORE_PANE.id) && (!altTabLaunched))
   >#<!space:: RunPanesActionIsolated(ACTION_MAX_RESTORE_PANE.id) 
@@ -115,6 +99,65 @@ return
 #if (IsActionImplemented(__PANES_ID__, ACTION_CLOSE_PANE.id) && (!altTabLaunched))
   >#<!w:: RunPanesActionIsolated(ACTION_CLOSE_PANE.id)  
 #if
+
+; RWin + LAlt + Shift + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+
+; Move pane.
+#if (IsActionImplemented(__PANES_ID__, ACTION_MOVE_PANE_RIGHT.id) && (!altTabLaunched))
+  >#<!+l:: 
+  >#<!+right:: RunPanesActionIsolated(ACTION_MOVE_PANE_RIGHT.id)
+  >#<!+h::
+  >#<!+left::  RunPanesActionIsolated(ACTION_MOVE_PANE_LEFT.id)
+  >#<!+j:: 
+  >#<!+down:: RunPanesActionIsolated(ACTION_MOVE_PANE_DOWN.id)
+  >#<!+k::
+  >#<!+up::  RunPanesActionIsolated(ACTION_MOVE_PANE_UP.id)
+#if
+
+; RWin + LAlt + RAlt + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+;                                           
+
+; Resize pane.
+#if (IsActionImplemented(__PANES_ID__, ACTION_RESIZE_PANE_RIGHT.id) && (!altTabLaunched))
+  >#<!>!l::
+  >#<!>!right:: RunPanesActionIsolated(ACTION_RESIZE_PANE_RIGHT.id)
+  >#<!>!h::
+  >#<!>!left::  RunPanesActionIsolated(ACTION_RESIZE_PANE_LEFT.id)
+  >#<!>!k::
+  >#<!>!up::    RunPanesActionIsolated(ACTION_RESIZE_PANE_UP.id)
+  >#<!>!j::
+  >#<!>!down::  RunPanesActionIsolated(ACTION_RESIZE_PANE_DOWN.id)
+#if
+
+; RWin + LAlt + RCtrl + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+
+; Swap pane.
+#if (IsActionImplemented(__PANES_ID__, ACTION_SWAP_PANE_RIGHT.id) && (!altTabLaunched))
+  >#<!>^l::
+  >#<!>^right:: RunPanesActionIsolated(ACTION_SWAP_PANE_RIGHT.id)
+  >#<!>^h::
+  >#<!>^left::  RunPanesActionIsolated(ACTION_SWAP_PANE_LEFT.id)
+  >#<!>^k::
+  >#<!>^up::    RunPanesActionIsolated(ACTION_SWAP_PANE_UP.id)
+  >#<!>^j::
+  >#<!>^down::  RunPanesActionIsolated(ACTION_SWAP_PANE_DOWN.id)
+#if
+
 
 ;----------------------------------------------------------------------  
 ;------------------------ HELPER FUNCTIONS ----------------------------  

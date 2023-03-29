@@ -17,7 +17,6 @@ FileManagerInterfaceAutoExec:
   global ACTION_RENAME :=          {id: "__rename()__", default: NOT_IMPLEMENTED}
   global ACTION_REFRESH :=         {id: "__refresh()__", default: NOT_IMPLEMENTED}
   global ACTION_INFO :=            {id: "__info()__", default: NOT_IMPLEMENTED}
-  global ACTION_FIND :=            {id: "__find()__", default: NOT_IMPLEMENTED}
   global ACTION_DUPLICATE :=       {id: "__duplicate()__", default: NOT_IMPLEMENTED}  
   global ACTION_SELECT_ALL :=      {id: "__selectAll()__", default: NOT_IMPLEMENTED} 
   global ACTION_NEW_FILE :=        {id: "__newFile()__", default: NOT_IMPLEMENTED}
@@ -44,6 +43,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;              Tab _ _ _ r _ _ _ i o p _ _ \ 
+;                   a _ d _ _ _ _ _ _ _ ' enter
+;                    _ _ _ _ _ n _ _ _ _
+;                          space         app
+
 ; Open file/folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_OPEN.id) && (!altTabLaunched))
   SC055 & o:: RunFileManagerActionIsolated(ACTION_OPEN.id) 
@@ -63,11 +70,6 @@ return
 ; Get info of file/folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_INFO.id) && (!altTabLaunched))
   SC055 & i:: RunFileManagerActionIsolated(ACTION_INFO.id) 
-#if
-
-; Find.
-#if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_FIND.id) && (!altTabLaunched))
-  SC055 & e:: RunFileManagerActionIsolated(ACTION_FIND.id) 
 #if
 
 ; Duplicate file/folder. 
@@ -114,6 +116,7 @@ return
 
 ; Preview file
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_PREVIEW.id) && (!altTabLaunched))
+  +space up::
   SC055 & space:: 
     if (!GetKeyState("Shift", "P")) {
       ; Open Seer app, without focusing seer popup window.
@@ -140,7 +143,6 @@ return
   ESC:: CloseWindow(), FreeModifiers(), RecentActiveWindow()
 
   ; Unfocus seer app. 
-;  SC055 & SC056::
   SC055 & space:: RecentActiveWindow()
 #if
 
@@ -175,7 +177,7 @@ ImplementFileManagerInterface(appsId
   , rename                  ; Rename file/folder
   , refresh                 ; Refresh file manager.
   , info                    ; Show info of file/folder
-  , find                    ; Find
+;  , find                    ; Find
   , duplicate               ; Duplicate file/folder
   , selectAll               ; Select all files/folders
   , newFile                 ; New file
@@ -200,8 +202,6 @@ ImplementFileManagerInterface(appsId
     := (refresh != DEFAULT_IMPLEMENTATION) ? refresh : ACTION_REFRESH.default
   app[ACTION_INFO.id] 
     := (info != DEFAULT_IMPLEMENTATION) ? info : ACTION_INFO.default
-  app[ACTION_FIND.id] 
-    := (find != DEFAULT_IMPLEMENTATION) ? find : ACTION_FIND.default
   app[ACTION_DUPLICATE.id] 
     := (duplicate != DEFAULT_IMPLEMENTATION) ? duplicate : ACTION_DUPLICATE.default
   app[ACTION_SELECT_ALL.id] 

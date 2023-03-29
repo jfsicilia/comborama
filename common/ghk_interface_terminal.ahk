@@ -22,6 +22,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; LCtrl + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _            up 
+;                    _ _ c v _ _ _ _ _ _       left down right
+;                                           
+
 ; Scroll terminal one line down/up.
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id) && (!altTabLaunched))
   <^down::  RunTerminalActionIsolated(ACTION_SCROLL_1_LINE_DOWN.id)

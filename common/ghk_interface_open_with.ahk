@@ -28,6 +28,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; RAlt + RCtrl + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _'_'_ _
+;                  q w e r t y u i o p _ _ _ 
+;                   a s d f g h j k l _ _ 
+;                    z x c v b n m _ _ _
+;                          
+
 ; Open with.
 #if (IsActionImplemented(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id) && (!altTabLaunched))
   >!>^a:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "a")

@@ -17,6 +17,15 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; AppKey + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _'_'_ _
+;                  q w e r t y u i o p _ _ _ 
+;                   a s d f g h j k l _ _ 
+;                    z x c v b n m _ _ _
+;                          
+
+
 ; Hotkeys to go to favourite.
 #if (IsActionImplemented(__FAVS_ID__, ACTION_GO_TO_FAV.id) && (!altTabLaunched))
   SC15D & space:: FavShiftSwitch("_")
@@ -57,7 +66,6 @@ FavShiftSwitch(key) {
   ShiftSwitch(bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, key)
             , bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, "<+" . key)
             , bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, ">+" . key))
-
 }
 
 /*

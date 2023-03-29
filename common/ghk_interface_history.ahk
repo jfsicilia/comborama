@@ -19,6 +19,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ [ ] _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;                                           
+
 ; Back/Forward in history.
 #if (IsActionImplemented(__HISTORY_ID__, ACTION_HISTORY_BACK.id) && (!altTabLaunched))
   SC055 & [::

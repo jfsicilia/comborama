@@ -17,6 +17,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ , _ _    
+;                                           
+
 ; Open settings.
 #if (IsActionImplemented(__SETTINGS_ID__, ACTION_OPEN_SETTINGS.id) && (!altTabLaunched))
   SC055 & ,:: RunSettingsActionIsolated(ACTION_OPEN_SETTINGS.id) 

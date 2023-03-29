@@ -28,6 +28,40 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key> / 3x LCtrl
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ _ _ _ _    
+;                LCtrl
+
+; Go to recent used tab.
+#if (IsActionImplemented(__TABS_ID__, ACTION_RECENT_TAB.id) && (!altTabLaunched))
+  SC055 & LCtrl:: RunTabsActionIsolated(ACTION_RECENT_TAB.id)
+  ~LCtrl up:: NTimesPressed("LCtrl up", 3,, bind("RunTabsActionIsolated", ACTION_RECENT_TAB.id))
+#if
+
+; RWin + LCtrl + <key>
+;
+; Used keys:    _ 1 2 3 4 5 6 7 8 9 0 _ _ _
+;               _  _ w _ _ t _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+;                          
+
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ _ _ _ _ _ _  
+;                    _ _ _ _ _ _ m _ . _    
+;                                           
+
+; RShift + LShift / LShift + RShift / 3x LShift / 3x RShift
+
+; LWin + Tab / LWin + Shift + Tab
+
 ; Go to prev tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_PREV_TAB.id) && (!altTabLaunched))
   >#<^h::
@@ -54,11 +88,6 @@ return
 #if (IsActionImplemented(__TABS_ID__, ACTION_NEXT_TAB.id) && (!altTabLaunched))
   LWin & Tab:: ShiftSwitch(bind("RunTabsActionFree", ACTION_NEXT_TAB.id)
                          , bind("RunTabsActionFree", ACTION_PREV_TAB.id))
-#if
-; Go to recent used tab.
-#if (IsActionImplemented(__TABS_ID__, ACTION_RECENT_TAB.id) && (!altTabLaunched))
-  SC055 & LCtrl:: RunTabsActionIsolated(ACTION_RECENT_TAB.id)
-  ~LCtrl up:: NTimesPressed("LCtrl up", 3,, bind("RunTabsActionIsolated", ACTION_RECENT_TAB.id))
 #if
 #if (IsActionImplemented(__TABS_ID__, ACTION_GO_TAB.id) && (!altTabLaunched))
   ; Go to tab by number.
@@ -97,20 +126,6 @@ return
   <^0::
   SC055 & 0:: RunTabsActionIsolated(ACTION_GO_TAB.id, 0)
 #if
-; Move tab left/right.
-#if (IsActionImplemented(__TABS_ID__, ACTION_MOVE_TAB_RIGHT.id) && (!altTabLaunched))
-  >#<^+l::
-  >#<^+right:: RunTabsActionIsolated(ACTION_MOVE_TAB_RIGHT.id)
-  >#<^+h::
-  >#<^+left:: RunTabsActionIsolated(ACTION_MOVE_TAB_LEFT.id)
-#if
-; Move tab first/last.
-#if (IsActionImplemented(__TABS_ID__, ACTION_MOVE_TAB_LAST.id) && (!altTabLaunched))
-  >#<^+j::
-  >#<^+down:: RunTabsActionIsolated(ACTION_MOVE_TAB_LAST.id)
-  >#<^+k::
-  >#<^+up:: RunTabsActionIsolated(ACTION_MOVE_TAB_FIRST.id)
-#if
 ; New tab / Undo close tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_NEW_TAB.id) && (!altTabLaunched))
   >#<^t::
@@ -125,6 +140,32 @@ return
   SC055 & w:: RunTabsActionIsolated(ACTION_CLOSE_TAB.id)
 #if
 
+; RWin + LCtrl + Shift + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+
+; Move tab left/right.
+#if (IsActionImplemented(__TABS_ID__, ACTION_MOVE_TAB_RIGHT.id) && (!altTabLaunched))
+  >#<^+l::
+  >#<^+right:: RunTabsActionIsolated(ACTION_MOVE_TAB_RIGHT.id)
+  >#<^+h::
+  >#<^+left:: RunTabsActionIsolated(ACTION_MOVE_TAB_LEFT.id)
+#if
+; Move tab first/last.
+#if (IsActionImplemented(__TABS_ID__, ACTION_MOVE_TAB_LAST.id) && (!altTabLaunched))
+  >#<^+j::
+  >#<^+down:: RunTabsActionIsolated(ACTION_MOVE_TAB_LAST.id)
+  >#<^+k::
+  >#<^+up:: RunTabsActionIsolated(ACTION_MOVE_TAB_FIRST.id)
+#if
+
+;----------------------------------------------------------------------  
+;------------------------ HELPER FUNCTIONS ----------------------------  
+;----------------------------------------------------------------------  
+
 /*
   Action to get to a tab by it's number.
   n -- Tab number.
@@ -132,10 +173,6 @@ return
 GoToTab(n) {
   SendInput("^" . n)
 }
-
-;----------------------------------------------------------------------  
-;------------------------ HELPER FUNCTIONS ----------------------------  
-;----------------------------------------------------------------------  
 
 /*
   Call this function to implement the interface. 
