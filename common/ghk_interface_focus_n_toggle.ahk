@@ -35,28 +35,28 @@ return
   ; >#<!k::     
   ; >#<!l::     
 
-  >#<!a::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "a")
-  >#<!b::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "b")
-  >#<!c::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "c")
-  >#<!d::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "d")
-  >#<!e::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "e")
-  >#<!f::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "f")
-  >#<!g::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "g")
-  >#<!i::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "i")
-  >#<!m::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "m")
-  >#<!n::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "n")
-  >#<!o::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "o")
-  >#<!p::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "p")
-  >#<!q::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "q")
-  >#<!r::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "r")
-  >#<!s::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "s")
-  >#<!t::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "t")
-  >#<!u::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "u")
-  >#<!v::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "v")
-  >#<!w::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "w")
-  >#<!x::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "x")
-  >#<!y::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "y")
-  >#<!z::     RunFocusNToggleActionIsolated(ACTION_FOCUS.id, "z")
+  >#<!a::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "a")
+  >#<!b::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "b")
+  >#<!c::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "c")
+  >#<!d::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "d")
+  >#<!e::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "e")
+  >#<!f::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "f")
+  >#<!g::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "g")
+  >#<!i::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "i")
+  >#<!m::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "m")
+  >#<!n::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "n")
+  >#<!o::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "o")
+  >#<!p::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "p")
+  >#<!q::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "q")
+  >#<!r::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "r")
+  >#<!s::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "s")
+  >#<!t::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "t")
+  >#<!u::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "u")
+  >#<!v::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "v")
+  >#<!w::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "w")
+  >#<!x::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "x")
+  >#<!y::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "y")
+  >#<!z::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_FOCUS.id, "z")
 #if
 
 ; RWin + LAlt + Shift + <key>
@@ -74,28 +74,28 @@ return
   ; >#<!+k::     
   ; >#<!+l::     
 
-  >#<!+a::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "a")
-  >#<!+b::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "b")
-  >#<!+c::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "c")
-  >#<!+d::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "d")
-  >#<!+e::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "e")
-  >#<!+f::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "f")
-  >#<!+g::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "g")
-  >#<!+i::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "i")
-  >#<!+m::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "m")
-  >#<!+n::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "n")
-  >#<!+o::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "o")
-  >#<!+p::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "p")
-  >#<!+q::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "q")
-  >#<!+r::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "r")
-  >#<!+s::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "s")
-  >#<!+t::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "t")
-  >#<!+u::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "u")
-  >#<!+v::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "v")
-  >#<!+w::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "w")
-  >#<!+x::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "x")
-  >#<!+y::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "y")
-  >#<!+z::     RunFocusNToggleActionIsolated(ACTION_TOGGLE.id, "z")
+  >#<!+a::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "a")
+  >#<!+b::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "b")
+  >#<!+c::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "c")
+  >#<!+d::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "d")
+  >#<!+e::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "e")
+  >#<!+f::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "f")
+  >#<!+g::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "g")
+  >#<!+i::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "i")
+  >#<!+m::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "m")
+  >#<!+n::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "n")
+  >#<!+o::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "o")
+  >#<!+p::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "p")
+  >#<!+q::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "q")
+  >#<!+r::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "r")
+  >#<!+s::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "s")
+  >#<!+t::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "t")
+  >#<!+u::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "u")
+  >#<!+v::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "v")
+  >#<!+w::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "w")
+  >#<!+x::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "x")
+  >#<!+y::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "y")
+  >#<!+z::     RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, ACTION_TOGGLE.id, "z")
 #if
 
 ;----------------------------------------------------------------------  
@@ -132,33 +132,5 @@ ImplementFocusAndToggleInterface(appsId
     := (toggle != DEFAULT_IMPLEMENTATION) ? toggle : ACTION_TOGGLE.default    
   
   ImplementInterface(__FOCUS_N_TOGGLE_ID__, appsId, app)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFocusNToggleAction(action, params*) {
-  RunInterfaceAction(__FOCUS_N_TOGGLE_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFocusNToggleActionFree(action, params*) {
-  RunInterfaceActionFree(__FOCUS_N_TOGGLE_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFocusNToggleActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__FOCUS_N_TOGGLE_ID__, action, params*)
 }
 

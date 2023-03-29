@@ -32,26 +32,26 @@ return
 
 ; Scroll terminal one line down/up.
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id) && (!altTabLaunched))
-  <^down::  RunTerminalActionIsolated(ACTION_SCROLL_1_LINE_DOWN.id)
-  <^up::    RunTerminalActionIsolated(ACTION_SCROLL_1_LINE_UP.id)
+  <^down::  RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id)
+  <^up::    RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_UP.id)
 #if
   
 ; Scroll terminal one page down/up.
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_DOWN.id) && (!altTabLaunched))
   <^right::
-  <^+down:: RunTerminalActionIsolated(ACTION_SCROLL_1_PAGE_DOWN.id)
+  <^+down:: RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_DOWN.id)
   <^left::
-  <^+up::   RunTerminalActionIsolated(ACTION_SCROLL_1_PAGE_UP.id)
+  <^+up::   RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_UP.id)
 #if
 
 ; Copy
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_TERMINAL_COPY.id) && (!altTabLaunched))
-  <^c::     RunTerminalActionIsolated(ACTION_TERMINAL_COPY.id)
+  <^c::     RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_TERMINAL_COPY.id)
 #if
 
 ; Paste
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_TERMINAL_PASTE.id) && (!altTabLaunched))
-  <^v::     RunTerminalActionIsolated(ACTION_TERMINAL_PASTE.id)
+  <^v::     RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_TERMINAL_PASTE.id)
 #if
 
 ;----------------------------------------------------------------------  
@@ -115,33 +115,4 @@ DefaultImplementationTerminalInterface(appsId) {
     , DEFAULT_IMPLEMENTATION 
     , DEFAULT_IMPLEMENTATION)
 }
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunTerminalAction(action, params*) {
-  RunInterfaceAction(__TERMINAL_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunTerminalActionFree(action, params*) {
-  RunInterfaceActionFree(__TERMINAL_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunTerminalActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__TERMINAL_ID__, action, params*)
-}
- 
 

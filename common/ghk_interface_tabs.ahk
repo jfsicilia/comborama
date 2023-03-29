@@ -38,8 +38,8 @@ return
 
 ; Go to recent used tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_RECENT_TAB.id) && (!altTabLaunched))
-  SC055 & LCtrl:: RunTabsActionIsolated(ACTION_RECENT_TAB.id)
-  ~LCtrl up:: NTimesPressed("LCtrl up", 3,, bind("RunTabsActionIsolated", ACTION_RECENT_TAB.id))
+  SC055 & LCtrl:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_RECENT_TAB.id)
+  ~LCtrl up:: NTimesPressed("LCtrl up", 3,, bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_RECENT_TAB.id))
 #if
 
 ; RWin + LCtrl + <key>
@@ -66,28 +66,28 @@ return
 #if (IsActionImplemented(__TABS_ID__, ACTION_PREV_TAB.id) && (!altTabLaunched))
   >#<^h::
   >#<^left:: 
-  RShift & LShift:: RunTabsActionIsolated(ACTION_PREV_TAB.id)
-  ~LShift up:: NTimesPressed("LShift up", 3,, bind("RunTabsActionIsolated", ACTION_PREV_TAB.id))
+  RShift & LShift:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_PREV_TAB.id)
+  ~LShift up:: NTimesPressed("LShift up", 3,, bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_PREV_TAB.id))
   ; The next combo is shared between tabs interface (no shift pressed) and panes 
   ; interface (shift pressed).
-  SC055 & m:: ShiftSwitch(bind("RunTabsActionIsolated", ACTION_PREV_TAB.id)
-                        , bind("RunPanesActionIsolated", ACTION_GO_PANE_LEFT.id))
+  SC055 & m:: ShiftSwitch(bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_PREV_TAB.id)
+                        , bind("RunInterfaceActionIsolated", __PANES_ID__, ACTION_GO_PANE_LEFT.id))
 #if
 ; Go to next tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_NEXT_TAB.id) && (!altTabLaunched))
   >#<^l::
   >#<^right:: 
-  LShift & RShift:: RunTabsActionIsolated(ACTION_NEXT_TAB.id)
-  ~RShift up:: NTimesPressed("RShift up", 3,, bind("RunTabsActionIsolated", ACTION_NEXT_TAB.id))
+  LShift & RShift:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_NEXT_TAB.id)
+  ~RShift up:: NTimesPressed("RShift up", 3,, bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_NEXT_TAB.id))
   ; The next combo is shared between tabs interface (no shift pressed) and panes 
   ; interface (shift pressed).
-  SC055 & .:: ShiftSwitch(bind("RunTabsActionIsolated", ACTION_NEXT_TAB.id)
-                        , bind("RunPanesActionIsolated", ACTION_GO_PANE_RIGHT.id))
+  SC055 & .:: ShiftSwitch(bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_NEXT_TAB.id)
+                        , bind("RunInterfaceActionIsolated", __PANES_ID__, ACTION_GO_PANE_RIGHT.id))
 #if
 ; Go to prev/next tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_NEXT_TAB.id) && (!altTabLaunched))
-  LWin & Tab:: ShiftSwitch(bind("RunTabsActionFree", ACTION_NEXT_TAB.id)
-                         , bind("RunTabsActionFree", ACTION_PREV_TAB.id))
+  LWin & Tab:: ShiftSwitch(bind("RunInterfaceActionFree", __TABS_ID__, ACTION_NEXT_TAB.id)
+                         , bind("RunInterfaceActionFree", __TABS_ID__, ACTION_PREV_TAB.id))
 #if
 #if (IsActionImplemented(__TABS_ID__, ACTION_GO_TAB.id) && (!altTabLaunched))
   ; Go to tab by number.
@@ -95,49 +95,49 @@ return
   >#<^up:: 
   >#<^1::
   <^1::
-  SC055 & 1:: RunTabsActionIsolated(ACTION_GO_TAB.id, 1)
+  SC055 & 1:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 1)
   >#<^2::
   <^2::
-  SC055 & 2:: RunTabsActionIsolated(ACTION_GO_TAB.id, 2)
+  SC055 & 2:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 2)
   >#<^3::
   <^3::
-  SC055 & 3:: RunTabsActionIsolated(ACTION_GO_TAB.id, 3)
+  SC055 & 3:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 3)
   >#<^4::
   <^4::
-  SC055 & 4:: RunTabsActionIsolated(ACTION_GO_TAB.id, 4)
+  SC055 & 4:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 4)
   >#<^5::
   <^5::
-  SC055 & 5:: RunTabsActionIsolated(ACTION_GO_TAB.id, 5)
+  SC055 & 5:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 5)
   >#<^6::
   <^6::
-  SC055 & 6:: RunTabsActionIsolated(ACTION_GO_TAB.id, 6)
+  SC055 & 6:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 6)
   >#<^7::
   <^7::
-  SC055 & 7:: RunTabsActionIsolated(ACTION_GO_TAB.id, 7)
+  SC055 & 7:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 7)
   >#<^8::
   <^8::
-  SC055 & 8:: RunTabsActionIsolated(ACTION_GO_TAB.id, 8)
+  SC055 & 8:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 8)
   >#<^j::
   >#<^down:: 
   >#<^9::
   <^9::
-  SC055 & 9:: RunTabsActionIsolated(ACTION_GO_TAB.id, 9)
+  SC055 & 9:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 9)
   >#<^0::
   <^0::
-  SC055 & 0:: RunTabsActionIsolated(ACTION_GO_TAB.id, 0)
+  SC055 & 0:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_GO_TAB.id, 0)
 #if
 ; New tab / Undo close tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_NEW_TAB.id) && (!altTabLaunched))
   >#<^t::
   <^t::
-  SC055 & t:: ShiftSwitch(bind("RunTabsActionIsolated", ACTION_NEW_TAB.id)
-                           , bind("RunTabsActionIsolated", ACTION_UNDO_CLOSE_TAB.id))
+  SC055 & t:: ShiftSwitch(bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_NEW_TAB.id)
+                           , bind("RunInterfaceActionIsolated", __TABS_ID__, ACTION_UNDO_CLOSE_TAB.id))
 #if
 ; Close tab.
 #if (IsActionImplemented(__TABS_ID__, ACTION_CLOSE_TAB.id) && (!altTabLaunched))
   >#<^w::
   <^w::
-  SC055 & w:: RunTabsActionIsolated(ACTION_CLOSE_TAB.id)
+  SC055 & w:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_CLOSE_TAB.id)
 #if
 
 ; RWin + LCtrl + Shift + <key>
@@ -150,16 +150,16 @@ return
 ; Move tab left/right.
 #if (IsActionImplemented(__TABS_ID__, ACTION_MOVE_TAB_RIGHT.id) && (!altTabLaunched))
   >#<^+l::
-  >#<^+right:: RunTabsActionIsolated(ACTION_MOVE_TAB_RIGHT.id)
+  >#<^+right:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_MOVE_TAB_RIGHT.id)
   >#<^+h::
-  >#<^+left:: RunTabsActionIsolated(ACTION_MOVE_TAB_LEFT.id)
+  >#<^+left:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_MOVE_TAB_LEFT.id)
 #if
 ; Move tab first/last.
 #if (IsActionImplemented(__TABS_ID__, ACTION_MOVE_TAB_LAST.id) && (!altTabLaunched))
   >#<^+j::
-  >#<^+down:: RunTabsActionIsolated(ACTION_MOVE_TAB_LAST.id)
+  >#<^+down:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_MOVE_TAB_LAST.id)
   >#<^+k::
-  >#<^+up:: RunTabsActionIsolated(ACTION_MOVE_TAB_FIRST.id)
+  >#<^+up:: RunInterfaceActionIsolated(__TABS_ID__, ACTION_MOVE_TAB_FIRST.id)
 #if
 
 ;----------------------------------------------------------------------  
@@ -232,33 +232,5 @@ ImplementTabsInterface(appsId
     := (undoCloseTab != DEFAULT_IMPLEMENTATION) ? undoCloseTab : ACTION_UNDO_CLOSE_TAB.default
 
   ImplementInterface(__TABS_ID__, appsId, app)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunTabsAction(action, params*) {
-  RunInterfaceAction(__TABS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunTabsActionFree(action, params*) {
-  RunInterfaceActionFree(__TABS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunTabsActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__TABS_ID__, action, params*)
 }
 

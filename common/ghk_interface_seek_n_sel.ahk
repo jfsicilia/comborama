@@ -33,10 +33,10 @@ return
 
 ; Fast access files or tabs.
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_CTRL_SPACE.id) && (!altTabLaunched))
-  <^space::       RunSeekAndSelActionIsolated(ACTION_CTRL_SPACE.id)
+  <^space::       RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, ACTION_CTRL_SPACE.id)
 #if
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_CTRL_SHIFT_SPACE.id) && (!altTabLaunched))
-  <^+space::      RunSeekAndSelActionIsolated(ACTION_CTRL_SHIFT_SPACE.id)
+  <^+space::      RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, ACTION_CTRL_SHIFT_SPACE.id)
 #if
 
 ; LAlt + <key>  / LAlt + Shift + <key>
@@ -49,10 +49,10 @@ return
 
 ; Fast access bookmarks.
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_ALT_SPACE.id) && (!altTabLaunched))
-  <!space::       RunSeekAndSelActionIsolated(ACTION_ALT_SPACE.id)
+  <!space::       RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, ACTION_ALT_SPACE.id)
 #if
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_ALT_SHIFT_SPACE.id) && (!altTabLaunched))
-  <!+space::      RunSeekAndSelActionIsolated(ACTION_ALT_SHIFT_SPACE.id)
+  <!+space::      RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, ACTION_ALT_SHIFT_SPACE.id)
 #if
 
 ; LWin + <key>  / LWin + Shift + <key>
@@ -65,10 +65,10 @@ return
 
 ; Fast access history.
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_WIN_SPACE.id) && (!altTabLaunched))
-  <#space::       RunSeekAndSelActionIsolated(ACTION_WIN_SPACE.id)
+  <#space::       RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, ACTION_WIN_SPACE.id)
 #if
 #if (IsActionImplemented(__SEEK_N_SEL_ID__, ACTION_WIN_SHIFT_SPACE.id) && (!altTabLaunched))
-  <#+space::      RunSeekAndSelActionIsolated(ACTION_WIN_SHIFT_SPACE.id)
+  <#+space::      RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, ACTION_WIN_SHIFT_SPACE.id)
 #if
 
 ;----------------------------------------------------------------------  
@@ -119,34 +119,4 @@ ImplementSeekAndSelInterface(appsId
 
   ImplementInterface(__SEEK_N_SEL_ID__, appsId, app)
 }
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunSeekAndSelAction(action, params*) {
-  RunInterfaceAction(__SEEK_N_SEL_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunSeekAndSelActionFree(action, params*) {
-  RunInterfaceActionFree(__SEEK_N_SEL_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunSeekAndSelActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__SEEK_N_SEL_ID__, action, params*)
-}
-
- 
 

@@ -48,11 +48,11 @@ return
 
 ; Go to recent used pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_RECENT_PANE.id) && (!altTabLaunched))
-  SC055 & LAlt:: RunPanesActionFree(ACTION_RECENT_PANE.id)
-  LAlt up:: NTimesPressed("LAlt up", 3,, bind("RunPanesActionFree", ACTION_RECENT_PANE.id))
+  SC055 & LAlt:: RunInterfaceActionFree(__PANES_ID__, ACTION_RECENT_PANE.id)
+  LAlt up:: NTimesPressed("LAlt up", 3,, bind("RunInterfaceActionFree", __PANES_ID__, ACTION_RECENT_PANE.id))
   ; NOTE Ended up removing ~ before LAlt because LAlt pressed 3 times didn't
   ; execute correctly the action.
-  ;~LAlt up:: NTimesPressed("LAlt up", 3,, bind("RunPanesActionFree", ACTION_RECENT_PANE.id))
+  ;~LAlt up:: NTimesPressed("LAlt up", 3,, bind("RunInterfaceActionFree", __PANES_ID__, ACTION_RECENT_PANE.id))
 #if
 
 ; RWin + LAlt + <key>
@@ -66,38 +66,38 @@ return
 ; Go to pane by direction.
 #if (IsActionImplemented(__PANES_ID__, ACTION_GO_PANE_RIGHT.id) && (!altTabLaunched))
   >#<!l::  
-  >#<!right:: RunPanesActionIsolated(ACTION_GO_PANE_RIGHT.id)
+  >#<!right:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE_RIGHT.id)
   >#<!h::  
-  >#<!left::  RunPanesActionIsolated(ACTION_GO_PANE_LEFT.id)
+  >#<!left::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE_LEFT.id)
   >#<!k::
-  >#<!up::    RunPanesActionIsolated(ACTION_GO_PANE_UP.id)
+  >#<!up::    RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE_UP.id)
   >#<!j::
-  >#<!down::  RunPanesActionIsolated(ACTION_GO_PANE_DOWN.id)
+  >#<!down::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE_DOWN.id)
 #if
 ; Go to pane by number.
 #if (IsActionImplemented(__PANES_ID__, ACTION_GO_PANE.id) && (!altTabLaunched))
-  >#<!1:: RunPanesActionIsolated(ACTION_GO_PANE.id, 1) 
-  >#<!2:: RunPanesActionIsolated(ACTION_GO_PANE.id, 2) 
-  >#<!3:: RunPanesActionIsolated(ACTION_GO_PANE.id, 3) 
-  >#<!4:: RunPanesActionIsolated(ACTION_GO_PANE.id, 4) 
-  >#<!5:: RunPanesActionIsolated(ACTION_GO_PANE.id, 5) 
-  >#<!6:: RunPanesActionIsolated(ACTION_GO_PANE.id, 6) 
-  >#<!7:: RunPanesActionIsolated(ACTION_GO_PANE.id, 7) 
-  >#<!8:: RunPanesActionIsolated(ACTION_GO_PANE.id, 8) 
-  >#<!9:: RunPanesActionIsolated(ACTION_GO_PANE.id, 9) 
+  >#<!1:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 1) 
+  >#<!2:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 2) 
+  >#<!3:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 3) 
+  >#<!4:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 4) 
+  >#<!5:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 5) 
+  >#<!6:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 6) 
+  >#<!7:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 7) 
+  >#<!8:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 8) 
+  >#<!9:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_GO_PANE.id, 9) 
 #if
 ; Maximize/restore pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_MAX_RESTORE_PANE.id) && (!altTabLaunched))
-  >#<!space:: RunPanesActionIsolated(ACTION_MAX_RESTORE_PANE.id) 
+  >#<!space:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_MAX_RESTORE_PANE.id) 
 #if
 ; Split horizontal/vertical.
 #if (IsActionImplemented(__PANES_ID__, ACTION_VSPLIT_PANE.id) && (!altTabLaunched))
-  >#<!\:: RunPanesActionIsolated(ACTION_VSPLIT_PANE.id)
-  >#<!-:: RunPanesActionIsolated(ACTION_HSPLIT_PANE.id)   
+  >#<!\:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_VSPLIT_PANE.id)
+  >#<!-:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_HSPLIT_PANE.id)   
 #if
 ; Close pane
 #if (IsActionImplemented(__PANES_ID__, ACTION_CLOSE_PANE.id) && (!altTabLaunched))
-  >#<!w:: RunPanesActionIsolated(ACTION_CLOSE_PANE.id)  
+  >#<!w:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_CLOSE_PANE.id)  
 #if
 
 ; RWin + LAlt + Shift + <key>
@@ -110,13 +110,13 @@ return
 ; Move pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_MOVE_PANE_RIGHT.id) && (!altTabLaunched))
   >#<!+l:: 
-  >#<!+right:: RunPanesActionIsolated(ACTION_MOVE_PANE_RIGHT.id)
+  >#<!+right:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_MOVE_PANE_RIGHT.id)
   >#<!+h::
-  >#<!+left::  RunPanesActionIsolated(ACTION_MOVE_PANE_LEFT.id)
+  >#<!+left::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_MOVE_PANE_LEFT.id)
   >#<!+j:: 
-  >#<!+down:: RunPanesActionIsolated(ACTION_MOVE_PANE_DOWN.id)
+  >#<!+down:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_MOVE_PANE_DOWN.id)
   >#<!+k::
-  >#<!+up::  RunPanesActionIsolated(ACTION_MOVE_PANE_UP.id)
+  >#<!+up::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_MOVE_PANE_UP.id)
 #if
 
 ; RWin + LAlt + RAlt + <key>
@@ -130,13 +130,13 @@ return
 ; Resize pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_RESIZE_PANE_RIGHT.id) && (!altTabLaunched))
   >#<!>!l::
-  >#<!>!right:: RunPanesActionIsolated(ACTION_RESIZE_PANE_RIGHT.id)
+  >#<!>!right:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_RESIZE_PANE_RIGHT.id)
   >#<!>!h::
-  >#<!>!left::  RunPanesActionIsolated(ACTION_RESIZE_PANE_LEFT.id)
+  >#<!>!left::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_RESIZE_PANE_LEFT.id)
   >#<!>!k::
-  >#<!>!up::    RunPanesActionIsolated(ACTION_RESIZE_PANE_UP.id)
+  >#<!>!up::    RunInterfaceActionIsolated(__PANES_ID__, ACTION_RESIZE_PANE_UP.id)
   >#<!>!j::
-  >#<!>!down::  RunPanesActionIsolated(ACTION_RESIZE_PANE_DOWN.id)
+  >#<!>!down::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_RESIZE_PANE_DOWN.id)
 #if
 
 ; RWin + LAlt + RCtrl + <key>
@@ -149,13 +149,13 @@ return
 ; Swap pane.
 #if (IsActionImplemented(__PANES_ID__, ACTION_SWAP_PANE_RIGHT.id) && (!altTabLaunched))
   >#<!>^l::
-  >#<!>^right:: RunPanesActionIsolated(ACTION_SWAP_PANE_RIGHT.id)
+  >#<!>^right:: RunInterfaceActionIsolated(__PANES_ID__, ACTION_SWAP_PANE_RIGHT.id)
   >#<!>^h::
-  >#<!>^left::  RunPanesActionIsolated(ACTION_SWAP_PANE_LEFT.id)
+  >#<!>^left::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_SWAP_PANE_LEFT.id)
   >#<!>^k::
-  >#<!>^up::    RunPanesActionIsolated(ACTION_SWAP_PANE_UP.id)
+  >#<!>^up::    RunInterfaceActionIsolated(__PANES_ID__, ACTION_SWAP_PANE_UP.id)
   >#<!>^j::
-  >#<!>^down::  RunPanesActionIsolated(ACTION_SWAP_PANE_DOWN.id)
+  >#<!>^down::  RunInterfaceActionIsolated(__PANES_ID__, ACTION_SWAP_PANE_DOWN.id)
 #if
 
 
@@ -256,32 +256,3 @@ ImplementPanesInterface(appsId
 
   ImplementInterface(__PANES_ID__, appsId, app)
 }
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunPanesAction(action, params*) {
-  RunInterfaceAction(__PANES_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunPanesActionFree(action, params*) {
-  RunInterfaceActionFree(__PANES_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunPanesActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__PANES_ID__, action, params*)
-}
-

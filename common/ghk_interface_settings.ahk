@@ -27,7 +27,7 @@ return
 
 ; Open settings.
 #if (IsActionImplemented(__SETTINGS_ID__, ACTION_OPEN_SETTINGS.id) && (!altTabLaunched))
-  SC055 & ,:: RunSettingsActionIsolated(ACTION_OPEN_SETTINGS.id) 
+  SC055 & ,:: RunInterfaceActionIsolated(__SETTINGS_ID__, ACTION_OPEN_SETTINGS.id) 
 #if
 
 ;----------------------------------------------------------------------  
@@ -69,33 +69,5 @@ ImplementSettingsInterface(appsId
 */
 DefaultImplementationSettingsInterface(appsId) {
   ImplementSettingsInterface(appsId, DEFAULT_IMPLEMENTATION)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunSettingsAction(action, params*) {
-  RunInterfaceAction(__SETTINGS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunSettingsActionFree(action, params*) {
-  RunInterfaceActionFree(__SETTINGS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunSettingsActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__SETTINGS_ID__, action, params*)
 }
 

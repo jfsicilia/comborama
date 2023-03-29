@@ -50,60 +50,60 @@ return
 
 ; Move to left/right or select to left/right
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_LEFT.id) && (!altTabLaunched))
-  SC055 & h:: ShiftSwitch(bind("RunCursorActionFree", ACTION_LEFT.id)
-                        , bind("RunCursorActionFree", ACTION_SHIFT_LEFT.id))
-  SC055 & l:: ShiftSwitch(bind("RunCursorActionFree", ACTION_RIGHT.id)
-                        , bind("RunCursorActionFree", ACTION_SHIFT_RIGHT.id))
+  SC055 & h:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_LEFT.id)
+                        , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_LEFT.id))
+  SC055 & l:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_RIGHT.id)
+                        , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_RIGHT.id))
 #if
 
 ; Move to start/end of line or select to start/end of line.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_START_LINE.id) && (!altTabLaunched))
   <^+left::
   <^left::
-  SC055 & left:: ShiftSwitch(bind("RunCursorActionFree", ACTION_START_LINE.id)
-                           , bind("RunCursorActionFree", ACTION_SHIFT_START_LINE.id))
+  SC055 & left:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_START_LINE.id)
+                           , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_START_LINE.id))
   <^+right::
   <^right::
-  SC055 & right:: ShiftSwitch(bind("RunCursorActionFree", ACTION_END_LINE.id)
-                            , bind("RunCursorActionFree", ACTION_SHIFT_END_LINE.id))
+  SC055 & right:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_END_LINE.id)
+                            , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_END_LINE.id))
 #if
 
 ; Move to up/down or select to up/down
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_DOWN.id) && (!altTabLaunched))
-  SC055 & j:: ShiftSwitch(bind("RunCursorActionFree", ACTION_DOWN.id)
-                        , bind("RunCursorActionFree", ACTION_SHIFT_DOWN.id))
-  SC055 & k:: ShiftSwitch(bind("RunCursorActionFree", ACTION_UP.id)
-                        , bind("RunCursorActionFree", ACTION_SHIFT_UP.id))
+  SC055 & j:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_DOWN.id)
+                        , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_DOWN.id))
+  SC055 & k:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_UP.id)
+                        , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_UP.id))
 #if
 
 ; Move to start/end of text or select to start/end of text.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_END_TEXT.id) && (!altTabLaunched))
   <^+down::
   <^down::
-  SC055 & down:: ShiftSwitch(bind("RunCursorActionFree", ACTION_END_TEXT.id)
-                              , bind("RunCursorActionFree", ACTION_SHIFT_END_TEXT.id))
+  SC055 & down:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_END_TEXT.id)
+                              , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_END_TEXT.id))
   <^+up::
   <^up::
-  SC055 & up:: ShiftSwitch(bind("RunCursorActionFree", ACTION_START_TEXT.id)
-                            , bind("RunCursorActionFree", ACTION_SHIFT_START_TEXT.id))
+  SC055 & up:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_START_TEXT.id)
+                            , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_START_TEXT.id))
 #if
 
 ; Move to page up/down or select page up/down.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_PAGE_DOWN.id) && (!altTabLaunched))
-  SC055 & f:: ShiftSwitch(bind("RunCursorActionFree", ACTION_PAGE_DOWN.id)
-                           , bind("RunCursorActionFree", ACTION_SHIFT_PAGE_DOWN.id))
-  SC055 & b:: ShiftSwitch(bind("RunCursorActionFree", ACTION_PAGE_UP.id)
-                           , bind("RunCursorActionFree", ACTION_SHIFT_PAGE_UP.id))
+  SC055 & f:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_PAGE_DOWN.id)
+                           , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_PAGE_DOWN.id))
+  SC055 & b:: ShiftSwitch(bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_PAGE_UP.id)
+                           , bind("RunInterfaceActionFree", __CURSOR_ID__, ACTION_SHIFT_PAGE_UP.id))
 #if
 
 ; Move to next/prev word.
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_NEXT_WORD.id) && (!altTabLaunched))
   <!+Left::
-  <!Left:: ShiftSwitch(bind("RunCursorActionIsolated", ACTION_PREV_WORD.id)
-                     , bind("RunCursorActionIsolated", ACTION_SHIFT_PREV_WORD.id))
+  <!Left:: ShiftSwitch(bind("RunInterfaceActionIsolated", __CURSOR_ID__, ACTION_PREV_WORD.id)
+                     , bind("RunInterfaceActionIsolated", __CURSOR_ID__, ACTION_SHIFT_PREV_WORD.id))
   <!+Right::
-  <!Right:: ShiftSwitch(bind("RunCursorActionIsolated", ACTION_NEXT_WORD.id)
-                      , bind("RunCursorActionIsolated", ACTION_SHIFT_NEXT_WORD.id))
+  <!Right:: ShiftSwitch(bind("RunInterfaceActionIsolated", __CURSOR_ID__, ACTION_NEXT_WORD.id)
+                      , bind("RunInterfaceActionIsolated", __CURSOR_ID__, ACTION_SHIFT_NEXT_WORD.id))
 #if
 
 
@@ -240,33 +240,4 @@ DefaultImplementationCursorInterface(appsId) {
     , DEFAULT_IMPLEMENTATION
     , DEFAULT_IMPLEMENTATION)
 }
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunCursorAction(action, params*) {
-  RunInterfaceAction(__CURSOR_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunCursorActionFree(action, params*) {
-  RunInterfaceActionFree(__CURSOR_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunCursorActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__CURSOR_ID__, action, params*)
-}
- 
 

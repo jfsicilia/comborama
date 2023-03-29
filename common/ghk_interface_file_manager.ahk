@@ -53,65 +53,65 @@ return
 
 ; Open file/folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_OPEN.id) && (!altTabLaunched))
-  SC055 & o:: RunFileManagerActionIsolated(ACTION_OPEN.id) 
+  SC055 & o:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_OPEN.id) 
 #if
 
 ; Go to parent folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_GO_PARENT.id) && (!altTabLaunched))
-  SC055 & p:: RunFileManagerActionIsolated(ACTION_GO_PARENT.id) 
+  SC055 & p:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_GO_PARENT.id) 
 #if
   
 ; Rename file/folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_RENAME.id) && (!altTabLaunched))
-  SC055 & r:: ShiftSwitch(bind("RunFileManagerActionFree", ACTION_RENAME.id)
-                        , bind("RunFileManagerActionFree", ACTION_REFRESH.id))
+  SC055 & r:: ShiftSwitch(bind("RunInterfaceActionFree", __FILE_MANAGER_ID__, ACTION_RENAME.id)
+                        , bind("RunInterfaceActionFree", __FILE_MANAGER_ID__, ACTION_REFRESH.id))
 #if
 
 ; Get info of file/folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_INFO.id) && (!altTabLaunched))
-  SC055 & i:: RunFileManagerActionIsolated(ACTION_INFO.id) 
+  SC055 & i:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_INFO.id) 
 #if
 
 ; Duplicate file/folder. 
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_DUPLICATE.id) && (!altTabLaunched))
-  SC055 & d:: RunFileManagerActionIsolated(ACTION_DUPLICATE.id) 
+  SC055 & d:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_DUPLICATE.id) 
 #if
 
 ; Select all files/folders.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_SELECT_ALL.id) && (!altTabLaunched))
-  SC055 & a:: RunFileManagerActionIsolated(ACTION_SELECT_ALL.id) 
+  SC055 & a:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_SELECT_ALL.id) 
 #if
 
 ; Create new file or folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_NEW_FILE.id) && (!altTabLaunched))
-  SC055 & n:: ShiftSwitch(bind("RunFileManagerActionFree", ACTION_NEW_FILE.id)
-                        , bind("RunFileManagerActionFree", ACTION_NEW_FOLDER.id))
+  SC055 & n:: ShiftSwitch(bind("RunInterfaceActionFree", __FILE_MANAGER_ID__, ACTION_NEW_FILE.id)
+                        , bind("RunInterfaceActionFree", __FILE_MANAGER_ID__, ACTION_NEW_FOLDER.id))
 #if
 
 ; Show context menu.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_CONTEXT_MENU.id) && (!altTabLaunched))
-  SC055 & SC15D:: RunFileManagerActionIsolated(ACTION_CONTEXT_MENU.id) 
+  SC055 & SC15D:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_CONTEXT_MENU.id) 
 #if
 
 ; View file.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_VIEW_FILE.id) && (!altTabLaunched))
-  SC055 & ':: RunFileManagerActionIsolated(ACTION_VIEW_FILE.id) 
+  SC055 & ':: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_VIEW_FILE.id) 
 #if
 
 ; Edit file.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_EDIT_FILE.id) && (!altTabLaunched))
-  SC055 & enter:: RunFileManagerActionIsolated(ACTION_EDIT_FILE.id) 
+  SC055 & enter:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_EDIT_FILE.id) 
 #if
 
 ; Explore folder.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_EXPLORE_PATH.id) && (!altTabLaunched))
-  SC055 & \:: RunFileManagerActionIsolated(ACTION_EXPLORE_PATH.id) 
+  SC055 & \:: RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_EXPLORE_PATH.id) 
 #if
 
 ; Copy other pane.
 #if (IsActionImplemented(__FILE_MANAGER_ID__, ACTION_COPY_OTHER_PANE.id) && (!altTabLaunched))
-  SC055 & Tab:: ShiftSwitch(bind("RunFileManagerActionFree", ACTION_COPY_OTHER_PANE.id)
-                          , bind("RunFileManagerActionFree", ACTION_MOVE_OTHER_PANE.id))
+  SC055 & Tab:: ShiftSwitch(bind("RunInterfaceActionFree", __FILE_MANAGER_ID__, ACTION_COPY_OTHER_PANE.id)
+                          , bind("RunInterfaceActionFree", __FILE_MANAGER_ID__, ACTION_MOVE_OTHER_PANE.id))
 #if
 
 ; Preview file
@@ -120,7 +120,7 @@ return
   SC055 & space:: 
     if (!GetKeyState("Shift", "P")) {
       ; Open Seer app, without focusing seer popup window.
-      RunFileManagerActionIsolated(ACTION_PREVIEW.id) 
+      RunInterfaceActionIsolated(__FILE_MANAGER_ID__, ACTION_PREVIEW.id) 
     } else {
       ; Focus Seer app. If already opened set focus on it, if not open it and set
       ; focus.
@@ -224,33 +224,5 @@ ImplementFileManagerInterface(appsId
     := (moveOtherPane != DEFAULT_IMPLEMENTATION) ? moveOtherPane : ACTION_MOVE_OTHER_PANE.default
 
   ImplementInterface(__FILE_MANAGER_ID__, appsId, app)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFileManagerAction(action, params*) {
-  RunInterfaceAction(__FILE_MANAGER_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFileManagerActionFree(action, params*) {
-  RunInterfaceActionFree(__FILE_MANAGER_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFileManagerActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__FILE_MANAGER_ID__, action, params*)
 }
 

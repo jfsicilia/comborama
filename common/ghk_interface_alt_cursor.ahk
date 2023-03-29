@@ -35,18 +35,18 @@ return
 
 ; Move to left/right or select to left/right
 #if (IsActionImplemented(__ALT_CURSOR_ID__, ACTION_ALT_LEFT.id) && (!altTabLaunched))
-  >^h:: ShiftSwitch(bind("RunAltCursorActionFree", ACTION_ALT_LEFT.id)
-                  , bind("RunAltCursorActionFree", ACTION_ALT_SHIFT_LEFT.id))
-  >^l:: ShiftSwitch(bind("RunAltCursorActionFree", ACTION_ALT_RIGHT.id)
-                  , bind("RunAltCursorActionFree", ACTION_ALT_SHIFT_RIGHT.id))
+  >^h:: ShiftSwitch(bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_LEFT.id)
+                  , bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_SHIFT_LEFT.id))
+  >^l:: ShiftSwitch(bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_RIGHT.id)
+                  , bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_SHIFT_RIGHT.id))
 #if
 
 ; Move to up/down or select to up/down
 #if (IsActionImplemented(__ALT_CURSOR_ID__, ACTION_ALT_DOWN.id) && (!altTabLaunched))
-  >^j:: ShiftSwitch(bind("RunAltCursorActionFree", ACTION_ALT_DOWN.id)
-                  , bind("RunAltCursorActionFree", ACTION_ALT_SHIFT_DOWN.id))
-  >^k:: ShiftSwitch(bind("RunAltCursorActionFree", ACTION_ALT_UP.id)
-                  , bind("RunAltCursorActionFree", ACTION_ALT_SHIFT_UP.id))
+  >^j:: ShiftSwitch(bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_DOWN.id)
+                  , bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_SHIFT_DOWN.id))
+  >^k:: ShiftSwitch(bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_UP.id)
+                  , bind("RunInterfaceActionFree", __ALT_CURSOR_ID__, ACTION_ALT_SHIFT_UP.id))
 #if
 
 ;----------------------------------------------------------------------  
@@ -118,33 +118,4 @@ DefaultImplementationAltCursorInterface(appsId) {
     , DEFAULT_IMPLEMENTATION 
     , DEFAULT_IMPLEMENTATION)
 }
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunAltCursorAction(action, params*) {
-  RunInterfaceAction(__ALT_CURSOR_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunAltCursorActionFree(action, params*) {
-  RunInterfaceActionFree(__ALT_CURSOR_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunAltCursorActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__ALT_CURSOR_ID__, action, params*)
-}
- 
 

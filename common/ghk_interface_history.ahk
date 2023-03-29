@@ -30,9 +30,9 @@ return
 ; Back/Forward in history.
 #if (IsActionImplemented(__HISTORY_ID__, ACTION_HISTORY_BACK.id) && (!altTabLaunched))
   SC055 & [::
-  ^[:: RunHistoryActionIsolated(ACTION_HISTORY_BACK.id)
+  ^[:: RunInterfaceActionIsolated(__HISTORY_ID__, ACTION_HISTORY_BACK.id)
   SC055 & ]::
-  ^]:: RunHistoryActionIsolated(ACTION_HISTORY_FORWARD.id)
+  ^]:: RunInterfaceActionIsolated(__HISTORY_ID__, ACTION_HISTORY_FORWARD.id)
 #if
 
 ;----------------------------------------------------------------------  
@@ -81,30 +81,3 @@ DefaultImplementionHistoryInterface(appsId) {
     , DEFAULT_IMPLEMENTATION)
 }
 
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunHistoryAction(action, params*) {
-  RunInterfaceAction(__HISTORY_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunHistoryActionFree(action, params*) {
-  RunInterfaceActionFree(__HISTORY_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunHistoryActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__HISTORY_ID__, action, params*)
-}

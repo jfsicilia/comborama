@@ -63,9 +63,9 @@ return
 /*
 */
 FavShiftSwitch(key) {                       
-  ShiftSwitch(bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, key)
-            , bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, "<+" . key)
-            , bind("RunFavsActionIsolated", ACTION_GO_TO_FAV.id, ">+" . key))
+  ShiftSwitch(bind("RunInterfaceActionIsolated", __FAVS_ID__, ACTION_GO_TO_FAV.id, key)
+            , bind("RunInterfaceActionIsolated", __FAVS_ID__, ACTION_GO_TO_FAV.id, "<+" . key)
+            , bind("RunInterfaceActionIsolated", __FAVS_ID__, ACTION_GO_TO_FAV.id, ">+" . key))
 }
 
 /*
@@ -96,33 +96,5 @@ ImplementFavsInterface(appsId
     := (goToFav != DEFAULT_IMPLEMENTATION) ? goToFav : ACTION_GO_TO_FAV.default    
   
   ImplementInterface(__FAVS_ID__, appsId, app)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFavsAction(action, params*) {
-  RunInterfaceAction(__FAVS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFavsActionFree(action, params*) {
-  RunInterfaceActionFree(__FAVS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFavsActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__FAVS_ID__, action, params*)
 }
 

@@ -27,7 +27,7 @@ return
 
 ; Go to. 
 #if (IsActionImplemented(__ADDRESS_ID__, ACTION_FOCUS_ADDRESS_BAR.id) && (!altTabLaunched))
-  SC055 & g:: RunAddressActionIsolated(ACTION_FOCUS_ADDRESS_BAR.id) 
+  SC055 & g:: RunInterfaceActionIsolated(__ADDRESS_ID__, ACTION_FOCUS_ADDRESS_BAR.id) 
 #if
 
 ;----------------------------------------------------------------------  
@@ -69,33 +69,5 @@ ImplementAddressInterface(appsId
 */
 DefaultImplementationAddressInterface(appsId) {
   ImplementAddressInterface(appsId, DEFAULT_IMPLEMENTATION)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunAddressAction(action, params*) {
-  RunInterfaceAction(__ADDRESS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunAddressActionFree(action, params*) {
-  RunInterfaceActionFree(__ADDRESS_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunAddressActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__ADDRESS_ID__, action, params*)
 }
 

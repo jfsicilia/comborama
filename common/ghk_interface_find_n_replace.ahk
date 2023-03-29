@@ -28,7 +28,7 @@ return
 ; Hotkeys to go search
 #if (IsActionImplemented(__SEARCH_ID__, ACTION_SEARCH.id) && (!altTabLaunched))
   ; Use up to avoid SC056 (RWin) from poping up Windows Start Menu.
-  SC055 & SC056 up::  RunFindAndReplaceActionIsolated(ACTION_SEARCH.id)
+  SC055 & SC056 up::  RunInterfaceActionIsolated(__SEARCH_ID__, ACTION_SEARCH.id)
 #if
 
 ;----------------------------------------------------------------------  
@@ -62,33 +62,5 @@ ImplementFindAndReplaceInterface(appsId
     := (search != DEFAULT_IMPLEMENTATION) ? search : ACTION_SEARCH.default    
   
   ImplementInterface(__SEARCH_ID__, appsId, app)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFindAndReplaceAction(action, params*) {
-  RunInterfaceAction(__SEARCH_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFindAndReplaceActionFree(action, params*) {
-  RunInterfaceActionFree(__SEARCH_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunFindAndReplaceActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__SEARCH_ID__, action, params*)
 }
 

@@ -38,33 +38,33 @@ return
 
 ; Open with.
 #if (IsActionImplemented(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id) && (!altTabLaunched))
-  >!>^a:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "a")
-  >!>^b:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "b")
-  >!>^c:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "c")
-  >!>^d:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "d")
-  >!>^e:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "e")
-  >!>^f:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "f")
-  >!>^g:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "g")
-  >!>^h:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "h")
-  >!>^i:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "i")
-  >!>^j:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "j")
-  >!>^k:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "k")
-  >!>^l:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "l")
-  >!>^m:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "m")
-  >!>^+m:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "M")
-  >!>^n:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "n")
-  >!>^o:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "o")
-  >!>^p:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "p")
-  >!>^q:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "q")
-  >!>^r:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "r")
-  >!>^s:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "s")
-  >!>^t:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "t")
-  >!>^u:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "u")
-  >!>^v:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "v")
-  >!>^w:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "w")
-  >!>^x:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "x")
-  >!>^y:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "y")
-  >!>^z:: RunOpenWithActionIsolated(ACTION_OPEN_WITH.id, "z")
+  >!>^a:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "a")
+  >!>^b:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "b")
+  >!>^c:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "c")
+  >!>^d:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "d")
+  >!>^e:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "e")
+  >!>^f:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "f")
+  >!>^g:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "g")
+  >!>^h:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "h")
+  >!>^i:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "i")
+  >!>^j:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "j")
+  >!>^k:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "k")
+  >!>^l:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "l")
+  >!>^m:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "m")
+  >!>^+m:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "M")
+  >!>^n:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "n")
+  >!>^o:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "o")
+  >!>^p:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "p")
+  >!>^q:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "q")
+  >!>^r:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "r")
+  >!>^s:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "s")
+  >!>^t:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "t")
+  >!>^u:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "u")
+  >!>^v:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "v")
+  >!>^w:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "w")
+  >!>^x:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "x")
+  >!>^y:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "y")
+  >!>^z:: RunInterfaceActionIsolated(__OPEN_WITH_ID__, ACTION_OPEN_WITH.id, "z")
 #if
 
 ;-----------------------------------------------------------------------------
@@ -375,33 +375,5 @@ ImplementOpenWithInterface(appsId
 */
 DefaultImplementationOpenWithInterface(appsId) {
   ImplementOpenWithInterface(appsId, DEFAULT_IMPLEMENTATION)
-}
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunOpenWithAction(action, params*) {
-  RunInterfaceAction(__OPEN_WITH_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunOpenWithActionFree(action, params*) {
-  RunInterfaceActionFree(__OPEN_WITH_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunOpenWithActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__OPEN_WITH_ID__, action, params*)
 }
 

@@ -34,25 +34,25 @@ return
 
 ; Copy
 #if (IsActionImplemented(__EDIT_ID__, ACTION_COPY.id) && (!altTabLaunched))
-  SC055 & c:: RunEditActionIsolated(ACTION_COPY.id)
+  SC055 & c:: RunInterfaceActionIsolated(__EDIT_ID__, ACTION_COPY.id)
 #if
 ; Cut
 #if (IsActionImplemented(__EDIT_ID__, ACTION_CUT.id) && (!altTabLaunched))
-  SC055 & x:: RunEditActionIsolated(ACTION_CUT.id)
+  SC055 & x:: RunInterfaceActionIsolated(__EDIT_ID__, CTION_CUT.id)
 #if
 ; Paste  
 #if (IsActionImplemented(__EDIT_ID__, ACTION_PASTE.id) && (!altTabLaunched))
-  SC055 & v:: RunEditActionIsolated(ACTION_PASTE.id)
+  SC055 & v:: RunInterfaceActionIsolated(__EDIT_ID__, ACTION_PASTE.id)
 #if
 ; Undo/Redo
 #if (IsActionImplemented(__EDIT_ID__, ACTION_UNDO.id) && (!altTabLaunched))
-  SC055 & z:: ShiftSwitch(bind("RunEditActionIsolated", ACTION_UNDO.id)
-                           , bind("RunEditActionIsolated", ACTION_REDO.id))
+  SC055 & z:: ShiftSwitch(bind("RunInterfaceActionIsolated", __EDIT_ID__, ACTION_UNDO.id)
+                           , bind("RunInterfaceActionIsolated", __EDIT_ID__, ACTION_REDO.id))
 #if
 ; Delete
 #if (IsActionImplemented(__EDIT_ID__, ACTION_DELETE.id) && (!altTabLaunched))
   <^backspace::
-  SC055 & backspace:: RunEditActionIsolated(ACTION_DELETE.id)
+  SC055 & backspace:: RunInterfaceActionIsolated(__EDIT_ID__, ACTION_DELETE.id)
 #if
 
 ;----------------------------------------------------------------------  
@@ -116,33 +116,4 @@ DefaultImplementationEditInterface(appsId) {
     , DEFAULT_IMPLEMENTATION
     , DEFAULT_IMPLEMENTATION) 
 }
-
-/*
-  Run action.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunEditAction(action, params*) {
-  RunInterfaceAction(__EDIT_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunEditActionFree(action, params*) {
-  RunInterfaceActionFree(__EDIT_ID__, action, params*)
-}
-
-/*
-  Run action, freeing modifiers before running it and setting them back after 
-  running it.
-  action -- Action to run. See Implement<...>Interface function.
-  params -- Optional params to pass to the action.
-*/
-RunEditActionIsolated(action, params*) {
-  RunInterfaceActionIsolated(__EDIT_ID__, action, params*)
-}
- 
 
