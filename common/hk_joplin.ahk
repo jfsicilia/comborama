@@ -13,13 +13,20 @@ JoplinAutoExec:
   global JOPLIN_COMBO_GOTO_ANYTHING := LAltLCtrlCombo("p")
   global JOPLIN_COMBO_CMD_PALETTE := LAltLCtrlCombo("P")
 
-  global JOPLIN_COMBO_TOGGLE_NOTELIST := "{F11}"
-  global JOPLIN_COMBO_TOGGLE_SIDEBAR := "{F10}"
+  ; Focus panes' actions dictionary.
+  global JOPLIN_COMBO_FOCUS 
+  := {"n": LShiftLCtrlCombo("s")       ; Notebooks navigation, pane. 
+    , "c": LShiftLCtrlCombo("l")       ; Note list navigation pane (children).
+    , "m": LShiftLCtrlCombo("b")       ; Main pane (joplin's note body).
+    , "i": LShiftLCtrlCombo("t")       ; Input pane (joplin's note title).
+    , "g": JOPLIN_COMBO_GOTO_ANYTHING} ; Address pane (joplin's search all).
 
-  global JOPLIN_COMBO_FOCUS_NOTELIST := LShiftLCtrlCombo("l")
-  global JOPLIN_COMBO_FOCUS_SIDEBAR := LShiftLCtrlCombo("s")
-  global JOPLIN_COMBO_FOCUS_TITLE := LShiftLCtrlCombo("t")
-  global JOPLIN_COMBO_FOCUS_BODY := LShiftLCtrlCombo("b")
+  ; Toggle panes' actions dictionary.
+  global JOPLIN_COMBO_TOGGLE
+  := {"n": "{F10}"                ; Toggle notebooks navigation pane.
+    , "c": "{F11}"                ; Toggle note list navigation pane (children).
+    ; Toggle bookmarks pane (joplin's favourites).
+    , "b": bind("JoplinRunPaletteCmd", "FavsToggleVisibility")}
 
   global JOPLIN_COMBO_SELECT_ALL := "{Esc}ggVG"
   global JOPLIN_COMBO_TOGGLE_EDIT := LAltLCtrlCombo("e")
@@ -44,13 +51,15 @@ JoplinAutoExec:
   global JOPLIN_CMD_SWITCH_LEFT := "SwitchLeft"
   global JOPLIN_CMD_MOVE_TAB_RIGHT := "TabsMoveRight"
   global JOPLIN_CMD_MOVE_TAB_LEFT := "TabsMoveLeft"
-  global JOPLIN_CMD_TOGGLE_FAVS_VISIBILITY := "FavsToggleVisibility"
   global JOPLIN_CMD_PIN_TAB := "TabsPinNote"
   global JOPLIN_CMD_UNPIN_TAB := "TabsUnPinNote"
 
   global JOPLIN_NOTEBOOK_PREFIX := "@"
   global JOPLIN_CMD_PREFIX := ":"
   global JOPLIN_TAG_PREFIX := "{raw}#"
+
+  ImplementAddressInterface("Joplin.exe"
+    , JOPLIN_COMBO_GOTO_ANYTHING)         ; Focus address bar. 
 
   ImplementTabsInterface("Joplin.exe"
     , bind("JoplinRunPaletteCmd", JOPLIN_CMD_SWITCH_RIGHT)   ; Next tab
@@ -87,7 +96,6 @@ JoplinAutoExec:
     , NOT_IMPLEMENTED                      ; Rename file/folder
     , NOT_IMPLEMENTED                      ; Refresh file manager
     , NOT_IMPLEMENTED                      ; Show info of file/folder
-    , NOT_IMPLEMENTED                      ; Find
     , NOT_IMPLEMENTED                      ; Duplicate file/folder
     , NOT_IMPLEMENTED                      ; Select all files/folders
     , JOPLIN_COMBO_NEW_NOTE                ; New note
@@ -104,6 +112,15 @@ JoplinAutoExec:
     , NOT_IMPLEMENTED                      ; Explore folder.
     , NOT_IMPLEMENTED                      ; Copy to other pane
     , NOT_IMPLEMENTED)                     ; Move to other pane
+
+  ImplementFindAndReplaceInterface("Joplin.exe"    ; Search.
+    , bind("ShiftSwitch"
+            , bind("JoplinRunPaletteCmd","showLocalSearch")
+            , bind("JoplinRunPaletteCmd","focusSearch")))
+
+  ImplementFocusAndToggleInterface("Joplin.exe"
+    , Func("RunActionFromDict").bind(JOPLIN_COMBO_FOCUS)   ; Focus pane function.
+    , Func("RunActionFromDict").bind(JOPLIN_COMBO_TOGGLE)) ; Toggle pane function.
 return
 
 ; Add some new shortcuts to Chrome.
@@ -115,7 +132,8 @@ return
   <^+p::   SendInputIsolated(JOPLIN_COMBO_CMD_PALETTE)
   <^e::    SendInputIsolated(JOPLIN_COMBO_TOGGLE_EDIT)
   <^a::    SendInputIsolated(JOPLIN_COMBO_SELECT_ALL)
-  <^f::    SendInputIsolated(JOPLIN_COMBO_SEARCH_IN_NOTE)
+  <^f::    JoplinRunPaletteCmd("showLocalSearch")
+  <^+f::   JoplinRunPaletteCmd("focusSearch")
   <^q::    SendInputIsolated(JOPLIN_COMBO_QUIT)
   <^b::    SendInputIsolated(JOPLIN_COMBO_BOLD)
   <^i::    SendInputIsolated(JOPLIN_COMBO_ITALIC)
@@ -128,40 +146,15 @@ return
   <^]::    SendInputIsolated(JOPLIN_COMBO_GO_FORWARD)
   <^o::    JoplinOpenInChrome()
 
-  ; Toggle panes.
-  <!>^s::
-  >#<!>^s:: SendInputIsolated(JOPLIN_COMBO_TOGGLE_SIDEBAR)
-  <!>^n::
-  >#<!>^n:: SendInputIsolated(JOPLIN_COMBO_TOGGLE_NOTELIST)
-  <!>^f::
-  >#<!>^f:: JoplinRunPaletteCmd(JOPLIN_CMD_TOGGLE_FAVS_VISIBILITY) 
-  ; Toggles all panes.
-  >#<!>^a::
-    JoplinRunPaletteCmd(JOPLIN_CMD_TOGGLE_FAVS_VISIBILITY)
-    SendInputIsolated(JOPLIN_COMBO_TOGGLE_SIDEBAR)
-    SendInputIsolated(JOPLIN_COMBO_TOGGLE_NOTELIST)
-  return
-
-  ; Focus panes.
-  >#<!:: return
-  >#<!b:: SendInputFree(JOPLIN_COMBO_FOCUS_BODY)
-  >#<!n:: SendInputFree(JOPLIN_COMBO_FOCUS_NOTELIST)
-  >#<!t:: SendInputFree(JOPLIN_COMBO_FOCUS_TITLE)
-  >#<!s:: SendInputFree(JOPLIN_COMBO_FOCUS_SIDEBAR)
-
   ; Pin/Unpin tab.
   >#<^p::  JoplinRunPaletteCmd(JOPLIN_CMD_PIN_TAB)
   >#<^u::  JoplinRunPaletteCmd(JOPLIN_CMD_UNPIN_TAB)
 
-  ;<^0::   Actual size
-  ;<^-::   Reduce size
-  ;<^plus::Increase size
-
-  F8::     ClickWndCenter()
+  ; Fast scrolling.
+  SC055 & space:: space
 #If
 
 ;------------------ Helper functions --------------------
-
 
 /*
   Runs a command in joplin. First it launches the command palette,
@@ -195,13 +188,15 @@ JoplinToggleRecent() {
 }
 
 /*
-  Open note in chrome. To do this, open note in external editor (in my case
-  gVim. In gVim, issue command to open current file in external app 
-  (vimOpenCommand) and close gVim. Then focus back joplin to toggle note editing 
+  Edit joplin's note externally. In my system this will open gVim to edit it.
+  When gVim is launched a vim command can be issued (see param vimOpenCommand),
+  this allows to open the file in other programs, through gVim preconfigured
+  commands. After doing this, focus back joplin to toggle note editing 
   off (in joplin it is bound to <JOPLIN_COMBO_TOGGLE_EDIT>). 
-  Finally, focus chrome and activate web page. 
+
+  vimOpenCommand -- Command gor gVim to open note in another external app.
 */
-JoplinOpenIn(vimOpenCommand) {
+JoplinEditNoteExtNUndoEdit(vimOpenCommand) {
   FreeModifiers()
   SendInput, %JOPLIN_COMBO_TOGGLE_EDIT%
   Sleep, 500
@@ -214,13 +209,15 @@ JoplinOpenIn(vimOpenCommand) {
   SetModifiers()
 }
 
-JoplinOpenInChrome() {
-  JoplinOpenIn(VIM_COMBO_EXT_OPEN_IN_CHROME) 
-  FocusOrLaunchChrome()
-  ClickWndCenter()
-}
+/*
+  Edit joplin's note externally. In my system this will open gVim to edit it.
+  When gVim is launched a vim command can be issued (see param vimOpenCommand),
+  this allows to open the file in other programs, through gVim preconfigured
+  commands. 
 
-JoplinEditIn(vimOpenCommand) {
+  vimOpenCommand -- Command gor gVim to open note in another external app.
+*/
+JoplinEditNoteExt(vimOpenCommand) {
   FreeModifiers()
   SendInput, %JOPLIN_COMBO_TOGGLE_EDIT%
   Sleep, 500
@@ -229,17 +226,36 @@ JoplinEditIn(vimOpenCommand) {
   SetModifiers()
 }
 
+/*
+  Open current note in chrome through gvim.
+*/
+JoplinOpenInChrome() {
+  JoplinEditNoteExtNUndoEdit(VIM_COMBO_EXT_OPEN_IN_CHROME) 
+  FocusOrLaunchChrome()
+  ChromeFocusBrowsingArea()
+
+}
+
+/*
+  Open current note in gvim.
+*/
 JoplinEditInVim() {
   SendInputIsolated(JOPLIN_COMBO_TOGGLE_EDIT)
 }
 
+/*
+  Open current note in VSCode through gvim.
+*/
 JoplinEditInVSCode() {
-  JoplinEditIn(VIM_COMBO_EXT_OPEN_IN_VSCODE) 
+  JoplinEditNoteExt(VIM_COMBO_EXT_OPEN_IN_VSCODE) 
   FocusOrLaunchVSCode()
 }
 
+/*
+  Open current note in Typora through gvim.
+*/
 JoplinEditInTypora() {
-  JoplinEditIn(VIM_COMBO_EXT_OPEN_IN_TYPORA) 
+  JoplinEditNoteExt(VIM_COMBO_EXT_OPEN_IN_TYPORA) 
   FocusOrLaunchTypora()
 }
 
