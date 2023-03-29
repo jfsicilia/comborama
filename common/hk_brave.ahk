@@ -24,6 +24,8 @@ BraveAutoExec:
   global BRAVE_COMBO_GO_TO_BOOKMARK := LAltCombo("b")
   ; Show settings.
   global BRAVE_COMBO_SETTINGS := LCtrlCombo("t") . "brave://settings{enter}"
+  ; Find.
+  global BRAVE_COMBO_FIND := LCtrlCombo("f")
 
   ImplementTabsInterface("brave.exe"
     , BRAVE_COMBO_GO_NEXT_TAB          ; Next tab
@@ -52,6 +54,9 @@ BraveAutoExec:
 
   ImplementSettingsInterface("brave.exe"
     , BRAVE_COMBO_SETTINGS)               ; Open settings.
+
+  ImplementFindAndReplaceInterface("brave.exe"
+    , BRAVE_COMBO_FIND)                   ; Search.
 return
 
 #IfWinActive ahk_exe brave.exe

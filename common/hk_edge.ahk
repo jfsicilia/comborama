@@ -13,6 +13,8 @@ EdgeAutoExec:
   global EDGE_COMBO_HISTORY := LCtrlCombo("h")
   ; Show settings.
   global EDGE_COMBO_SETTINGS := LCtrlCombo("t") . "edge://settings{Enter}"
+  ; Find.
+  global EDGE_COMBO_FIND := LCtrlCombo("f")
 
   ImplementTabsInterface("msedge.exe"
     , EDGE_COMBO_GO_NEXT_TAB           ; Next tab
@@ -28,8 +30,8 @@ EdgeAutoExec:
     , DEFAULT_IMPLEMENTATION)          ; Undo close tab.
 
   ImplementHistoryInterface("msedge.exe"
-    , Func("edgeBackHistory")          ; History back
-    , Func("edgeForwardHistory"))      ; History forward
+    , Func("EdgeBackHistory")          ; History back
+    , Func("EdgeForwardHistory"))      ; History forward
 
   ImplementSeekAndSelInterface("msedge.exe"
     , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Space
@@ -41,6 +43,9 @@ EdgeAutoExec:
 
   ImplementSettingsInterface("msedge.exe"
     , EDGE_COMBO_SETTINGS)               ; Open settings.
+
+  ImplementFindAndReplaceInterface("msedge.exe"
+    , EDGE_COMBO_FIND)                   ; Search.
 return
 
 #ifWinActive ahk_exe msedge.exe
@@ -49,7 +54,7 @@ return
 /*
   Back in history.
 */
-edgeBackHistory() {
+EdgeBackHistory() {
   SendInput, ^l
   Sleep, 50
   SendInput, {Esc}
@@ -60,7 +65,7 @@ edgeBackHistory() {
 /*
   Forward in history.
 */
-edgeForwardHistory() {
+EdgeForwardHistory() {
   SendInput, ^l
   Sleep, 50
   SendInput, {Esc}
