@@ -33,6 +33,14 @@ EverythingAutoExec:
   FAV_EVERYTHING_SEARCHES.item("e") := "books/ electronics/ *.pdf"
   FAV_EVERYTHING_SEARCHES.item("m") := "books/ mathematics/ *.pdf"
 
+  global EVERYTHING_COMBO_FOCUS 
+  := {"g": EVERYTHING_COMBO_SHOW_EVERYTHING   ; Focus file list
+     ,"p": EVERYTHING_COMBO_FOCUS_PREVIEW     ; Focus preview
+     ,"m": EVERYTHING_COMBO_FOCUS_FILES_PANE} ; Focus search box
+
+  global EVERYTHING_COMBO_TOGGLE
+  := {"p": EVERYTHING_COMBO_TOGGLE_PREVIEW}   ; Focus preview
+
   ImplementHistoryInterface("Everything.exe"
     , Func("EverythingBackInHistory")         ; History back
     , Func("EverythingBackInHistory"))        ; History forward
@@ -47,7 +55,6 @@ EverythingAutoExec:
     , EVERYTHING_COMBO_RENAME_FILE          ; Rename file/folder
     , EVERYTHING_COMBO_REFRESH              ; Refresh file manager
     , EVERYTHING_COMBO_SHOW_INFO            ; Show info of file/folder
-    , EVERYTHING_COMBO_FIND                 ; Find
     , NOT_IMPLEMENTED                       ; Duplicate file/folder
     , EVERYTHING_COMBO_SELECT_ALL           ; Select all files/folders
     , NOT_IMPLEMENTED                       ; New file
@@ -66,6 +73,9 @@ EverythingAutoExec:
     , NOT_IMPLEMENTED          ; Copy to other pane
     , NOT_IMPLEMENTED)         ; Move to other pane
 
+  ImplementFindAndReplaceInterface("Everything.exe"
+    , EVERYTHING_COMBO_FIND)              ; Find
+
   DefaultImplementationOpenWithInterface("Everything.exe")
 
   DefaultImplementationAltCursorInterface("Everything.exe")
@@ -81,6 +91,9 @@ EverythingAutoExec:
   ImplementFavsInterface("Everything.exe"
     , func("EverythingGoToFav"))           ; Go to favourite.
 
+  ImplementFocusAndToggleInterface("Everything.exe"
+    , Func("RunActionFromDict").bind(EVERYTHING_COMBO_FOCUS)   ; Focus pane function.
+    , Func("RunActionFromDict").bind(EVERYTHING_COMBO_TOGGLE)) ; Toggle pane function.
 return
 
 ; Remap explorer
@@ -88,15 +101,10 @@ return
   SC055::
   ESC:: ToggleEverythingApp()
 
-  ; Focus Files
-  SC055 & F8:: EverythingFocusFiles()
-  ; Focus preview
-  ;NOTE F9 focus preview
-  SC055 & F9:: F9
-  ;F9::  ; Already built in everything.
-
   <!p:: SendInputIsolated(EVERYTHING_COMBO_TOGGLE_PREVIEW)
 #if
+
+;------------------ Helper functions --------------------
 
 /*
   Go back in search history
@@ -108,27 +116,6 @@ EverythingBackInHistory() {
   sleep, 100
   SendInputIsolated(LAltCombo("o"))
   SendInputIsolated("{enter}")
-}
-
-/*
-  Focus search textbox.
-*/
-EverythingFocusSearchBox() {
-    SendInputIsolated(EVERYTHING_COMBO_FOCUS_FIND_TXTBOX)
-}
-
-/*
-  Focus file list.
-*/
-EverythingFocusFiles() {
-  SendInputIsolated(EVERYTHING_COMBO_FOCUS_FILES_PANE)
-} 
-
-/*
-  Focus preview.
-*/
-EverythingFocusPreview() {
-  SendInputFree(EVERYTHING_COMBO_FOCUS_PREVIEW)
 }
 
 /*
