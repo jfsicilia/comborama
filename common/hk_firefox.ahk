@@ -18,6 +18,8 @@ FirefoxAutoExec:
 
   ; Show settings.
   global FIREFOX_COMBO_SETTINGS := LCtrlCombo("t") . "about:preferences{enter}"
+  ; Find.
+  global FIREFOX_COMBO_FIND := LCtrlCombo("f")
     
   ImplementAddressInterface("firefox.exe"
     , FIREFOX_COMBO_ADDRESS_BAR)                ; Focus address bar. 
@@ -49,7 +51,9 @@ FirefoxAutoExec:
 
   ImplementSettingsInterface("firefox.exe"
     , FIREFOX_COMBO_SETTINGS)               ; Open settings.
-return
+
+  ImplementFindAndReplaceInterface("firefox.exe"
+    , FIREFOX_COMBO_FIND)                   ; Search.
 
 ; Add some new shortcuts to Firefox.
 #IfWinActive ahk_exe firefox.exe
