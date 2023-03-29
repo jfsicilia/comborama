@@ -40,6 +40,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; Capslock + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _            up 
+;                    _ _ _ _ _ _ _ _ _ _       left down right
+;                                           
+
 ; Move to left/right or select to left/right
 #if (IsActionImplemented(__CURSOR_ID__, ACTION_LEFT.id) && (!altTabLaunched))
   SC055 & h:: ShiftSwitch(bind("RunCursorActionFree", ACTION_LEFT.id)
