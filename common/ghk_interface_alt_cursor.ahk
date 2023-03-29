@@ -25,6 +25,14 @@ return
 ;------------------------ ACTIONS' HOTKEYS ----------------------------  
 ;----------------------------------------------------------------------  
 
+; RCtrl + <key>
+;
+; Used keys:    _ _ _ _ _ _ _ _ _ _ _ _ _ _
+;               _  _ _ _ _ _ _ _ _ _ _ _ _ _ 
+;                   _ _ _ _ _ h j k l _ _     
+;                    _ _ _ _ _ _ _ _ _ _       
+;                                           
+
 ; Move to left/right or select to left/right
 #if (IsActionImplemented(__ALT_CURSOR_ID__, ACTION_ALT_LEFT.id) && (!altTabLaunched))
   >^h:: ShiftSwitch(bind("RunAltCursorActionFree", ACTION_ALT_LEFT.id)
