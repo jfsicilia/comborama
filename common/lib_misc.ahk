@@ -706,3 +706,26 @@ HideTrayTip() {
   }
 }
 
+/*
+  Writes txt to log (_main_.log)
+*/
+FileLog(txt) {
+  FileAppend, %A_YYYY%%A_MM%%A_DD% %A_Hour%:%A_Min% %txt%`n, %A_ScriptDir%\_main_.log
+}
+
+/*
+  Converts a dictionary to a string.
+  dict - Dictionary to convert.
+  return - String (e.g. { a:apple, b:banana, c:carrot}). 
+*/
+Dict2Str(dict) {
+  result := "{"
+  sep := ""
+  for key, value in dict {
+    value := (IsObject(value))? value.Name : value
+    result := result . sep . key . ":" . value
+    sep := ", "
+  }
+  result := result . "}"
+  return result
+}
