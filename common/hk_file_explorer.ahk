@@ -35,6 +35,18 @@ FileExplorerAutoExec:
   global FILE_EXPLORER_COMBO_PASTE := "^v"
   global FILE_EXPLORER_COMBO_HISTORY_PASTE := "#v"
 
+  ; Focus combos dictionary.
+  global FILE_EXPLORER_COMBO_FOCUS 
+  := {"i": Func("FileExplorerFocusFileNameInputBox")  ; Focus filename textbox.
+     ,"n": Func("FileExplorerFocusNavigationPane")    ; Focus address bar. 
+     ,"g": FILE_EXPLORER_COMBO_ADDRESS_BAR            ; Focus address bar. 
+     ,"p": Func("FileExplorerFocusPreview")           ; Focus address bar. 
+     ,"m": Func("FileExplorerFocusFileList") }        ; Focus browsing area.
+
+  ; Focus combos dictionary.
+  global FILE_EXPLORER_COMBO_TOGGLE
+  := {"p": "!p" }                           ; Toggle preview.
+
   ImplementTabsInterface("Explorer.EXE"
     , FILE_EXPLORER_COMBO_NEXT_TAB         ; Next tab
     , FILE_EXPLORER_COMBO_PREV_TAB         ; Prev tab
@@ -44,7 +56,7 @@ FileExplorerAutoExec:
     , NO_BOUND_ACTION_MSGBOX               ; Move tab left.
     , NO_BOUND_ACTION_MSGBOX               ; Move tab first.
     , NO_BOUND_ACTION_MSGBOX               ; Move tab last.
-    , func("ExplorerNewTab")               ; New tab.
+    , func("FileExplorerNewTab")               ; New tab.
     , DEFAULT_IMPLEMENTATION               ; Close tab.
     , DEFAULT_IMPLEMENTATION)              ; Undo close tab.
 
@@ -80,9 +92,10 @@ FileExplorerAutoExec:
     , FILE_EXPLORER_COMBO_ADDRESS_BAR)         ; Focus address bar. 
 
   ImplementFavsInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
-    , func("ExplorerGoToFav"))           ; Go to favourite.
+    , Func("FileExplorerGoToFav"))           ; Go to favourite.
+    ;, "!d")           ; Go to favourite.
 
-  ImplementEditInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
+  ImplementEditInterface(["Explorer.EXE", "PickerHost.exe", "#32770", "CabinetWClass"]
     , bind("ShiftSwitch"                         ; Copy
          , FILE_EXPLORER_COMBO_COPY
          , FILE_EXPLORER_COMBO_COPY_PATH)                  
@@ -102,7 +115,6 @@ FileExplorerAutoExec:
     , FILE_EXPLORER_COMBO_RENAME_FILE       ; Rename file/folder
     , FILE_EXPLORER_COMBO_REFRESH           ; Refresh file manager
     , FILE_EXPLORER_COMBO_SHOW_INFO         ; Show info of file/folder
-    , FILE_EXPLORER_COMBO_FIND              ; Find
     , FILE_EXPLORER_COMBO_DUPLICATE         ; Duplicate file/folder
     , FILE_EXPLORER_COMBO_SELECT_ALL        ; Select all files/folders
     , func("CreateNewFile")                 ; New file
@@ -118,8 +130,11 @@ FileExplorerAutoExec:
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__WindowsTerminal__"))
                         , bind("__OpenSelectedItemsWith__", Func("__CMD__")) 
                         , bind("__OpenSelectedItemsWith__", Func("__OneCommander__")))
-    , func("CopyOtherPane")                 ; Copy to other pane
-    , func("MoveOtherPane"))                ; Move to other pane
+    , func("FileExplorerCopyOtherPane")                 ; Copy to other pane
+    , func("FileExplorerMoveOtherPane"))                ; Move to other pane
+
+  ImplementFindAndReplaceInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
+    , FILE_EXPLORER_COMBO_FIND)              ; Find
 
   DefaultImplementationOpenWithInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"])
 
@@ -129,35 +144,23 @@ FileExplorerAutoExec:
     , FILE_EXPLORER_COMBO_ADDRESS_BAR              ; Ctrl + Space
     , NO_BOUND_ACTION_MSGBOX                       ; Ctrl + Shift + Space
     , bind("ShowFavFoldersListBox"
-         , FAV_FOLDERS_PATH, func("ExplorerGoTo")) ; Alt + Space
+         , FAV_FOLDERS_PATH, func("FileExplorerGoTo")) ; Alt + Space
     , NO_BOUND_ACTION_MSGBOX                       ; Alt + Shift + Space
     , NO_BOUND_ACTION_MSGBOX                       ; Win + Space
     , NO_BOUND_ACTION_MSGBOX)                      ; Win + Shift + Space
+
+  ImplementFocusAndToggleInterface(["Explorer.exe", "PickerHost.exe", "#32770", "CabinetWClass"]
+    , Func("RunActionFromDict").bind(FILE_EXPLORER_COMBO_FOCUS)   ; Focus pane function.
+    , Func("RunActionFromDict").bind(FILE_EXPLORER_COMBO_TOGGLE)) ; Toggle pane function.
 return
 
-; Keybinding to set focus in file explorer.
-#if (WinActive("ahk_class CabinetWClass") 
-  || WinActive("ahk_class ExploreWClass")
-  || WinActive("ahk_class #32770"))
-
-  ; This will set focus on the list of files.
-  SC055 & F8:: ControlFocus, DirectUIHWND2, A
-  
-  ; This will set focus on the navigation pane. 
-  SC055 & F7:: ControlFocus, SysTreeView321, A
-#if
-
-; Keybinding to set focus in file explorer (Open and Save As dialogs).
-#if WinActive("ahk_class #32770")
-  ; This will set focus on the filename textbox.
-  SC055 & F6::ControlFocus, Edit2, A
-#If
+;------------------ Helper functions --------------------
 
 /*
   Go to path.
   path -- Path to go.
 */
-ExplorerGoTo(path) {
+FileExplorerGoTo(path) {
   SendInputIsolated(FILE_EXPLORER_COMBO_ADDRESS_BAR)
   Sleep, 800
   SendInputIsolated(path . "{Enter}")
@@ -168,20 +171,52 @@ ExplorerGoTo(path) {
   FAV_FOLDERS_PATH dictionary to retrive a path. 
   key -- Key to retrieve a path in the FAV_FOLDERS_PATH dictionary.
 */
-ExplorerGoToFav(key) {
-  ExplorerGoTo(FAV_FOLDERS_PATH.item(key))
+FileExplorerGoToFav(key) {
+  FileExplorerGoTo(FAV_FOLDERS_PATH.item(key))
 }
+
+/*
+  This will set focus on file list.
+*/
+FileExplorerFocusFileList() {
+  ControlFocus, DirectUIHWND2, A
+}
+
+/*
+  This will set focus on the navigation pane.
+*/
+FileExplorerFocusNavigationPane() {
+  ControlFocus, SysTreeView321, A
+}
+
+/*
+  This will set focus on the filename textbox.
+*/
+FileExplorerFocusFileNameInputBox() {
+  ControlFocus, Edit1, A
+  ; Sometimes there is an Edit2 control. If exists then focus, if not it
+  ; will remained focused in Edit1.
+  ControlFocus, Edit2, A
+}
+
+/*
+  This will set focus on the preview pane.
+*/
+FileExplorerFocusPreview() {
+  ControlFocus, PdfWebviewPreview1, A
+}
+
 
 /*
   Create a new tab and also set it to the DEFAULT_FOLDER.
 */
-ExplorerNewTab() {
+FileExplorerNewTab() {
   SendInputIsolated(FILE_EXPLORER_COMBO_NEW_TAB)
   Sleep, 800
-  ExplorerGoTo(DEFAULT_FOLDER)
+  FileExplorerGoTo(DEFAULT_FOLDER)
 }
 
-CopyOtherPane() {
+FileExplorerCopyOtherPane() {
   SendInputIsolated(FILE_EXPLORER_COMBO_COPY)
   sleep, 500
   if ActivateAppNextWindow() {
@@ -192,7 +227,7 @@ CopyOtherPane() {
   }
 }
 
-MoveOtherPane() {
+FileExplorerMoveOtherPane() {
   SendInputIsolated(FILE_EXPLORER_COMBO_CUT)
   sleep, 500
   if ActivateAppNextWindow() {
@@ -215,7 +250,7 @@ CreateNewFile() {
   if ErrorLevel  ; If user pressed cancel, return.
       return
 
-  path := GetExplorerPath()
+  path := FileExplorerGetPath()
   if (!path) {
     MsgBox, % "Error, unable to create file " . userInput
     return
@@ -252,7 +287,7 @@ FileExplorerRedo() {
   Move copied files to current selected folder in file explorer.
 */
 FileExplorerMoveFiles() {
-  path := GetExplorerPath()
+  path := FileExplorerGetPath()
   if (!path) {
     MsgBox, % "Error, unable to move files."
     return
@@ -275,11 +310,11 @@ FileExplorerMoveFiles() {
   Returns the current path of a file explorer window. It copes with file
   explorer open/save dialogs (class #32770).
 */
-GetExplorerPath(title:="A") {
+FileExplorerGetPath(title:="A") {
   WinGetClass class, %title%
   path := ""
   if ((class = "CabinetWClass") OR (class = "ExploreWClass")) {
-    w := GetActiveExplorer()
+    w := GetActiveFileExplorer()
     if (w = -1)  
       return path
     path := w.Document.Folder.Self.Path
@@ -301,7 +336,7 @@ GetExplorerPath(title:="A") {
 /*  
   Returns Active explorer window object. 
 */
-GetActiveExplorer() {
+GetActiveFileExplorer() {
   static objShell := ComObjCreate("Shell.Application")
   WinHWND := WinActive("A")    ; Active window
   for Item in objShell.Windows
