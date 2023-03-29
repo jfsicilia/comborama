@@ -120,7 +120,7 @@ FocusOrLaunchFileExplorer(dir := "") {
     if ErrorLevel
       return 0
     if (dir != "")
-      ExplorerGoTo(dir)
+      FileExplorerGoTo(dir)
     return 1
   }
 
@@ -130,7 +130,7 @@ FocusOrLaunchFileExplorer(dir := "") {
   if ErrorLevel
     return 0
   dir := (dir = "") ? DEFAULT_FOLDER : dir
-  ExplorerGoTo(dir)
+  FileExplorerGoTo(dir)
   return 2
 }
 
