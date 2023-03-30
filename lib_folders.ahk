@@ -47,7 +47,7 @@ LibFoldersAutoExec:
   FAV_FOLDERS_PATH.item("<+j") := DEFAULT_FOLDER . "\projects.win"
   FAV_FOLDERS_PATH.item(">+j") := WSL_DEFAULT_FOLDER . "\projects.wsl"
 
-  FAV_FOLDERS_PATH.item("k") := DEFAULT_FOLDER . "\settings\autohotkey\common"
+  FAV_FOLDERS_PATH.item("k") := DEFAULT_FOLDER . "\settings\autohotkey\comborama"
 
   FAV_FOLDERS_PATH.item("m") := "\\192.168.3.10\"
 
