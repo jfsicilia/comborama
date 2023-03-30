@@ -3,7 +3,6 @@
 
   @jfsicilia 2022.
 */
-#include %A_ScriptDir%\lib_log.ahk
 #include %A_ScriptDir%\lib_misc.ahk
 #include %A_ScriptDir%\lib_combo.ahk
 #include %A_ScriptDir%\lib_desktop.ahk

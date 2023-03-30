@@ -5,7 +5,6 @@
 
   @jfsicilia 2022.
 */
-#include %A_ScriptDir%\lib_log.ahk
 #include %A_ScriptDir%\lib_grid.ahk
 
 ;-----------------------------------------------------------------------------

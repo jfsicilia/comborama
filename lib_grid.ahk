@@ -5,7 +5,6 @@
 
   @jfsicilia 2022.
 */
-#include %A_ScriptDir%\lib_log.ahk
 #include %A_ScriptDir%\lib_window.ahk
 #include %A_ScriptDir%\lib_desktop.ahk
 #include %A_ScriptDir%\lib_monitor.ahk

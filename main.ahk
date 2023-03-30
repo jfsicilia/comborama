@@ -23,22 +23,26 @@ SetCapsLockState, AlwaysOff
 
 ShowProgressText("AHK Start loading...", 500)
 
-; Logging global object.
-;global LOG := new LogClass("_main_")
-;LOG.initalizeNewLogFile(true, "Logging...`n")
-
 ; Load autoexec code needed by some scripts.
+
+; Interface scaffolding.
 GoSub InterfaceAutoExec
+
+; Libraries.
+; NOTE: LibHighlightActiveWindowAutoExec must be run before other libraries
+; to register callbacks in correct order.
 GoSub LibActiveWindowPollingAutoExec
 GoSub LibMiscAutoExec
 GoSub LibDesktopAutoExec
 GoSub LibWindowAutoExec
 GoSub LibMonitorAutoExec
-; NOTE: LibHighlightActiveWindowAutoExec must be run before LibGridAutoExec
-; to register callbacks in correct order.
 GoSub LibHighlightActiveWindowAutoExec
 GoSub LibGridAutoExec
 GoSub LibAppsAutoExec
+GoSub LibFoldersAutoExec
+GoSub LibSearchesAutoExec
+
+; Interfaces. 
 GoSub EditInterfaceAutoExec
 GoSub TabsInterfaceAutoExec
 GoSub PanesInterfaceAutoExec
@@ -54,13 +58,16 @@ GoSub TerminalInterfaceAutoExec
 GoSub OpenWithInterfaceAutoExec
 GoSub SeekAndSelInterfaceAutoExec
 GoSub SettingsInterfaceAutoExec
+
+; Misc
 GoSub MiscAutoExec
 GoSub WindowAutoExec
+GoSub AltCharsAutoExec
+
+; Apps
 GoSub GVimAutoExec
 GoSub VSCodeAutoExec
-GoSub LibFoldersAutoExec
 GoSub WindowsTerminalAutoExec
-GoSub LibSearchesAutoExec
 GoSub FileExplorerAutoExec
 GoSub EverythingAutoExec
 GoSub OneCmdrAutoExec
@@ -69,16 +76,14 @@ GoSub EdgeAutoExec
 GoSub FirefoxAutoExec
 GoSub BraveAutoExec
 GoSub JoplinAutoExec
-GoSub AltCharsAutoExec
 
-; Load default implementations of interfaces 
+; Load default implementations of interfaces common to all apps.
 DefaultImplementationCursorInterface(ANY_APP_ID)
 DefaultImplementationEditInterface(ANY_APP_ID)
 
 ShowProgressText("AHK Scripts loaded!", 500)
 
 ; Libraries.
-#include %A_ScriptDir%\lib_log.ahk
 #include %A_ScriptDir%\lib_active_window_polling.ahk
 
 ; Modifiers.
