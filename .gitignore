@@ -1,12 +1,5 @@
 .vim-bookmarks
-.gitold/
-backup_capslock/
 ~*
 *.log
 **/*.html
-**/*copy.*
-**/*Copy.*
-common/html/test/
-common/info/
-old/
-test/
+info/
