@@ -127,6 +127,3 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\hk_joplin.ahk
 #include %A_ScriptDir%\hk_gvim.ahk
 #include %A_ScriptDir%\hk_windows_terminal.ahk
-
-; Hotstrings.
-#include %A_ScriptDir%\hs_misc.ahk
