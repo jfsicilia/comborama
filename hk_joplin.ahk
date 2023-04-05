@@ -26,7 +26,8 @@ JoplinAutoExec:
   := {"n": "{F10}"                ; Toggle notebooks navigation pane.
     , "c": "{F11}"                ; Toggle note list navigation pane (children).
     ; Toggle bookmarks pane (joplin's favourites).
-    , "b": bind("JoplinRunPaletteCmd", "FavsToggleVisibility")}
+    , "b": bind("JoplinRunPaletteCmd", "FavsToggleVisibility")
+    , "o": bind("JoplinRunPaletteCmd", "ToggleOutline")}
 
   global JOPLIN_COMBO_SELECT_ALL := "{Esc}ggVG"
   global JOPLIN_COMBO_TOGGLE_EDIT := LAltLCtrlCombo("e")
