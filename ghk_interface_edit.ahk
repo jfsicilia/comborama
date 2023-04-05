@@ -38,7 +38,7 @@ return
 #if
 ; Cut
 #if (IsActionImplemented(__EDIT_ID__, ACTION_CUT.id) && (!altTabLaunched))
-  SC055 & x:: RunInterfaceActionIsolated(__EDIT_ID__, CTION_CUT.id)
+  SC055 & x:: RunInterfaceActionIsolated(__EDIT_ID__, ACTION_CUT.id)
 #if
 ; Paste  
 #if (IsActionImplemented(__EDIT_ID__, ACTION_PASTE.id) && (!altTabLaunched))
