@@ -7,11 +7,21 @@
 #include %A_ScriptDir%\interface.ahk
 
 FileManagerInterfaceAutoExec:
+  ; -------------- To preview files, we use SEER app. --------------
+
+  ; When Seer app (preview/quicklook) opens, it show a window, but the focus
+  ; remains in the window behing. This key combo (set in seer settings), allow
+  ; to set focus on the Seer app.
+  SEER_FOCUS_COMBO := "+#!{F12}"
+
+  ; Open Seer app.
+  SEER_OPEN_COMBO := "{space}"
+
   ; Name of interface.
   global __FILE_MANAGER_ID__ := "FILE_MANAGER_INTERFACE"
 
   ; Interface's actions.
-  global ACTION_PREVIEW :=         {id: "__preview()__", default: NOT_IMPLEMENTED}
+  global ACTION_PREVIEW :=         {id: "__preview()__", default: SEER_OPEN_COMBO}
   global ACTION_OPEN :=            {id: "__open()__", default: NOT_IMPLEMENTED}
   global ACTION_GO_PARENT :=       {id: "__goParent()__", default: NOT_IMPLEMENTED}
   global ACTION_RENAME :=          {id: "__rename()__", default: NOT_IMPLEMENTED}
@@ -28,15 +38,6 @@ FileManagerInterfaceAutoExec:
   global ACTION_COPY_OTHER_PANE := {id: "__copyOtherPane()__", default: NOT_IMPLEMENTED}
   global ACTION_MOVE_OTHER_PANE := {id: "__moveOtherPane()__", default: NOT_IMPLEMENTED}
 
-  ; -------------- To preview files, we use SEER app. --------------
-
-  ; When Seer app (preview/quicklook) opens, it show a window, but the focus
-  ; remains in the window behing. This key combo (set in seer settings), allow
-  ; to set focus on the Seer app.
-  SEER_FOCUS_COMBO := "+#!{F12}"
-
-  ; Open Seer app.
-  SEER_OPEN_COMBO := "{space}"
 return
 
 ;----------------------------------------------------------------------  
