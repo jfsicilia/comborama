@@ -107,7 +107,7 @@ OneCmdrAutoExec:
     , DEFAULT_IMPLEMENTATION)                      ; Delete
 
   ImplementFileManagerInterface("OneCommander.exe"
-    , ""                      ; Prefiew file/folder
+    , DEFAULT_IMPLEMENTATION                   ; Prefiew file/folder
     , ONE_COMMANDER_COMBO_OPEN_FILE_FOLDER     ; Open file/folder
     , ONE_COMMANDER_COMBO_GO_PARENT            ; Go parent folder
     , ONE_COMMANDER_COMBO_RENAME_FILE          ; Rename file/folder
