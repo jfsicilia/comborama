@@ -14,6 +14,8 @@ TerminalInterfaceAutoExec:
   global ACTION_SCROLL_1_LINE_DOWN := {id: "__scroll1LineDown()__", default:NOT_IMPLEMENTED}
   global ACTION_SCROLL_1_PAGE_UP :=   {id: "__scroll1PageUp()__",   default:NOT_IMPLEMENTED}
   global ACTION_SCROLL_1_PAGE_DOWN := {id: "__scroll1PageDown()__", default:NOT_IMPLEMENTED}
+  global ACTION_SCROLL_TO_TOP :=      {id: "__scrollToTop()__",   default:NOT_IMPLEMENTED}
+  global ACTION_SCROLL_TO_BOTTOM :=   {id: "__scrollToBottom()__", default:NOT_IMPLEMENTED}
   global ACTION_TERMINAL_COPY :=      {id: "__terminalCopy()__",    default:NOT_IMPLEMENTED}
   global ACTION_TERMINAL_PASTE :=     {id: "__terminalPaste()__",   default:NOT_IMPLEMENTED}
 return
@@ -32,16 +34,23 @@ return
 
 ; Scroll terminal one line down/up.
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id) && (!altTabLaunched))
-  <^down::  RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id)
-  <^up::    RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_UP.id)
+;  SC055 & down::  Msgbox, hola
+;  Capslock & down::  RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id)
+  <^down::  RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_DOWN.id)
+;  SC055 & up::    Msgbox, adios
+  <^up::    RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_1_LINE_UP.id)
 #if
   
 ; Scroll terminal one page down/up.
 #if (IsActionImplemented(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_DOWN.id) && (!altTabLaunched))
-  <^right::
-  <^+down:: RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_DOWN.id)
-  <^left::
-  <^+up::   RunInterfaceActionIsolated(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_UP.id)
+  <^+down:: RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_DOWN.id)
+  <^+up::   RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_1_PAGE_UP.id)
+#if
+
+; Scroll terminal to top/bottom.
+#if (IsActionImplemented(__TERMINAL_ID__, ACTION_SCROLL_TO_BOTTOM.id) && (!altTabLaunched))
+  <^left::  RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_TO_TOP.id)
+  <^right:: RunInterfaceActionFree(__TERMINAL_ID__, ACTION_SCROLL_TO_BOTTOM.id)
 #if
 
 ; Copy
@@ -83,6 +92,8 @@ ImplementTerminalInterface(appsId
   , scroll1LineDown                 ; Scroll 1 line down
   , scroll1PageUp                   ; Scroll 1 page up 
   , scroll1PageDown                 ; Scroll 1 page down 
+  , scrollToTop                     ; Scroll to top
+  , scrollToBottom                  ; Scroll to bottom
   , terminalCopy                    ; Terminal copy
   , terminalPaste) {                ; Terminal paste
 
@@ -95,6 +106,10 @@ ImplementTerminalInterface(appsId
     := (scroll1PageUp != DEFAULT_IMPLEMENTATION) ? scroll1PageUp : ACTION_SCROLL_1_PAGE_UP.default
   app[ACTION_SCROLL_1_PAGE_DOWN.id]
     := (scroll1PageDown != DEFAULT_IMPLEMENTATION) ? scroll1PageDown : ACTION_SCROLL_1_PAGE_DOWN.default
+  app[ACTION_SCROLL_TO_TOP.id]
+    := (scrollToTop != DEFAULT_IMPLEMENTATION) ? scrollToTop : ACTION_SCROLL_TO_TOP.default
+  app[ACTION_SCROLL_TO_BOTTOM.id]
+    := (scrollToBottom != DEFAULT_IMPLEMENTATION) ? scrollToBottom : ACTION_SCROLL_TO_BOTTOM.default
   app[ACTION_TERMINAL_COPY.id]
     := (terminalCopy != DEFAULT_IMPLEMENTATION) ? terminalCopy : ACTION_TERMINAL_COPY.default
   app[ACTION_TERMINAL_PASTE.id]
@@ -108,6 +123,8 @@ ImplementTerminalInterface(appsId
 */
 DefaultImplementationTerminalInterface(appsId) {
   ImplementTerminalInterface(appsId
+    , DEFAULT_IMPLEMENTATION 
+    , DEFAULT_IMPLEMENTATION 
     , DEFAULT_IMPLEMENTATION 
     , DEFAULT_IMPLEMENTATION 
     , DEFAULT_IMPLEMENTATION 
