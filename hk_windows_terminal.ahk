@@ -30,10 +30,12 @@ WindowsTerminalAutoExec:
   global WT_COMBO_SPLIT_VERTICAL := CtrlCombo("{numpad9}")
   global WT_COMBO_SPLIT_HORIZONTAL := CtrlCombo("{numpad3}")
 
-  global WT_COMBO_SCROLL_1_LINE_DOWN := CtrlCombo("{end}")
-  global WT_COMBO_SCROLL_1_LINE_UP := CtrlCombo("{home}")
-  global WT_COMBO_SCROLL_1_PAGE_DOWN := CtrlCombo("{pgdn}")
-  global WT_COMBO_SCROLL_1_PAGE_UP := CtrlCombo("{pgup}")
+  global WT_COMBO_SCROLL_1_LINE_DOWN := ShiftCtrlCombo("{F7}")
+  global WT_COMBO_SCROLL_1_LINE_UP := ShiftCtrlCombo("{F8}")
+  global WT_COMBO_SCROLL_1_PAGE_DOWN := ShiftCtrlCombo("{F9}")
+  global WT_COMBO_SCROLL_1_PAGE_UP := ShiftCtrlCombo("{F10}")
+  global WT_COMBO_SCROLL_TO_BOTTOM := ShiftCtrlCombo("{F11}")
+  global WT_COMBO_SCROLL_TO_TOP := ShiftCtrlCombo("{F12}")
 
   global WT_COMBO_COPY := CtrlCombo("{numpad7}")
   global WT_COMBO_PASTE := CtrlCombo("{numpad1}")
@@ -84,11 +86,42 @@ WindowsTerminalAutoExec:
     , WT_COMBO_SPLIT_VERTICAL       ; Vertical pane split.
     , WT_COMBO_CLOSE_PANE_OR_TAB)   ; Close pane.
 
+  ; NOTE: Cursor interface is implemented by default by all apps. We need to
+  ; disable some combos to let WindowsTerminal implement TerminalInterface
+  ; without combo clashing. 
+  ImplementCursorInterface("WindowsTerminal.exe"
+    , DEFAULT_IMPLEMENTATION      ; left                            
+    , DEFAULT_IMPLEMENTATION      ; shiftLeft                       
+    , DEFAULT_IMPLEMENTATION      ; right                           
+    , DEFAULT_IMPLEMENTATION      ; shiftRight                      
+    , NOT_IMPLEMENTED             ; startLine  (ctrl + left)
+    , DEFAULT_IMPLEMENTATION      ; shiftStartLine                  
+    , NOT_IMPLEMENTED             ; endLine    (ctrl + right)                     
+    , DEFAULT_IMPLEMENTATION      ; shiftEndLine                    
+    , DEFAULT_IMPLEMENTATION      ; down                            
+    , DEFAULT_IMPLEMENTATION      ; shiftDown                       
+    , DEFAULT_IMPLEMENTATION      ; up                              
+    , DEFAULT_IMPLEMENTATION      ; shiftUp                         
+    , NOT_IMPLEMENTED             ; startText      (ctrl + up)
+    , NOT_IMPLEMENTED             ; shiftStartText (ctrl + shift + up)                 
+    , NOT_IMPLEMENTED             ; endText        (ctrl + down)                 
+    , NOT_IMPLEMENTED             ; shiftEndText   (ctrl + shift + down)                 
+    , DEFAULT_IMPLEMENTATION      ; pageUp                          
+    , DEFAULT_IMPLEMENTATION      ; shiftPageUp                     
+    , DEFAULT_IMPLEMENTATION      ; pageDown                        
+    , DEFAULT_IMPLEMENTATION      ; shiftPageDown
+    , DEFAULT_IMPLEMENTATION      ; prevWord
+    , DEFAULT_IMPLEMENTATION      ; shiftPrevWord
+    , DEFAULT_IMPLEMENTATION      ; nextWord
+    , DEFAULT_IMPLEMENTATION)     ; shiftNextWord
+
   ImplementTerminalInterface("WindowsTerminal.exe"
     , WT_COMBO_SCROLL_1_LINE_UP            ; Scroll 1 line up
     , WT_COMBO_SCROLL_1_LINE_DOWN          ; Scroll 1 line down
     , WT_COMBO_SCROLL_1_PAGE_UP            ; Scroll 1 page up 
     , WT_COMBO_SCROLL_1_PAGE_DOWN          ; Scroll 1 page down 
+    , WT_COMBO_SCROLL_TO_TOP               ; Scroll to top
+    , WT_COMBO_SCROLL_TO_BOTTOM            ; Scroll to bottom
     , WT_COMBO_COPY                        ; Terminal copy
     , WT_COMBO_PASTE)                      ; Terminal paste
 
