@@ -48,7 +48,8 @@ VSCodeAutoExec:
   global VSCODE_COMBO_JUMP_FORWARD := "^k^!i"
 
   ; Find.
-  global VSCODE_COMBO_FIND := LCtrlCombo("f")
+  global VSCODE_COMBO_FIND := LCtrlCombo("h")
+  global VSCODE_COMBO_FIND_AND_REPLACE := LShiftLCtrlCombo("h")
   global VSCODE_COMBO_VIM_FIND := "/"
 
   ; Focus panes' actions dictionary.
@@ -144,7 +145,8 @@ VSCodeAutoExec:
   ImplementFindAndReplaceInterface("Code.exe"    ; Search.
     , bind("ShiftSwitch"
             , VSCODE_COMBO_FIND
-            , VSCODE_COMBO_VIM_FIND))                   
+            , VSCODE_COMBO_VIM_FIND
+            , VSCODE_COMBO_FIND_AND_REPLACE))                   
 return
 
 ;----------------------------------------------------------------------------
@@ -223,7 +225,7 @@ SendVSCodeProxyCombo(key) {
 
 VSCodeRunPaletteCmd(cmd) {
   sendInputFree(VSCODE_COMBO_CMD_PALETTE)
-  sleep, 50
+  sleep, 10
   sendInputFree(cmd . "{enter}")
 }
 
