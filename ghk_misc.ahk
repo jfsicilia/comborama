@@ -40,7 +40,7 @@ LCtrl & Tab:: AltTabLaunch()
 ;----------------------------------------------------------------------------
 
 #if true
-  Tab & p:: ShiftSwitch("#{PrintScreen}", "#+s")
+  Tab & p:: ShiftSwitch("#{PrintScreen}", "#+s", "{PrintScreen}")
 #if
 
 ; Capture entire screen with PrintScreen
@@ -119,6 +119,10 @@ PrintScreen::send #{PrintScreen}
 ; Launch Task manager application dialog
 #if true
   Tab & ESC:: RunTaskManager() 
+#if
+
+#if true
+  Tab & Enter:: Enter
 #if
 
 ;----------------------------------------------------------------------------
