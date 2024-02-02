@@ -68,6 +68,8 @@ RAlt & LCtrl:: ToggleEverythingApp()
 >!t:: FocusOrLaunchWindowsTerminal()
 ; ----- 'T'elegram ------
 >!+t::FocusOrLaunchTelegram()
+; ------ 'U'Pdf ------
+>!u:: FocusOrLaunchUPdf()
 ; ------ 'v'im ------
 >!v:: FocusOrLaunchVim()
 ; ------ 'V'irtualBox ------
