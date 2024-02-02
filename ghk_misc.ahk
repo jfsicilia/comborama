@@ -11,6 +11,17 @@ MiscAutoExec:
   global altTabLaunched := false
 return
 
+ExitAltTab:
+  ; If LCtrl still pressed do nothing.
+  if (GetKeyState("LCtrl","P"))
+    return
+  ; Exit AltTab.
+  altTabLaunched := false
+  Send, {LAlt up} 
+  Send, {Shift Up}
+  SetTimer, ExitAltTab, Off
+return
+
 ;----------------------------------------------------------------------------
 ;                            Apps switching
 ;----------------------------------------------------------------------------
@@ -18,9 +29,9 @@ return
 ; is now done with LCtrl + Tab.
 LCtrl & Tab:: AltTabLaunch() 
 
-#If (altTabLaunched)
-  ~*LCtrl Up:: AltTabRelease()
-#If
+;#If (altTabLaunched)
+;  *LCtrl Up:: AltTabRelease()
+;#If
 
 ;----------------------------------------------------------------------------
 ;                            Tabs switching
@@ -141,16 +152,18 @@ AltTabLaunch() {
     Send {Alt Down}{RShift Down}{Tab}
   else
     Send {Alt Down}{Tab}
+  ; Set timer to disable AltTab when keycombo released is detected.
+  SetTimer, ExitAltTab, 100
 }
 
-/*
-  Shuts windows alt+tab functionality.
-  It sets internally global variable altTabLaunched to false.
-*/
-AltTabRelease() {
-    Send {Shift Up}{Alt Up}
-    altTabLaunched := false 
-}
+;/*
+;  Shuts windows alt+tab functionality.
+;  It sets internally global variable altTabLaunched to false.
+;*/
+;AltTabRelease() {
+;  Send {Shift Up}{Alt Up}
+;  altTabLaunched := false 
+;}
 
 /*
  Reload autohotkey main script.
