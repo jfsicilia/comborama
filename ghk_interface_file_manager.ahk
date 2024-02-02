@@ -178,7 +178,6 @@ ImplementFileManagerInterface(appsId
   , rename                  ; Rename file/folder
   , refresh                 ; Refresh file manager.
   , info                    ; Show info of file/folder
-;  , find                    ; Find
   , duplicate               ; Duplicate file/folder
   , selectAll               ; Select all files/folders
   , newFile                 ; New file
