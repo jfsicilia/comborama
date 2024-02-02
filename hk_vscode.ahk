@@ -36,8 +36,7 @@ VSCodeAutoExec:
   
   global VSCODE_COMBO_OPEN_FILE := "^p"                                
   global VSCODE_COMBO_CMD_PALETTE := "^+p"                                
-  global VSCODE_COMBO_SYMBOLS := "^t"                                
-  global VSCODE_COMBO_VARIABLES := "^+o"                                
+  global VSCODE_COMBO_SYMBOLS := "^+o"                                
 
   global VSCODE_COMBO_SETTINGS := "^,"                                
   global VSCODE_COMBO_SETTINGS_JSON := "^+p open user json{enter}"
@@ -76,7 +75,8 @@ VSCodeAutoExec:
     , VSCODE_COMBO_MOVE_TAB_LEFT                ; Move tab left.
     , NO_BOUND_ACTION_MSGBOX                    ; Move tab first.
     , NO_BOUND_ACTION_MSGBOX                    ; Move tab last.
-    , VSCODE_COMBO_OPEN_FILE                    ; New tab.
+    , NOT_IMPLEMENTED
+;    , VSCODE_COMBO_OPEN_FILE                    ; New tab.
     , DEFAULT_IMPLEMENTATION                    ; Close tab.
     , DEFAULT_IMPLEMENTATION)                   ; Undo close tab.
 
@@ -110,10 +110,10 @@ VSCodeAutoExec:
 
   ImplementSeekAndSelInterface("Code.exe"
     , VSCODE_COMBO_OPEN_FILE              ; Ctrl + Space
-    , VSCODE_COMBO_CMD_PALETTE            ; Ctrl + Shift + Space
-    , VSCODE_COMBO_SYMBOLS                ; Alt + Space
+    , NO_BOUND_ACTION_MSGBOX              ; Ctrl + Shift + Space
+    , VSCODE_COMBO_CMD_PALETTE            ; Alt + Space
     , NO_BOUND_ACTION_MSGBOX              ; Alt + Shift + Space
-    , VSCODE_COMBO_VARIABLES              ; Win + Space
+    , VSCODE_COMBO_SYMBOLS                ; Win + Space
     , NO_BOUND_ACTION_MSGBOX)             ; Win + Shift + Space
 
   ImplementSettingsInterface("Code.exe"
