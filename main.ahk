@@ -120,6 +120,7 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\ghk_fav_apps.ahk
 #include %A_ScriptDir%\ghk_debug.ahk
 
+;#include %A_ScriptDir%\captura_vacaciones.ahk
 ; Apps hotkeys.
 #include %A_ScriptDir%\hk_vscode.ahk
 #include %A_ScriptDir%\hk_file_explorer.ahk
@@ -132,3 +133,4 @@ ShowProgressText("AHK Scripts loaded!", 500)
 #include %A_ScriptDir%\hk_joplin.ahk
 #include %A_ScriptDir%\hk_gvim.ahk
 #include %A_ScriptDir%\hk_windows_terminal.ahk
+
