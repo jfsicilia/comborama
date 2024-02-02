@@ -15,7 +15,8 @@ JoplinAutoExec:
 
   ; Focus panes' actions dictionary.
   global JOPLIN_COMBO_FOCUS 
-  := {"n": LShiftLCtrlCombo("s")       ; Notebooks navigation, pane. 
+  := {"n": bind("JoplinRunPaletteCmd", "focusElementSideBar")    ; Notebooks navigation, pane.  
+;"n": LShiftLCtrlCombo("s")       ; Notebooks navigation, pane. 
     , "c": LShiftLCtrlCombo("l")       ; Note list navigation pane (children).
     , "m": LShiftLCtrlCombo("b")       ; Main pane (joplin's note body).
     , "i": LShiftLCtrlCombo("t")       ; Input pane (joplin's note title).
