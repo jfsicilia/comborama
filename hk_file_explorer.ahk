@@ -164,6 +164,8 @@ FileExplorerGoTo(path) {
   SendInputIsolated(FILE_EXPLORER_COMBO_ADDRESS_BAR)
   Sleep, 800
   SendInputIsolated(path . "{Enter}")
+  Sleep, 1500
+  FileExplorerFocusFileList()
 }
 
 /*
