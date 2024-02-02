@@ -68,8 +68,8 @@ EverythingAutoExec:
                         , bind("__OpenSelectedItemsWith__", Func("__Typora__")))
     ; Explore folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__WindowsTerminal__"))
-                        , bind("__OpenSelectedItemsWith__", Func("__OneCommander__"))
-                        , bind("__OpenSelectedItemsWith__", Func("__FileExplorer__")))
+                        , bind("__OpenSelectedItemsWith__", Func("__CMD__"))
+                        , bind("__OpenSelectedItemsWith__", Func("__OneCommander__")))
     , NOT_IMPLEMENTED          ; Copy to other pane
     , NOT_IMPLEMENTED)         ; Move to other pane
 
