@@ -61,7 +61,8 @@ EverythingAutoExec:
     , NOT_IMPLEMENTED                       ; New folder
     , EVERYTHING_COMBO_CONTEXT_MENU         ; Context menu
     ; View file/folder.
-    , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__Chrome__"))) 
+    , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__Chrome__"))
+                        , bind("__OpenSelectedItemsWith__", Func("__JoplinLinkScript__"))) 
     ; Edit file/folder.
     , bind("ShiftSwitch", bind("__OpenSelectedItemsWith__", Func("__Vim__"))
                         , bind("__OpenSelectedItemsWith__", Func("__VSCode__"))
