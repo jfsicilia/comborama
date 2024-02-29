@@ -91,11 +91,11 @@ ShowFavFoldersListBox(optionsDict, goToFolderFunc) {
 
   Gui, FavFolderGUI:New, -MinimizeBox
   Gui, FavFolderGUI:Add, ListBox, gFavFolderAction v_favFolderChoice W500 R30, %guiOptions%
-  Gui, FavFolderGUI:Show,, Choose_folder
+  Gui, FavFolderGUI:Show,, Choose folder (underscore "_" and space " " have the same effect). 
 }
 
 ; Deals with listbox.
-#if WinActive("Choose_folder ahk_class AutoHotkeyGUI")
+#if WinActive("ahk_class AutoHotkeyGUI")
   Enter::  ;  <-- Keys listed here WILL trigger a selection. 
     Sleep, 100 
   FavFolderAction: 
@@ -104,7 +104,9 @@ ShowFavFoldersListBox(optionsDict, goToFolderFunc) {
     Gui, FavFolderGUI:Submit
     Gui, FavFolderGUI:Destroy
     WinActivate, ahk_id %_favFolderAppHwnd%
-    _favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH.item(SubStr(_favFolderChoice,1,1)))
+    ;_favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH.item(SubStr(_favFolderChoice,1,1)))
+    option := StrReplace(StrSplit(_favFolderChoice,"-")[1], A_Space, "")
+    _favFolderGoFolderFunc.Call(FAV_FOLDERS_PATH.item(option))
   return 
 
   ~Up::  ;  <-- Keys listed here WILL NOT trigger a selection. 
