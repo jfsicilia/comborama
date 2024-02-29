@@ -336,6 +336,17 @@ __Typora__(index, file) {
   FocusOrLaunchTypora(true, file, true)
 }
 
+/*
+  Help function that handles running a file with the joplin_bookcase_link.bat.
+  index - Index of the file to process. It's ignored because each file
+          launches an instance of typora.
+  file - File path.
+*/
+__JoplinLinkScript__(index, file) {
+  ; Before the first path is processed, focus or launch vim.
+  run, c:\tools\joplin_bookcase_link\joplin_bookcase_link.bat "%file%"
+}
+
 ;----------------------------------------------------------------------  
 ;------------------------ HELPER FUNCTIONS ----------------------------  
 ;----------------------------------------------------------------------  
